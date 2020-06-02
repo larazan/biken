@@ -95,7 +95,6 @@ class Login extends CI_Controller
      */
     public function forgotPassword()
     {
-        echo "forgot";
         $this->load->view('auth/forgotPassword');
     }
     
