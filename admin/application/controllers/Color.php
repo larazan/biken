@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class User extends CI_Controller
+class Color extends CI_Controller
 {
 
 	function __construct()
@@ -11,14 +11,14 @@ class User extends CI_Controller
 
 	public function index()
 	{
-		$this->template->views('users/manage');
+		$this->template->views('color/manage');
 	}
 
 	public function manage()
 	{
 		$data['query'] = $this->get('userId');
 		$data['flash'] = $this->session->flashdata('item');
-		$this->template->views('users/manage', $data);
+		$this->template->views('color/manage', $data);
 	}
 
 	public function create()
@@ -29,7 +29,7 @@ class User extends CI_Controller
 		$submit = $this->input->post('submit');
 
 		if ($submit == "Cancel") {
-			redirect('User/manage');
+			redirect('color/manage');
 		}
 
 		if ($submit == "Submit") {
@@ -50,14 +50,14 @@ class User extends CI_Controller
 					$flash_msg = "The user account were successfully updated.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
-					redirect('user/create/' . $update_id);
+					redirect('color/create/' . $update_id);
 				} else {
 					$update_id = $this->get_max();
 
 					$flash_msg = "The user account was successfully added.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
-					redirect('user/create/' . $update_id);
+					redirect('color/create/' . $update_id);
 				}
 			}
 		}
@@ -69,16 +69,16 @@ class User extends CI_Controller
 		}
 
 		if (!is_numeric($update_id)) {
-			$data['headline'] = "Tambah User";
+			$data['headline'] = "Tambah Color";
 		} else {
-			$data['headline'] = "Edit User";
+			$data['headline'] = "Edit Color";
 		}
 
 
 		$data['update_id'] = $update_id;
 		$data['flash'] = $this->session->flashdata('item');
 
-		$this->template->views('users/create', $data);
+		$this->template->views('color/create', $data);
 	}
 
 	function delete()
@@ -95,7 +95,7 @@ class User extends CI_Controller
 			$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 			$this->session->set_flashdata('item', $value);
 
-			redirect('user/manage');
+			redirect('color/manage');
 		}
 	}
 
@@ -131,8 +131,8 @@ class User extends CI_Controller
 
 	function get($order_by)
 	{
-		$this->load->model('Mdl_user');
-		$query = $this->Mdl_user->get($order_by);
+		$this->load->model('Mdl_color');
+		$query = $this->Mdl_color->get($order_by);
 		return $query;
 	}
 
@@ -142,8 +142,8 @@ class User extends CI_Controller
 			die('Non-numeric variable!');
 		}
 
-		$this->load->model('Mdl_user');
-		$query = $this->Mdl_user->get_with_limit($limit, $offset, $order_by);
+		$this->load->model('Mdl_color');
+		$query = $this->Mdl_color->get_with_limit($limit, $offset, $order_by);
 		return $query;
 	}
 
@@ -153,28 +153,28 @@ class User extends CI_Controller
 			die('Non-numeric variable!');
 		}
 
-		$this->load->model('Mdl_user');
-		$query = $this->Mdl_user->get_where($id);
+		$this->load->model('Mdl_color');
+		$query = $this->Mdl_color->get_where($id);
 		return $query;
 	}
 
 	// function get_data_where($key) {
-	//     $this->load->model('Mdl_user');
-	//     $query = $this->Mdl_user->get_data_where($key);
+	//     $this->load->model('Mdl_color');
+	//     $query = $this->Mdl_color->get_data_where($key);
 	//     return $query;
 	// }
 
 	function get_where_custom($col, $value)
 	{
-		$this->load->model('Mdl_user');
-		$query = $this->Mdl_user->get_where_custom($col, $value);
+		$this->load->model('Mdl_color');
+		$query = $this->Mdl_color->get_where_custom($col, $value);
 		return $query;
 	}
 
 	function _insert($data)
 	{
-		$this->load->model('Mdl_user');
-		$this->Mdl_user->_insert($data);
+		$this->load->model('Mdl_color');
+		$this->Mdl_color->_insert($data);
 	}
 
 	function _update($id, $data)
@@ -183,8 +183,8 @@ class User extends CI_Controller
 			die('Non-numeric variable!');
 		}
 
-		$this->load->model('Mdl_user');
-		$this->Mdl_user->_update($id, $data);
+		$this->load->model('Mdl_color');
+		$this->Mdl_color->_update($id, $data);
 	}
 
 	function _delete($id)
@@ -193,35 +193,35 @@ class User extends CI_Controller
 			die('Non-numeric variable!');
 		}
 
-		$this->load->model('Mdl_user');
-		$this->Mdl_user->_delete($id);
+		$this->load->model('Mdl_color');
+		$this->Mdl_color->_delete($id);
 	}
 
 	function count_where($column, $value)
 	{
-		$this->load->model('Mdl_user');
-		$count = $this->Mdl_user->count_where($column, $value);
+		$this->load->model('Mdl_color');
+		$count = $this->Mdl_color->count_where($column, $value);
 		return $count;
 	}
 
 	function get_max()
 	{
-		$this->load->model('Mdl_user');
-		$max_id = $this->Mdl_user->get_max();
+		$this->load->model('Mdl_color');
+		$max_id = $this->Mdl_color->get_max();
 		return $max_id;
 	}
 
 	function _custom_query($mysql_query)
 	{
-		$this->load->model('Mdl_user');
-		$query = $this->Mdl_user->_custom_query($mysql_query);
+		$this->load->model('Mdl_color');
+		$query = $this->Mdl_color->_custom_query($mysql_query);
 		return $query;
 	}
 
 	function count_all()
 	{
-		$this->load->model('Mdl_user');
-		$count = $this->Mdl_user->_count_all();
+		$this->load->model('Mdl_color');
+		$count = $this->Mdl_color->_count_all();
 		return $count;
 	}
 }
