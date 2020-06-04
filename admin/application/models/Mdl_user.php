@@ -2,63 +2,89 @@
 
 class Mdl_user extends CI_Model
 {
-    function userListingCount($searchText = '')
-    {
-        $this->db->select('BaseTbl.userId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, Role.role');
-        $this->db->from('tbl_users as BaseTbl');
-        $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId','left');
-        if(!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.email  LIKE '%".$searchText."%'
-                            OR  BaseTbl.name  LIKE '%".$searchText."%'
-                            OR  BaseTbl.mobile  LIKE '%".$searchText."%')";
-            $this->db->where($likeCriteria);
-        }
-        $this->db->where('BaseTbl.isDeleted', 0);
-        $this->db->where('BaseTbl.roleId !=', 1);
-        $query = $this->db->get();
-        
-        return count($query->result());
+    function get_table() {
+        $table = "tbl_users";
+        return $table;
     }
     
-    /**
-     * This function is used to get the user listing count
-     * @param string $searchText : This is optional search text
-     * @param number $page : This is pagination offset
-     * @param number $segment : This is pagination limit
-     * @return array $result : This is result
-     */
-    function userListing($searchText = '', $page, $segment)
-    {
-        $this->db->select('BaseTbl.userId, BaseTbl.email, BaseTbl.name, BaseTbl.mobile, Role.role');
-        $this->db->from('tbl_users as BaseTbl');
-        $this->db->join('tbl_roles as Role', 'Role.roleId = BaseTbl.roleId','left');
-        if(!empty($searchText)) {
-            $likeCriteria = "(BaseTbl.email  LIKE '%".$searchText."%'
-                            OR  BaseTbl.name  LIKE '%".$searchText."%'
-                            OR  BaseTbl.mobile  LIKE '%".$searchText."%')";
-            $this->db->where($likeCriteria);
-        }
-        $this->db->where('BaseTbl.isDeleted', 0);
-        $this->db->where('BaseTbl.roleId !=', 1);
-        $this->db->limit($page, $segment);
-        $query = $this->db->get();
-        
-        $result = $query->result();        
-        return $result;
+    function get($order_by){
+        $table = $this->get_table();
+        $this->db->order_by($order_by, 'DESC');
+        $query=$this->db->get($table);
+        return $query;
     }
     
-    /**
-     * This function is used to get the user roles information
-     * @return array $result : This is result of the query
-     */
-    function getUserRoles()
-    {
-        $this->db->select('roleId, role');
-        $this->db->from('tbl_roles');
-        $this->db->where('roleId !=', 1);
-        $query = $this->db->get();
-        
-        return $query->result();
+    function get_with_limit($limit, $offset, $order_by) {
+        $table = $this->get_table();
+        $this->db->limit($limit, $offset);
+        $this->db->order_by($order_by);
+        $query=$this->db->get($table);
+        return $query;
+    }
+    
+    function get_where($id){
+        $table = $this->get_table();
+        $this->db->where('userId', $id);
+        $query=$this->db->get($table);
+        return $query;
+    }
+    
+    function get_where_custom($col, $value) {
+        $table = $this->get_table();
+        $this->db->where($col, $value);
+        $query=$this->db->get($table);
+        return $query;
+    }
+    
+    function _insert($data){
+        $table = $this->get_table();
+        $this->db->insert($table, $data);
+    }
+    
+    function _update($id, $data){
+        $table = $this->get_table();
+        $this->db->where('userId', $id);
+        $this->db->update($table, $data);
+    }
+    
+    function _delete($id){
+        $table = $this->get_table();
+        $this->db->where('userId', $id);
+        $this->db->delete($table);
+    }
+    
+    function count_where($column, $value) {
+        $table = $this->get_table();
+        $this->db->where($column, $value);
+        $query=$this->db->get($table);
+        $num_rows = $query->num_rows();
+        return $num_rows;
+    }
+    
+    function count_all() {
+        $table = $this->get_table();
+        $query=$this->db->get($table);
+        $num_rows = $query->num_rows();
+        return $num_rows;
+    }
+    
+    function get_max() {
+        $table = $this->get_table();
+        $this->db->select_max('userId');
+        $query = $this->db->get($table);
+        $row=$query->row();
+        $id=$row->id;
+        return $id;
+    }
+    
+    function _custom_query($mysql_query) {
+        $query = $this->db->query($mysql_query);
+        return $query;
+    }
+    
+    function _count_all() {
+        $count = $this->db->count_all($this->get_table());
+        return $count;
     }
 
     /**
@@ -72,76 +98,12 @@ class Mdl_user extends CI_Model
         $this->db->select("email");
         $this->db->from("tbl_users");
         $this->db->where("email", $email);   
-        $this->db->where("isDeleted", 0);
         if($userId != 0){
             $this->db->where("userId !=", $userId);
         }
         $query = $this->db->get();
 
         return $query->result();
-    }
-    
-    
-    /**
-     * This function is used to add new user to system
-     * @return number $insert_id : This is last inserted id
-     */
-    function addNewUser($userInfo)
-    {
-        $this->db->trans_start();
-        $this->db->insert('tbl_users', $userInfo);
-        
-        $insert_id = $this->db->insert_id();
-        
-        $this->db->trans_complete();
-        
-        return $insert_id;
-    }
-    
-    /**
-     * This function used to get user information by id
-     * @param number $userId : This is user id
-     * @return array $result : This is user information
-     */
-    function getUserInfo($userId)
-    {
-        $this->db->select('userId, name, email, mobile, roleId');
-        $this->db->from('tbl_users');
-        $this->db->where('isDeleted', 0);
-		$this->db->where('roleId !=', 1);
-        $this->db->where('userId', $userId);
-        $query = $this->db->get();
-        
-        return $query->result();
-    }
-    
-    
-    /**
-     * This function is used to update the user information
-     * @param array $userInfo : This is users updated information
-     * @param number $userId : This is user id
-     */
-    function editUser($userInfo, $userId)
-    {
-        $this->db->where('userId', $userId);
-        $this->db->update('tbl_users', $userInfo);
-        
-        return TRUE;
-    }
-    
-    
-    
-    /**
-     * This function is used to delete the user information
-     * @param number $userId : This is user id
-     * @return boolean $result : TRUE / FALSE
-     */
-    function deleteUser($userId, $userInfo)
-    {
-        $this->db->where('userId', $userId);
-        $this->db->update('tbl_users', $userInfo);
-        
-        return $this->db->affected_rows();
     }
 
 
@@ -153,7 +115,6 @@ class Mdl_user extends CI_Model
     {
         $this->db->select('userId, password');
         $this->db->where('userId', $userId);        
-        $this->db->where('isDeleted', 0);
         $query = $this->db->get('tbl_users');
         
         $user = $query->result();
@@ -177,7 +138,6 @@ class Mdl_user extends CI_Model
     function changePassword($userId, $userInfo)
     {
         $this->db->where('userId', $userId);
-        $this->db->where('isDeleted', 0);
         $this->db->update('tbl_users', $userInfo);
         
         return $this->db->affected_rows();
