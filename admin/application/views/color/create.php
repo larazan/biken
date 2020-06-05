@@ -1,5 +1,5 @@
 <?php
-$backlink = base_url() . "user/manage";
+$backlink = base_url() . "color/manage";
 ?>
 
 <!-- Content Header (Page header) -->
@@ -7,7 +7,7 @@ $backlink = base_url() . "user/manage";
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h3 class="m-0 text-dark">User <small>/ <?= $headline ?></small></h3>
+                <h3 class="m-0 text-dark">Color <small>/ <?= $headline ?></small></h3>
 
             </div><!-- /.col -->
 
@@ -26,13 +26,13 @@ $backlink = base_url() . "user/manage";
                 <!-- Horizontal Form -->
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">Enter User Details</h3>
+                        <h3 class="card-title">Color Details</h3>
                         <a href="<?= $backlink ?>" class="btn bg-warning float-right">Back</a>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
                     <?php
-                    $form_location = base_url() . "user/create/" . $update_id;
+                    $form_location = base_url() . "color/create/" . $update_id;
                     ?>
                     <form class="form-horizontal" method="post" action="<?= $form_location ?>">
                         <!-- alert -->
@@ -43,40 +43,28 @@ $backlink = base_url() . "user/manage";
                         ?>
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Full Name</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Color Name</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Full Name" id="username" name="username" value="<?= $name ?>" required>
+                                    <input type="text" class="form-control" placeholder="Color Name" id="name" name="name" value="<?= $name ?>" required>
                                     <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('name'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Status</label>
                                 <div class="col-sm-6">
-                                    <input type="email" class="form-control" placeholder="Email" id="email" name="email" value="<?= $email ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('email'); ?></div>
+                                <?php 
+                                    $additional_dd_code = 'class="form-control"';
+                                    $options = array(
+                                                    '' => 'Please Select',
+                                                    '1' => 'Active',
+                                                    '0' => 'Inactive'  
+                                                );
+                                    echo form_dropdown('color_status', $options, $color_status, $additional_dd_code);
+                                    ?>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('color_status'); ?></div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-                                <div class="col-sm-6">
-                                    <input type="password" class="form-control" placeholder="Password" id="password" name="password">
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('password'); ?></div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm Password</label>
-                                <div class="col-sm-6">
-                                    <input type="password" class="form-control" placeholder="Confirm Password" id="cpassword" name="cpassword">
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('cpassword'); ?></div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Mobile Phone</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Mobile Phone" id="mobile" name="mobile" value="<?= $mobile ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('mobile'); ?></div>
-                                </div>
-                            </div>
+                            
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">

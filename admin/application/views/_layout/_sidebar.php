@@ -24,7 +24,7 @@
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="<?= base_url()?>dashboard" class="nav-link active">
+          <a href="<?= base_url()?>dashboard" class="nav-link  <?= ($this->uri->segment(1) == 'dashboard') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
@@ -33,10 +33,73 @@
         </li>
 
         <li class="nav-item">
-          <a href="<?= base_url()?>user" class="nav-link">
+          <a href="<?= base_url()?>user/manage" class="nav-link <?= ($this->uri->segment(1) == 'user') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-user-alt"></i>
             <p>
               Users
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url()?>customer/manage" class="nav-link <?= ($this->uri->segment(1) == 'customer') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-user-alt"></i>
+            <p>
+              Customer
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url()?>product/manage" class="nav-link <?= ($this->uri->segment(1) == 'product') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-user-alt"></i>
+            <p>
+              Product
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url()?>brand/manage" class="nav-link <?= ($this->uri->segment(1) == 'brand') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-user-alt"></i>
+            <p>
+              Brand
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url()?>category/manage" class="nav-link <?= ($this->uri->segment(1) == 'category') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-user-alt"></i>
+            <p>
+              Category
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url()?>color/manage" class="nav-link <?= ($this->uri->segment(1) == 'color') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-user-alt"></i>
+            <p>
+              Color
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url()?>size/manage" class="nav-link <?= ($this->uri->segment(1) == 'size') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-user-alt"></i>
+            <p>
+              Size
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url()?>article/manage" class="nav-link <?= ($this->uri->segment(1) == 'article') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-user-alt"></i>
+            <p>
+              Article
             </p>
           </a>
         </li>

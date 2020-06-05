@@ -1,5 +1,5 @@
 <?php
-$addlink = base_url() . "brand/create";
+$addlink = base_url() . "article/create";
 ?>
 
 <!-- Content Header (Page header) -->
@@ -7,7 +7,7 @@ $addlink = base_url() . "brand/create";
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h3 class="m-0 text-dark">Brand <small>/ Manage</small></h3>
+                <h3 class="m-0 text-dark">Article <small>/ Manage</small></h3>
 
             </div><!-- /.col -->
 
@@ -32,7 +32,7 @@ $addlink = base_url() . "brand/create";
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">DataTable with default features</h3>
-                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah Brand</a>
+                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah Article</a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -40,7 +40,8 @@ $addlink = base_url() . "brand/create";
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Name</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th class="text-center">Actions</th>
@@ -49,8 +50,8 @@ $addlink = base_url() . "brand/create";
                             <tbody>
                                 <?php $no = 1;
                                 foreach ($query->result() as $row) {
-                                    $editLink = base_url() . "Brand/create/" . $row->brand_id;
-                                    $deleteLink = base_url(). "modal/popup/delete/" . $row->brand_id . "/brand";
+                                    $editLink = base_url() . "article/create/" . $row->id;
+                                    $deleteLink = base_url(). "modal/popup/delete/" . $row->id . "/article";
                                     $status = $row->status;
 
                                     if ($status == 1) {
@@ -68,6 +69,9 @@ $addlink = base_url() . "brand/create";
                                         <td><?= $no++ ?> </td>
                                         <td>
                                             <?= $row->name ?>
+                                        </td>
+                                        <td>
+                                            <?= word_limiter($row->body, 8) ?>
                                         </td>
                                         <td>
                                             <span style="width: 110px;"><span class="m-badge <?= $status_label ?> m-badge--wide"><?= $status_desc ?></span></span>

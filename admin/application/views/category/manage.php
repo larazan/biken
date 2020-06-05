@@ -1,5 +1,5 @@
 <?php
-$addlink = base_url() . "user/create";
+$addlink = base_url() . "category/create";
 ?>
 
 <!-- Content Header (Page header) -->
@@ -7,7 +7,7 @@ $addlink = base_url() . "user/create";
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h3 class="m-0 text-dark">User <small>/ Manage</small></h3>
+                <h3 class="m-0 text-dark">Category <small>/ Manage</small></h3>
 
             </div><!-- /.col -->
 
@@ -32,7 +32,7 @@ $addlink = base_url() . "user/create";
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">DataTable with default features</h3>
-                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah User</a>
+                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah Category</a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -41,28 +41,41 @@ $addlink = base_url() . "user/create";
                                 <tr>
                                     <th>No</th>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $no = 1;
                                 foreach ($query->result() as $row) {
-                                    $edit_user = base_url() . "User/create/" . $row->userId;
+                                    $editLink = base_url() . "category/create/" . $row->id;
+                                    $deleteLink = base_url(). "modal/popup/delete/" . $row->id . "/category";
+                                    $status = $row->status;
 
+                                    if ($status == 1) {
+                                        $status_label = "m-badge--success";
+                                        $status_desc = "Active";
+                                    } else {
+                                        $status_label = "m-badge--danger";
+                                        $status_desc = "Inactive";
+                                    }
+
+                                    $tgl = getNiceDate($row->created_at);
                                 ?>
 
                                     <tr>
                                         <td><?= $no++ ?> </td>
                                         <td>
-                                            <?= $row->name ?>
+                                            <?= $row->category_name ?>
                                         </td>
-                                        <td><?= $row->email ?></td>
-                                        <td><?= $row->mobile ?></td>
+                                        <td>
+                                            <span style="width: 110px;"><span class="m-badge <?= $status_label ?> m-badge--wide"><?= $status_desc ?></span></span>
+                                        </td>
+                                        <td><?= $tgl ?></td>
                                         <td class="text-center">
-                                            <a class="btn btn-sm btn-info" href="<?= $edit_user ?>"><i class="fa fa-edit"></i></a>
-                                            <a class="btn btn-sm btn-danger deleteUser" href="#" data-userid="1" onclick="showAjaxModal('<?= base_url() ?>modal/popup/delete/<?= $row->userId ?>/users');"><i class="fa fa-trash"></i></a>
+                                        <a class="btn btn-sm btn-info" href="<?= $editLink ?>"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-sm btn-danger deleteUser" href="#" data-userid="1" onclick="showAjaxModal('<?= $deleteLink ?>');"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>

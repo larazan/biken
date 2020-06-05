@@ -1,16 +1,16 @@
 <div class="modal-header">
-    <h4 class="modal-title">Delete User</h4>
+    <h4 class="modal-title">Delete Category</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <?php
 $attributes = array('class' => 'm-form m-form--fit m-form--label-align-right');
-echo form_open(base_url() . 'user/delete', $attributes);
+echo form_open(base_url() . 'category/delete', $attributes);
 ?>
 <div class="modal-body">
-    <input type="hidden" name="user" value="<?= $param2 ?>">
-    <h5>Are you sure you want to delete this user <?= $param2 ?>?</h5>
+    <input type="hidden" name="id" value="<?= $param2 ?>">
+    <h5>Are you sure you want to delete this category?</h5>
 </div>
 <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

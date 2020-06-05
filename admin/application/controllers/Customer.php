@@ -16,7 +16,8 @@ class Customer extends CI_Controller
 
 	public function manage()
 	{
-		$data['query'] = $this->get('userId');
+		$mysql_query = "SELECT * FROM tbl_customer ORDER BY customer_id DESC";
+        $data['query'] = $this->_custom_query($mysql_query);
 		$data['flash'] = $this->session->flashdata('item');
 		$this->template->views('customer/manage', $data);
 	}
@@ -35,26 +36,26 @@ class Customer extends CI_Controller
 		if ($submit == "Submit") {
 			// process the form
 			$this->load->library('form_validation');
-			$this->form_validation->set_rules('username', 'Username', 'trim|required');
-			$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-			$this->form_validation->set_rules('password', 'Password', 'required|max_length[20]');
+			$this->form_validation->set_rules('customer_name', 'Username', 'trim|required');
+			$this->form_validation->set_rules('customer_email', 'Email', 'trim|required|valid_email');
+			$this->form_validation->set_rules('customer_password', 'Password', 'required|max_length[20]');
 			$this->form_validation->set_rules('cpassword', 'Confirm Password', 'trim|required|matches[password]|max_length[20]');
-			$this->form_validation->set_rules('mobile', 'Telpon', 'trim|required|numeric|min_length[5]|max_length[13]');
+			$this->form_validation->set_rules('customer_phone', 'Telpon', 'trim|required|numeric|min_length[5]|max_length[13]');
+			$this->form_validation->set_rules('customer_address', 'Alamat', 'trim|required');
 
 			if ($this->form_validation->run() == TRUE) {
 				$data = $this->fetch_data_from_post();
 
 				if (is_numeric($update_id)) {
-					$data['updated_at'] = time();
 					$this->_update($update_id, $data);
-					$flash_msg = "The user account were successfully updated.";
+					$flash_msg = "The customer account were successfully updated.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
 					redirect('customer/create/' . $update_id);
 				} else {
 					$update_id = $this->get_max();
 
-					$flash_msg = "The user account was successfully added.";
+					$flash_msg = "The customer account was successfully added.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
 					redirect('customer/create/' . $update_id);
@@ -84,14 +85,14 @@ class Customer extends CI_Controller
 	function delete()
 	{	
 		$this->load->library('session');
-		$update_id = $this->input->post('user');
+		$update_id = $this->input->post('id');
 
 		$submit = $this->input->post('submit', TRUE);
 		if ($submit == "Delete") {
 			// delete the item record from db
 			$this->_delete($update_id);
 
-			$flash_msg = "The user were successfully deleted.";
+			$flash_msg = "The customer were successfully deleted.";
 			$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 			$this->session->set_flashdata('item', $value);
 
@@ -101,12 +102,14 @@ class Customer extends CI_Controller
 
 	function fetch_data_from_post()
 	{
-		$data['name'] = $this->input->post('username', true);
-		$data['password'] = getHashedPassword($this->input->post('password', true));
-		$data['email'] = $this->input->post('email', true);
-		$data['mobile'] = $this->input->post('mobile', true);
+		$data['customer_name'] = $this->input->post('customer_name', true);
+		$data['customer_password'] = $this->input->post('customer_password', true);
+		$data['customer_email'] = $this->input->post('customer_email', true);
+		$data['customer_phone'] = $this->input->post('customer_phone', true);
+		$data['customer_address'] = $this->input->post('customer_address', true);
+		$data['customer_city'] = $this->input->post('customer_city', true);
+		$data['customer_status'] = $this->input->post('customer_status', true);
 		$data['created_at'] = time();
-		$data['updated_at'] = time();
 		return $data;
 	}
 
@@ -114,11 +117,14 @@ class Customer extends CI_Controller
 	{
 		$query = $this->get_where($updated_id);
 		foreach ($query->result() as $row) {
-			$data['userId'] = $row->userId;
-			$data['name'] = $row->name;
-			$data['email'] = $row->email;
-			$data['password'] = $row->password;
-			$data['mobile'] = $row->mobile;
+			$data['customer_id'] = $row->customer_id;
+			$data['customer_name'] = $row->customer_name;
+			$data['customer_password'] = $row->customer_password;
+			$data['customer_email'] = $row->customer_email;
+			$data['customer_phone'] = $row->customer_phone;
+			$data['customer_address'] = $row->customer_address;
+			$data['customer_city'] = $row->customer_city;
+			$data['customer_status'] = $row->customer_status;
 			$data['created_at'] = $row->created_at;
 		}
 

@@ -16,7 +16,8 @@ class Brand extends CI_Controller
 
 	public function manage()
 	{
-		$data['query'] = $this->get('userId');
+		$mysql_query = "SELECT * FROM tbl_brand ORDER BY brand_id DESC";
+        $data['query'] = $this->_custom_query($mysql_query);
 		$data['flash'] = $this->session->flashdata('item');
 		$this->template->views('Brand/manage', $data);
 	}
@@ -35,26 +36,22 @@ class Brand extends CI_Controller
 		if ($submit == "Submit") {
 			// process the form
 			$this->load->library('form_validation');
-			$this->form_validation->set_rules('username', 'Username', 'trim|required');
-			$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-			$this->form_validation->set_rules('password', 'Password', 'required|max_length[20]');
-			$this->form_validation->set_rules('cpassword', 'Confirm Password', 'trim|required|matches[password]|max_length[20]');
-			$this->form_validation->set_rules('mobile', 'Telpon', 'trim|required|numeric|min_length[5]|max_length[13]');
-
+			$this->form_validation->set_rules('brand_name', 'Brand name', 'trim|required');
+			
 			if ($this->form_validation->run() == TRUE) {
 				$data = $this->fetch_data_from_post();
 
 				if (is_numeric($update_id)) {
 					$data['updated_at'] = time();
 					$this->_update($update_id, $data);
-					$flash_msg = "The user account were successfully updated.";
+					$flash_msg = "The brand were successfully updated.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
 					redirect('Brand/create/' . $update_id);
 				} else {
 					$update_id = $this->get_max();
 
-					$flash_msg = "The user account was successfully added.";
+					$flash_msg = "The brand was successfully added.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
 					redirect('Brand/create/' . $update_id);
@@ -84,14 +81,14 @@ class Brand extends CI_Controller
 	function delete()
 	{	
 		$this->load->library('session');
-		$update_id = $this->input->post('user');
+		$update_id = $this->input->post('id');
 
 		$submit = $this->input->post('submit', TRUE);
 		if ($submit == "Delete") {
 			// delete the item record from db
 			$this->_delete($update_id);
 
-			$flash_msg = "The user were successfully deleted.";
+			$flash_msg = "The brand were successfully deleted.";
 			$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 			$this->session->set_flashdata('item', $value);
 
@@ -101,10 +98,8 @@ class Brand extends CI_Controller
 
 	function fetch_data_from_post()
 	{
-		$data['name'] = $this->input->post('username', true);
-		$data['password'] = getHashedPassword($this->input->post('password', true));
-		$data['email'] = $this->input->post('email', true);
-		$data['mobile'] = $this->input->post('mobile', true);
+		$data['brand_name'] = $this->input->post('brand_name', true);
+		$data['status'] = $this->input->post('status', true);
 		$data['created_at'] = time();
 		$data['updated_at'] = time();
 		return $data;
@@ -114,12 +109,11 @@ class Brand extends CI_Controller
 	{
 		$query = $this->get_where($updated_id);
 		foreach ($query->result() as $row) {
-			$data['userId'] = $row->userId;
-			$data['name'] = $row->name;
-			$data['email'] = $row->email;
-			$data['password'] = $row->password;
-			$data['mobile'] = $row->mobile;
+			$data['brand_id'] = $row->brand_id;
+			$data['brand_name'] = $row->brand_name;
+			$data['status'] = $row->status;
 			$data['created_at'] = $row->created_at;
+			$data['updated_at'] = $row->updated_at;
 		}
 
 		if (!isset($data)) {

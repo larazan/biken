@@ -149,4 +149,70 @@ if(!function_exists('setFlashData'))
     }
 }
 
+if(!function_exists('get_nice_date'))
+{
+    function getNiceDate($timestamp, $format) {
+        switch ($format) {
+            case 'full':
+                $the_date = date('l jS \of F Y \a\t h:i:s A', $timestamp);
+                break;
+            case 'cool':
+                $the_date = date('l jS \of F Y', $timestamp);
+                break;
+            case 'shorter':
+                $the_date = date('jS \of F Y', $timestamp);
+                break;
+            case 'mini':
+                $the_date = date('jS M Y', $timestamp);
+                break;
+            case 'oldschool':
+                $the_date = date('j\/n\/y', $timestamp);
+                break;
+            case 'datepicker':
+                $the_date = date('m\/d\/Y', $timestamp);
+                break;
+            case 'indo':
+                $the_date = date('d\/m\/Y', $timestamp);
+                break; 
+            case 'indo2':
+                $the_date = date('d-m-Y', $timestamp);
+                break; 
+            case 'indon':
+                $the_date = date('l, d F Y', $timestamp);
+                break;  
+            case 'indon2':
+                $the_date = date('d F Y', $timestamp);
+                break;            
+            case 'monyear':
+                $the_date = date('F Y', $timestamp);
+                break;      
+            case 'lengkap':
+                $the_date = date('d F Y \/ h:i:s A', $timestamp);
+                break;
+            case 'keren':
+                $the_date = date('l d F Y', $timestamp);
+                break; 
+            case 'ok':
+                $the_date = date('d-M-Y', $timestamp);
+                break;     
+            case 'ok2':
+                $the_date = date('d M Y', $timestamp);
+                break;     
+            case 'countdown':
+                $the_date = date('Y/m/d h:i:s', $timestamp);
+                break;  
+            case 'timer':
+                $the_date = date('F d Y h:i:s', $timestamp);
+                break;  
+            case 'dataDate':
+                $the_date = date('Y-m-d', $timestamp);
+                break;
+            case 'dataTime':
+                $the_date = date('h:i:s', $timestamp);
+                break;         
+        }
+        return $the_date;
+    }
+}
+
 ?>
