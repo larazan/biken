@@ -1,5 +1,5 @@
 <?php
-$backlink = base_url() . "customer/manage";
+$backlink = base_url() . "order/manage";
 ?>
 
 <!-- Content Header (Page header) -->
@@ -7,7 +7,7 @@ $backlink = base_url() . "customer/manage";
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h3 class="m-0 text-dark">Customer <small>/ <?= $headline ?></small></h3>
+                <h3 class="m-0 text-dark">Order <small>/ <?= $headline ?></small></h3>
 
             </div><!-- /.col -->
 
@@ -32,50 +32,50 @@ $backlink = base_url() . "customer/manage";
                 <!-- Horizontal Form -->
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">Customer Details</h3>
+                        <h3 class="card-title">Order Details</h3>
                         <a href="<?= $backlink ?>" class="btn bg-warning float-right">Back</a>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
                     <?php
-                    $form_location = base_url() . "customer/create/" . $update_id;
+                    $form_location = base_url() . "order/create/" . $update_id;
                     ?>
                     <form class="form-horizontal" method="post" action="<?= $form_location ?>">
                         
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Customer Name</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Order ID</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Customer Name" id="customer_name" name="customer_name" value="<?= $customer_name ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('customer_name'); ?></div>
+                                    <input type="text" class="form-control" placeholder="Order ID" id="order_id" name="order_id" value="<?= $order_id ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('order_id'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Customer Email</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Customer ID</label>
                                 <div class="col-sm-6">
-                                    <input type="email" class="form-control" placeholder="Customer Email" id="customer_email" name="customer_email" value="<?= $customer_email ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('customer_email'); ?></div>
+                                    <input type="text" class="form-control" placeholder="Customer ID" id="customer_id" name="customer_id" value="<?= $customer_id ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('customer_id'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Customer Address</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Payment ID</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Customer Address" id="customer_address" name="customer_address" value="<?= $customer_address ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('customer_address'); ?></div>
+                                    <input type="text" class="form-control" placeholder="Payment ID" id="payment_id" name="payment_id" value="<?= $payment_id ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('payment_id'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Customer Phone</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Total</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Customer Phone" id="customer_phone" name="customer_phone" value="<?= $customer_phone ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('customer_phone'); ?></div>
+                                    <input type="text" class="form-control" placeholder="Total" id="order_total" name="order_total" value="<?= $order_total ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('order_total'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Customer City</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Brand Name</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Customer City" id="customer_city" name="customer_city" value="<?= $customer_city ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('customer_city'); ?></div>
+                                    <input type="text" class="form-control" placeholder="Brand Name" id="brand_name" name="brand_name" value="<?= $brand_name ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('brand_name'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -88,10 +88,10 @@ $backlink = base_url() . "customer/manage";
                                                     '1' => 'Active',
                                                     '0' => 'Inactive'  
                                                 );
-                                    echo form_dropdown('customer_status', $options, $customer_status, $additional_dd_code);
+                                    echo form_dropdown('order_status', $options, $order_status, $additional_dd_code);
                                     ?>
                             
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('customer_status'); ?></div>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('order_status'); ?></div>
                                 </div>
                             </div>
                            

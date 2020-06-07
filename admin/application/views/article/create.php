@@ -23,6 +23,13 @@ $backlink = base_url() . "brand/manage";
             <div class="col-md-12">
 
 
+            <!-- alert -->
+            <?php
+                if (isset($flash)) {
+                    echo $flash;
+                }
+                ?>
+
                 <!-- Horizontal Form -->
                 <div class="card card-info">
                     <div class="card-header">
@@ -31,22 +38,42 @@ $backlink = base_url() . "brand/manage";
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <?php
-                    $form_location = base_url() . "brand/create/" . $update_id;
+                    <?php 
+                    $attribute = array('class' => '');
+                    echo form_open_multipart('article/create/'.$update_id, $attribute);
                     ?>
-                    <form class="form-horizontal" method="post" action="<?= $form_location ?>">
-                        <!-- alert -->
-                        <?php
-                        if (isset($flash)) {
-                            echo $flash;
-                        }
-                        ?>
+                        
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Brand Name</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Title</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Brand Name" id="brand_name" name="brand_name" value="<?= $brand_name ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('brand_name'); ?></div>
+                                    <input type="text" class="form-control" placeholder="Title" id="title" name="title" value="<?= $title ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('title'); ?></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Author</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" placeholder="Author" id="author" name="author" value="<?= $author ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('author'); ?></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Body</label>
+                                <div class="col-sm-6">
+                                    <textarea class="form-control textarea" rows="3" placeholder="body" name="body"><?=$body?></textarea>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('body'); ?></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Image</label>
+                                <div class="col-sm-6">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="customFile" name="featured_image">
+            
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('featured_image'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -76,6 +103,25 @@ $backlink = base_url() . "brand/manage";
                     </form>
                 </div>
                 <!-- /.card -->
+
+<!-- image -->
+<?php
+$path_img = base_url().'assets/article/'.$featured_image;
+if ($featured_image != "") { ?>
+
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Image</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="">
+				            <img src="<?= $path_img ?>" width="" style="width: 100%;">
+			            </div>
+                    </div>
+                </div>
+                
+<?php } ?>
 
             </div>
             <!--/.col (left) -->

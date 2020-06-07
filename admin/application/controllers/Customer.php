@@ -53,6 +53,7 @@ class Customer extends CI_Controller
 					$this->session->set_flashdata('item', $value);
 					redirect('customer/create/' . $update_id);
 				} else {
+					$this->_insert($data);
 					$update_id = $this->get_max();
 
 					$flash_msg = "The customer account was successfully added.";

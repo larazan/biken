@@ -61,7 +61,7 @@ $addlink = base_url() . "category/create";
                                         $status_desc = "Inactive";
                                     }
 
-                                    $tgl = getNiceDate($row->created_at);
+                                    $tgl = getNiceDate($row->created_at, 'indo');
                                 ?>
 
                                     <tr>

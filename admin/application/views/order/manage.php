@@ -1,5 +1,5 @@
 <?php
-$addlink = base_url() . "customer/create";
+$addlink = base_url() . "order/create";
 ?>
 
 <!-- Content Header (Page header) -->
@@ -7,7 +7,7 @@ $addlink = base_url() . "customer/create";
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h3 class="m-0 text-dark">Customer <small>/ Manage</small></h3>
+                <h3 class="m-0 text-dark">Order <small>/ Manage</small></h3>
 
             </div><!-- /.col -->
 
@@ -32,7 +32,7 @@ $addlink = base_url() . "customer/create";
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">DataTable with default features</h3>
-                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah Customer</a>
+                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah Order</a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -40,9 +40,10 @@ $addlink = base_url() . "customer/create";
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Payment ID</th>
+                                    <th>Total</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th class="text-center">Actions</th>
@@ -51,9 +52,9 @@ $addlink = base_url() . "customer/create";
                             <tbody>
                                 <?php $no = 1;
                                 foreach ($query->result() as $row) {
-                                    $editLink = base_url() . "customer/create/" . $row->customer_id;
-                                    $deleteLink = base_url(). "modal/popup/delete/" . $row->customer_id . "/customer";
-                                    $status = $row->customer_status;
+                                    $editLink = base_url() . "order/create/" . $row->order_id;
+                                    $deleteLink = base_url(). "modal/popup/delete/" . $row->order_id . "/order";
+                                    $status = $row->order_status;
 
                                     if ($status == 1) {
                                         $status_label = "m-badge--success";
@@ -63,27 +64,27 @@ $addlink = base_url() . "customer/create";
                                         $status_desc = "Inactive";
                                     }
 
-                                    $tgl = getNiceDate($row->created_at, 'indo');
+                                    $tgl = getNiceDate($row->order_date, 'indo');
                                 ?>
 
                                     <tr>
                                         <td><?= $no++ ?> </td>
                                         <td>
-                                            <?= $row->customer_name ?>
+                                            <?= $row->order_id ?>
                                         </td>
                                         <td>
-                                            <?= $row->customer_email ?>
+                                            <?= $row->cus_id ?>
                                         </td>
                                         <td>
-                                            <?= $row->customer_phone ?>
+                                            <?= $row->payment_id ?>
                                         </td>
-                                        
+                                        <td>
+                                            <?= $row->order_total ?>
+                                        </td>
                                         <td>
                                             <span style="width: 110px;"><span class="m-badge <?= $status_label ?> m-badge--wide"><?= $status_desc ?></span></span>
                                         </td>
-                                        <td>
-                                            <?= $tgl ?>
-                                        </td>
+                                        <td><?= $tgl ?></td>
                                         <td class="text-center">
                                             <a class="btn btn-sm btn-info" href="<?= $editLink ?>"><i class="fa fa-edit"></i></a>
                                             <a class="btn btn-sm btn-danger deleteUser" href="#" data-userid="1" onclick="showAjaxModal('<?= $deleteLink ?>');"><i class="fa fa-trash"></i></a>

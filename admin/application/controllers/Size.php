@@ -48,6 +48,7 @@ class Size extends CI_Controller
 					$this->session->set_flashdata('item', $value);
 					redirect('size/create/' . $update_id);
 				} else {
+					$this->_insert($data);
 					$update_id = $this->get_max();
 
 					$flash_msg = "The size was successfully added.";

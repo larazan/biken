@@ -73,7 +73,7 @@ class Mdl_user extends CI_Model
         $this->db->select_max('userId');
         $query = $this->db->get($table);
         $row=$query->row();
-        $id=$row->id;
+        $id=$row->userId;
         return $id;
     }
     

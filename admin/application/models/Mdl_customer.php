@@ -73,7 +73,7 @@ class Mdl_customer extends CI_Model
         $this->db->select_max('customer_id');
         $query = $this->db->get($table);
         $row=$query->row();
-        $id=$row->id;
+        $id=$row->customer_id;
         return $id;
     }
     

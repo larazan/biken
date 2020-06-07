@@ -43,7 +43,7 @@
 
         <li class="nav-item">
           <a href="<?= base_url()?>customer/manage" class="nav-link <?= ($this->uri->segment(1) == 'customer') ? 'active' : '' ?>">
-            <i class="nav-icon fas fa-user-alt"></i>
+            <i class="nav-icon fas fa-users"></i>
             <p>
               Customer
             </p>
@@ -52,7 +52,16 @@
 
         <li class="nav-item">
           <a href="<?= base_url()?>product/manage" class="nav-link <?= ($this->uri->segment(1) == 'product') ? 'active' : '' ?>">
-            <i class="nav-icon fas fa-user-alt"></i>
+            <i class="nav-icon fas fa-shopping-basket"></i>
+            <p>
+              Order
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url()?>product/manage" class="nav-link <?= ($this->uri->segment(1) == 'product') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-gift"></i>
             <p>
               Product
             </p>
@@ -61,7 +70,7 @@
 
         <li class="nav-item">
           <a href="<?= base_url()?>brand/manage" class="nav-link <?= ($this->uri->segment(1) == 'brand') ? 'active' : '' ?>">
-            <i class="nav-icon fas fa-user-alt"></i>
+            <i class="nav-icon fas fa-bookmark"></i>
             <p>
               Brand
             </p>
@@ -70,7 +79,7 @@
 
         <li class="nav-item">
           <a href="<?= base_url()?>category/manage" class="nav-link <?= ($this->uri->segment(1) == 'category') ? 'active' : '' ?>">
-            <i class="nav-icon fas fa-user-alt"></i>
+            <i class="nav-icon fas fa-tags"></i>
             <p>
               Category
             </p>
@@ -79,7 +88,7 @@
 
         <li class="nav-item">
           <a href="<?= base_url()?>color/manage" class="nav-link <?= ($this->uri->segment(1) == 'color') ? 'active' : '' ?>">
-            <i class="nav-icon fas fa-user-alt"></i>
+            <i class="nav-icon fas fa-cube"></i>
             <p>
               Color
             </p>
@@ -88,7 +97,7 @@
 
         <li class="nav-item">
           <a href="<?= base_url()?>size/manage" class="nav-link <?= ($this->uri->segment(1) == 'size') ? 'active' : '' ?>">
-            <i class="nav-icon fas fa-user-alt"></i>
+            <i class="nav-icon fas fa-object-ungroup"></i>
             <p>
               Size
             </p>
@@ -97,7 +106,7 @@
 
         <li class="nav-item">
           <a href="<?= base_url()?>article/manage" class="nav-link <?= ($this->uri->segment(1) == 'article') ? 'active' : '' ?>">
-            <i class="nav-icon fas fa-user-alt"></i>
+            <i class="nav-icon fas fa-file-pdf"></i>
             <p>
               Article
             </p>

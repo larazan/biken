@@ -73,7 +73,7 @@ class Mdl_brand extends CI_Model
         $this->db->select_max('brand_id');
         $query = $this->db->get($table);
         $row=$query->row();
-        $id=$row->id;
+        $id=$row->brand_id;
         return $id;
     }
     

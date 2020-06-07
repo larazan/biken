@@ -1,9 +1,9 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Mdl_color extends CI_Model
+class Mdl_product extends CI_Model
 {
     function get_table() {
-        $table = "tbl_color";
+        $table = "tbl_product";
         return $table;
     }
     
@@ -24,7 +24,7 @@ class Mdl_color extends CI_Model
     
     function get_where($id){
         $table = $this->get_table();
-        $this->db->where('color_id', $id);
+        $this->db->where('product_id', $id);
         $query=$this->db->get($table);
         return $query;
     }
@@ -43,13 +43,13 @@ class Mdl_color extends CI_Model
     
     function _update($id, $data){
         $table = $this->get_table();
-        $this->db->where('color_id', $id);
+        $this->db->where('product_id', $id);
         $this->db->update($table, $data);
     }
     
     function _delete($id){
         $table = $this->get_table();
-        $this->db->where('color_id', $id);
+        $this->db->where('product_id', $id);
         $this->db->delete($table);
     }
     
@@ -70,10 +70,10 @@ class Mdl_color extends CI_Model
     
     function get_max() {
         $table = $this->get_table();
-        $this->db->select_max('color_id');
+        $this->db->select_max('product_id');
         $query = $this->db->get($table);
         $row=$query->row();
-        $id=$row->color_id;
+        $id=$row->product_id;
         return $id;
     }
     

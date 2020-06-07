@@ -22,6 +22,12 @@ $backlink = base_url() . "category/manage";
             <!-- left column -->
             <div class="col-md-12">
 
+                <!-- alert -->
+                <?php
+                        if (isset($flash)) {
+                            echo $flash;
+                        }
+                        ?>
 
                 <!-- Horizontal Form -->
                 <div class="card card-info">
@@ -35,12 +41,7 @@ $backlink = base_url() . "category/manage";
                     $form_location = base_url() . "category/create/" . $update_id;
                     ?>
                     <form class="form-horizontal" method="post" action="<?= $form_location ?>">
-                        <!-- alert -->
-                        <?php
-                        if (isset($flash)) {
-                            echo $flash;
-                        }
-                        ?>
+                        
                         <div class="card-body">
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Category Name</label>

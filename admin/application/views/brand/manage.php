@@ -61,13 +61,13 @@ $addlink = base_url() . "brand/create";
                                         $status_desc = "Inactive";
                                     }
 
-                                    $tgl = getNiceDate($row->created_at);
+                                    $tgl = getNiceDate($row->created_at, 'indo');
                                 ?>
 
                                     <tr>
                                         <td><?= $no++ ?> </td>
                                         <td>
-                                            <?= $row->name ?>
+                                            <?= $row->brand_name ?>
                                         </td>
                                         <td>
                                             <span style="width: 110px;"><span class="m-badge <?= $status_label ?> m-badge--wide"><?= $status_desc ?></span></span>

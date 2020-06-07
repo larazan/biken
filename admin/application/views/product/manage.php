@@ -1,5 +1,5 @@
 <?php
-$addlink = base_url() . "customer/create";
+$addlink = base_url() . "product/create";
 ?>
 
 <!-- Content Header (Page header) -->
@@ -7,7 +7,7 @@ $addlink = base_url() . "customer/create";
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h3 class="m-0 text-dark">Customer <small>/ Manage</small></h3>
+                <h3 class="m-0 text-dark">Product <small>/ Manage</small></h3>
 
             </div><!-- /.col -->
 
@@ -32,7 +32,7 @@ $addlink = base_url() . "customer/create";
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">DataTable with default features</h3>
-                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah Customer</a>
+                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah Product</a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -40,9 +40,10 @@ $addlink = base_url() . "customer/create";
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
+                                    <th>Title</th>
+                                    <th>SKU</th>
+                                    <th>Image</th>
+                                    <th>Price</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th class="text-center">Actions</th>
@@ -50,10 +51,11 @@ $addlink = base_url() . "customer/create";
                             </thead>
                             <tbody>
                                 <?php $no = 1;
+                                $path = base_url().'assets/product/';
                                 foreach ($query->result() as $row) {
-                                    $editLink = base_url() . "customer/create/" . $row->customer_id;
-                                    $deleteLink = base_url(). "modal/popup/delete/" . $row->customer_id . "/customer";
-                                    $status = $row->customer_status;
+                                    $editLink = base_url() . "product/create/" . $row->product_id;
+                                    $deleteLink = base_url(). "modal/popup/delete/" . $row->product_id . "/product";
+                                    $status = $row->product_status;
 
                                     if ($status == 1) {
                                         $status_label = "m-badge--success";
@@ -63,27 +65,29 @@ $addlink = base_url() . "customer/create";
                                         $status_desc = "Inactive";
                                     }
 
-                                    $tgl = getNiceDate($row->created_at, 'indo');
+                                    $tgl = getNiceDate($row->created_at);
+
+                                    $gambar = $path.$row->product_image;
                                 ?>
 
                                     <tr>
                                         <td><?= $no++ ?> </td>
                                         <td>
-                                            <?= $row->customer_name ?>
+                                            <?= $row->name ?>
                                         </td>
                                         <td>
-                                            <?= $row->customer_email ?>
+                                            <?= $row->sku ?>
                                         </td>
                                         <td>
-                                            <?= $row->customer_phone ?>
+                                            <?php echo ($row->product_image == '') ? '' : '<img src="'.$gambar.'" class="img-responsive" width="80px">' ?>
                                         </td>
-                                        
+                                        <td>
+                                            <?= $row->price ?>
+                                        </td>
                                         <td>
                                             <span style="width: 110px;"><span class="m-badge <?= $status_label ?> m-badge--wide"><?= $status_desc ?></span></span>
                                         </td>
-                                        <td>
-                                            <?= $tgl ?>
-                                        </td>
+                                        <td><?= $tgl ?></td>
                                         <td class="text-center">
                                             <a class="btn btn-sm btn-info" href="<?= $editLink ?>"><i class="fa fa-edit"></i></a>
                                             <a class="btn btn-sm btn-danger deleteUser" href="#" data-userid="1" onclick="showAjaxModal('<?= $deleteLink ?>');"><i class="fa fa-trash"></i></a>

@@ -73,7 +73,7 @@ class Mdl_size extends CI_Model
         $this->db->select_max('size_id');
         $query = $this->db->get($table);
         $row=$query->row();
-        $id=$row->id;
+        $id=$row->size_id;
         return $id;
     }
     

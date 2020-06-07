@@ -26,7 +26,7 @@ class Color extends CI_Controller
 	{
 		$this->load->library('session');
 
-		$update_id = $this->uri->segment(3);
+		$update_id = $this->uri->segment(4);
 		$submit = $this->input->post('submit');
 
 		if ($submit == "Cancel") {
@@ -38,6 +38,9 @@ class Color extends CI_Controller
 			$this->load->library('form_validation');
 			$this->form_validation->set_rules('name', 'name', 'trim|required');
 		
+			// var_dump($this->input->post());
+			// die();
+
 			if ($this->form_validation->run() == TRUE) {
 				$data = $this->fetch_data_from_post();
 
@@ -48,6 +51,7 @@ class Color extends CI_Controller
 					$this->session->set_flashdata('item', $value);
 					redirect('color/create/' . $update_id);
 				} else {
+					$this->_insert($data);
 					$update_id = $this->get_max();
 
 					$flash_msg = "The color was successfully added.";
