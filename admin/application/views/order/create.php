@@ -53,8 +53,8 @@ $backlink = base_url() . "order/manage";
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Customer ID</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Customer ID" id="customer_id" name="customer_id" value="<?= $customer_id ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('customer_id'); ?></div>
+                                    <input type="text" class="form-control" placeholder="Customer ID" id="cus_id" name="cus_id" value="<?= $cus_id ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('cus_id'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -71,13 +71,7 @@ $backlink = base_url() . "order/manage";
                                     <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('order_total'); ?></div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Brand Name</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Brand Name" id="brand_name" name="brand_name" value="<?= $brand_name ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('brand_name'); ?></div>
-                                </div>
-                            </div>
+                           
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Status</label>
                                 <div class="col-sm-6">

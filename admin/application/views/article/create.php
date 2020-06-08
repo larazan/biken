@@ -1,5 +1,5 @@
 <?php
-$backlink = base_url() . "brand/manage";
+$backlink = base_url() . "article/manage";
 ?>
 
 <!-- Content Header (Page header) -->
@@ -33,7 +33,7 @@ $backlink = base_url() . "brand/manage";
                 <!-- Horizontal Form -->
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">Brand Details</h3>
+                        <h3 class="card-title">Article Details</h3>
                         <a href="<?= $backlink ?>" class="btn bg-warning float-right">Back</a>
                     </div>
                     <!-- /.card-header -->

@@ -62,13 +62,13 @@ $addlink = base_url() . "article/create";
                                         $status_desc = "Inactive";
                                     }
 
-                                    $tgl = getNiceDate($row->created_at);
+                                    $tgl = getNiceDate($row->created_at, 'indon');
                                 ?>
 
                                     <tr>
                                         <td><?= $no++ ?> </td>
                                         <td>
-                                            <?= $row->name ?>
+                                            <?= $row->title ?>
                                         </td>
                                         <td>
                                             <?= word_limiter($row->body, 8) ?>
