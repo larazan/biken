@@ -8,6 +8,26 @@ class Login_model extends CI_Model
      * @param string $email : This is email of the user
      * @param string $password : This is encrypted password of the user
      */
+
+    function loginProcess($email, $password) 
+    {
+        $this->db->select('BaseTbl.userId, BaseTbl.password, BaseTbl.name');
+        $this->db->from('tbl_users as BaseTbl');
+        $this->db->where('BaseTbl.email', $email);
+        $query = $this->db->get();
+        
+        $user = $query->result();
+        if(!empty($user)){
+            if(verifyHashedPassword($password, $user[0]->password)){
+                return $user;
+            } else {
+                return array();
+            }
+        } else {
+            return array();
+        }
+    }
+
     function loginMe($email, $password)
     {
         $this->db->select('BaseTbl.userId, BaseTbl.password, BaseTbl.name, BaseTbl.roleId, Roles.role');
@@ -39,7 +59,7 @@ class Login_model extends CI_Model
     {
         $this->db->select('userId');
         $this->db->where('email', $email);
-        $this->db->where('isDeleted', 0);
+        // $this->db->where('isDeleted', 0);
         $query = $this->db->get('tbl_users');
 
         if ($query->num_rows() > 0){
@@ -75,7 +95,7 @@ class Login_model extends CI_Model
     {
         $this->db->select('userId, email, name');
         $this->db->from('tbl_users');
-        $this->db->where('isDeleted', 0);
+        // $this->db->where('isDeleted', 0);
         $this->db->where('email', $email);
         $query = $this->db->get();
 
@@ -101,7 +121,7 @@ class Login_model extends CI_Model
     function createPasswordUser($email, $password)
     {
         $this->db->where('email', $email);
-        $this->db->where('isDeleted', 0);
+        // $this->db->where('isDeleted', 0);
         $this->db->update('tbl_users', array('password'=>getHashedPassword($password)));
         $this->db->delete('tbl_reset_password', array('email'=>$email));
     }

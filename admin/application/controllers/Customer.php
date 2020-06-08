@@ -1,12 +1,15 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Customer extends CI_Controller
+require APPPATH . '/libraries/BaseController.php';
+
+class Customer extends BaseController
 {
 
 	function __construct()
 	{
 		parent::__construct();
+		$this->isLoggedIn();
 	}
 
 	public function index()

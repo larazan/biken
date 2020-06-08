@@ -1,12 +1,15 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Color extends CI_Controller
+require APPPATH . '/libraries/BaseController.php';
+
+class Color extends BaseController
 {
 
 	function __construct()
 	{
 		parent::__construct();
+		$this->isLoggedIn();
 	}
 
 	public function index()

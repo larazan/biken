@@ -1,7 +1,9 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Article extends CI_Controller
+require APPPATH . '/libraries/BaseController.php';
+
+class Article extends BaseController
 {
 
     private $loca = './assets/article/';
@@ -12,6 +14,7 @@ class Article extends CI_Controller
         $this->load->library('form_validation');
         // $this->form_validation->CI=& $this;
         $this->load->helper('text');
+        $this->isLoggedIn();
 	}
 
 	public function index()

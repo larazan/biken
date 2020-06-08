@@ -63,15 +63,13 @@ class Login extends CI_Controller
             $email = $this->input->post('email');
             $password = $this->input->post('password');
             
-            $result = $this->login_model->loginMe($email, $password);
+            $result = $this->login_model->loginProcess($email, $password);
             
             if(count($result) > 0)
             {
                 foreach ($result as $res)
                 {
                     $sessionArray = array('userId'=>$res->userId,                    
-                                            'role'=>$res->roleId,
-                                            'roleText'=>$res->role,
                                             'name'=>$res->name,
                                             'isLoggedIn' => TRUE
                                     );
@@ -232,6 +230,17 @@ class Login extends CI_Controller
         }
     }
 
+    public function logout(){
+       
+        $email = $this->session->unset_userdata('userId');
+        $name = $this->session->unset_userdata('name');
+        $id = $this->session->unset_userdata('isLoggedIn');
+        
+        if($email==FALSE){
+           redirect('/login'); 
+        }
+         
+     }   
 
 }
 

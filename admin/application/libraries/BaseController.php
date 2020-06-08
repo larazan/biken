@@ -36,14 +36,14 @@ class BaseController extends CI_Controller {
 		if (! isset ( $isLoggedIn ) || $isLoggedIn != TRUE) {
 			redirect ( 'login' );
 		} else {
-			$this->role = $this->session->userdata ( 'role' );
+			// $this->role = $this->session->userdata ( 'role' );
 			$this->vendorId = $this->session->userdata ( 'userId' );
 			$this->name = $this->session->userdata ( 'name' );
-			$this->roleText = $this->session->userdata ( 'roleText' );
+			// $this->roleText = $this->session->userdata ( 'roleText' );
 			
 			$this->global ['name'] = $this->name;
-			$this->global ['role'] = $this->role;
-			$this->global ['role_text'] = $this->roleText;
+			// $this->global ['role'] = $this->role;
+			// $this->global ['role_text'] = $this->roleText;
 		}
 	}
 	
@@ -112,7 +112,7 @@ class BaseController extends CI_Controller {
 	 * @return {mixed} $result : This is array of records and pagination data
 	 */
 	function paginationCompress($link, $count, $perPage = 10) {
-		$this->load->library ( 'pagination' );
+		$this->load->library ('pagination');
 	
 		$config ['base_url'] = base_url () . $link;
 		$config ['total_rows'] = $count;

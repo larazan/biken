@@ -1,12 +1,15 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class User extends CI_Controller
+require APPPATH . '/libraries/BaseController.php';
+
+class User extends BaseController
 {
 
 	function __construct()
 	{
 		parent::__construct();
+		$this->isLoggedIn();
 	}
 
 	public function index()
@@ -52,6 +55,7 @@ class User extends CI_Controller
 					$this->session->set_flashdata('item', $value);
 					redirect('user/create/' . $update_id);
 				} else {
+					$this->_insert($data);
 					$update_id = $this->get_max();
 
 					$flash_msg = "The user account was successfully added.";

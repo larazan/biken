@@ -51,7 +51,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="<?= base_url()?>product/manage" class="nav-link <?= ($this->uri->segment(1) == 'product') ? 'active' : '' ?>">
+          <a href="<?= base_url()?>order/manage" class="nav-link <?= ($this->uri->segment(1) == 'order') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-shopping-basket"></i>
             <p>
               Order
