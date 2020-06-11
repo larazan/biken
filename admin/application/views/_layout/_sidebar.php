@@ -113,6 +113,15 @@
           </a>
         </li>
 
+        <li class="nav-item">
+          <a href="<?= base_url()?>contact/manage" class="nav-link <?= ($this->uri->segment(1) == 'contact') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-phone"></i>
+            <p>
+              Contact
+            </p>
+          </a>
+        </li>
+
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
