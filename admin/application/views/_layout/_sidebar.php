@@ -114,6 +114,15 @@
         </li>
 
         <li class="nav-item">
+          <a href="<?= base_url()?>banner/manage" class="nav-link <?= ($this->uri->segment(1) == 'banner') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-sticky-note"></i>
+            <p>
+              Banner
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
           <a href="<?= base_url()?>contact/manage" class="nav-link <?= ($this->uri->segment(1) == 'contact') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-phone"></i>
             <p>

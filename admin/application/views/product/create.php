@@ -120,6 +120,13 @@ $backlink = base_url() . "product/manage";
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Product Specification</label>
+                                <div class="col-sm-6">
+
+                                <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_description'); ?></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Status</label>
                                 <div class="col-sm-6">
                                     <?php 

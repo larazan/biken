@@ -1,5 +1,5 @@
 <?php
-$addlink = base_url() . "product/create";
+$addlink = base_url() . "banner/create";
 ?>
 
 <!-- Content Header (Page header) -->
@@ -7,7 +7,7 @@ $addlink = base_url() . "product/create";
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h3 class="m-0 text-dark">Product <small>/ Manage</small></h3>
+                <h3 class="m-0 text-dark">Banner <small>/ Manage</small></h3>
 
             </div><!-- /.col -->
 
@@ -32,7 +32,7 @@ $addlink = base_url() . "product/create";
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">DataTable with default features</h3>
-                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah Product</a>
+                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah Banner</a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -40,10 +40,8 @@ $addlink = base_url() . "product/create";
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Title</th>
-                                    <th>SKU</th>
+                                    <th>Name</th>
                                     <th>Image</th>
-                                    <th>Price</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th class="text-center">Actions</th>
@@ -51,11 +49,11 @@ $addlink = base_url() . "product/create";
                             </thead>
                             <tbody>
                                 <?php $no = 1;
-                                $path = base_url().'assets/product/';
+                                $path = base_url().'assets/banner/';
                                 foreach ($query->result() as $row) {
-                                    $editLink = base_url() . "product/create/" . $row->product_id;
-                                    $deleteLink = base_url(). "modal/popup/delete/" . $row->product_id . "/product";
-                                    $status = $row->product_status;
+                                    $editLink = base_url() . "banner/create/" . $row->banner_id;
+                                    $deleteLink = base_url(). "modal/popup/delete/" . $row->banner_id . "/banner";
+                                    $status = $row->banner_status;
 
                                     if ($status == 1) {
                                         $status_label = "m-badge--success";
@@ -66,23 +64,16 @@ $addlink = base_url() . "product/create";
                                     }
 
                                     $tgl = getNiceDate($row->created_at, 'indon');
-
-                                    $gambar = $path.$row->product_image;
+                                    $gambar = $path.$row->banner_img;
                                 ?>
 
                                     <tr>
                                         <td><?= $no++ ?> </td>
                                         <td>
-                                            <?= $row->name ?>
+                                            <?= $row->banner_name ?>
                                         </td>
                                         <td>
-                                            <?= $row->sku ?>
-                                        </td>
-                                        <td>
-                                            <?php echo ($row->product_image == '') ? '' : '<img src="'.$gambar.'" class="img-responsive" width="80px">' ?>
-                                        </td>
-                                        <td>
-                                            <?= $row->price ?>
+                                            <?php echo ($row->banner_img == '') ? '' : '<img src="'.$gambar.'" class="img-responsive" width="80px">' ?>
                                         </td>
                                         <td>
                                             <span style="width: 110px;"><span class="m-badge <?= $status_label ?> m-badge--wide"><?= $status_desc ?></span></span>
