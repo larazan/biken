@@ -1,5 +1,5 @@
 <?php
-$backlink = base_url() . "article/manage";
+$backlink = base_url() . "contact/manage";
 ?>
 
 <!-- Content Header (Page header) -->
@@ -7,7 +7,7 @@ $backlink = base_url() . "article/manage";
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h3 class="m-0 text-dark">Article <small>/ <?= $headline ?></small></h3>
+                <h3 class="m-0 text-dark">Contact <small>/ <?= $headline ?></small></h3>
 
             </div><!-- /.col -->
 
@@ -33,49 +33,46 @@ $backlink = base_url() . "article/manage";
                 <!-- Horizontal Form -->
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">Article Details</h3>
+                        <h3 class="card-title">Contact Details</h3>
                         <a href="<?= $backlink ?>" class="btn bg-warning float-right">Back</a>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
                     <?php 
                     $attribute = array('class' => '');
-                    echo form_open_multipart('article/create/'.$update_id, $attribute);
+                    echo form_open('contact/create/'.$update_id, $attribute);
                     ?>
                         
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Title</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Title" id="title" name="title" value="<?= $title ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('title'); ?></div>
+                                    <input type="text" class="form-control" placeholder="Name" id="contact_name" name="contact_name" value="<?= $contact_name ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('contact_name'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Author</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Author" id="author" name="author" value="<?= $author ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('author'); ?></div>
+                                    <input type="email" class="form-control" placeholder="Email" id="contact_email" name="contact_email" value="<?= $contact_email ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('contact_email'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Body</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Phone</label>
                                 <div class="col-sm-6">
-                                    <textarea class="form-control textarea" rows="3" placeholder="body" name="body"><?=$body?></textarea>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('body'); ?></div>
+                                    <input type="email" class="form-control" placeholder="Phone" id="contact_phone" name="contact_phone" value="<?= $contact_phone ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('contact_phone'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Image</label>
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Message</label>
                                 <div class="col-sm-6">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="customFile" name="featured_image">
-            
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('featured_image'); ?></div>
+                                    <textarea class="form-control textarea" rows="3" placeholder="Message" name="contact_msg"><?=$contact_msg?></textarea>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('contact_msg'); ?></div>
                                 </div>
                             </div>
+                            
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Status</label>
                                 <div class="col-sm-6">
@@ -86,10 +83,10 @@ $backlink = base_url() . "article/manage";
                                                     '1' => 'Active',
                                                     '0' => 'Inactive'  
                                                 );
-                                    echo form_dropdown('status', $options, $status, $additional_dd_code);
+                                    echo form_dropdown('contact_status', $options, $contact_status, $additional_dd_code);
                                     ?>
                             
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('status'); ?></div>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('contact_status'); ?></div>
                                 </div>
                             </div>
                            
@@ -104,24 +101,7 @@ $backlink = base_url() . "article/manage";
                 </div>
                 <!-- /.card -->
 
-<!-- image -->
-<?php
-$path_img = base_url().'assets/article/'.$featured_image;
-if ($featured_image != "") { ?>
 
-                <div class="card card-info">
-                    <div class="card-header">
-                        <h3 class="card-title">Image</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="">
-				            <img src="<?= $path_img ?>" width="" style="width: 100%;">
-			            </div>
-                    </div>
-                </div>
-                
-<?php } ?>
 
             </div>
             <!--/.col (left) -->
