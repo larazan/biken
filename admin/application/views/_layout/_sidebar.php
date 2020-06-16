@@ -60,6 +60,24 @@
         </li>
 
         <li class="nav-item">
+          <a href="<?= base_url()?>payment/manage" class="nav-link <?= ($this->uri->segment(1) == 'payment') ? 'active' : '' ?>">
+            <i class="nav-icon fa fa-credit-card"></i>
+            <p>
+              Payment
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url()?>bank/manage" class="nav-link <?= ($this->uri->segment(1) == 'bank') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-university"></i>
+            <p>
+              Bank
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
           <a href="<?= base_url()?>product/manage" class="nav-link <?= ($this->uri->segment(1) == 'product') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-gift"></i>
             <p>

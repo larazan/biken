@@ -1,6 +1,6 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Mdl_article extends CI_Model
+class Mdl_bank extends CI_Model
 {
     function get_table() {
         $table = "tbl_bank";
