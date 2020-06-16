@@ -121,10 +121,22 @@ $backlink = base_url() . "product/manage";
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Product Specification</label>
-                                <div class="col-sm-6">
-
-                                <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_description'); ?></div>
+                                <div class="col-sm-6 row" id="content-spec">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" placeholder="Type" id="type" name="type[]" value="">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" placeholder="Value" id="val" name="val[]" value="">
+                                        </div>
+                                        <!-- <div class="col-sm-2"></div> -->
+                                    </div>
                                 </div>
+                                
+                                <div class="col-sm-2">
+                                    <button type="button" id="add" class="btn btn-primary float-right" >Add input</button>
+                                </div>
+                                
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Status</label>
@@ -180,3 +192,32 @@ if ($product_image != "") { ?>
         <!-- /.row -->
     </div><!-- /.container-fluid -->
 </section>
+
+<script>  
+ $(document).ready(function(){  
+      var i=1;  
+     
+      $('#add').click(function(){  
+        var el = `<div class="row"  id="row${i}" style="margin-top:10px;">
+                    <div class='col-sm-5'>
+                        <input type='text' class='form-control' placeholder='Type' id='type' name='type[]' value=''>
+                    </div>
+                    <div class='col-sm-5'>
+                        <input type='text' class='form-control' placeholder='Value' id='val' name='val[]' value=''>
+                    </div>
+                    <div class='col-sm-2'>
+                        <button type="button" name="remove" id="${i}" class="btn btn-danger btn_remove">X</button>
+                    </div>
+                </div>`; 
+           i++;  
+           $('#content-spec').append(el);  
+      });  
+      $(document).on('click', '.btn_remove', function(){  
+          console.log('delete');
+          
+           var button_id = $(this).attr("id");   
+           $('#row'+button_id+'').remove();  
+      });  
+
+});
+</script>
