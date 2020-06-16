@@ -68,7 +68,14 @@ $backlink = base_url() . "payment/manage";
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Bank</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" placeholder="Author" id="author" name="author" value="<?= $author ?>" required>
+                            <?php 
+                            $additional_dd_code = 'class="form-control"';
+                            $kategori_bank = array();
+                            foreach ($banks->result_array() as $row) {
+                            $kategori_bank[$row['id']] = $row['title'];   
+                            }
+                            echo form_dropdown('bank', $kategori_bank, $bank, $additional_dd_code);
+                            ?>
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('author'); ?></div>
                             </div>
                         </div>

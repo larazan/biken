@@ -24,6 +24,8 @@ class Payment extends BaseController
 
 	public function manage()
 	{
+        $mysql_query = "SELECT tbl_payment_confirm.*, tbl_bank.*, tbl_payment_confirm.id as payment_id, tbl_payment_confirm.status as payment_status, tbl_payment_confirm.created_at as payment_created, tbl_bank.title as bank_name, tbl_bank.id as id_bank from tbl_payment_confirm left join tbl_bank on tbl_payment_confirm.bank = tbl_bank.id";
+        $result = $this->_custom_query($mysql_query);
 		$mysql_query = "SELECT * FROM tbl_payment_confirm ORDER BY id DESC";
         $data['query'] = $this->_custom_query($mysql_query);
 		$data['flash'] = $this->session->flashdata('item');
@@ -187,6 +189,8 @@ class Payment extends BaseController
             $data['headline'] = "Update Payment";
         }
 
+        $this->db->order_by('id');
+        $data['banks'] = $this->db->get('bank');
         $data['update_id'] = $update_id;
         $data['flash'] = $this->session->flashdata('item');
         $this->template->views('Payment/create', $data);

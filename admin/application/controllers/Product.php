@@ -49,7 +49,21 @@ class Product extends BaseController
         //hapus image
         unlink($image1);
         unlink($image2);
-    }
+	}
+	
+	function getSizes() {
+		$this->db->where('status', 1);
+    	$this->db->order_by('size_id');
+		$query=$this->db->get('tbl_size');
+		return $query;
+	}
+
+	function getColors() {
+		$this->db->where('status', 1);
+    	$this->db->order_by('color_id');
+		$query=$this->db->get('tbl_color');
+		return $query;
+	}
 
 	function create() {
         error_reporting(0);
@@ -213,6 +227,9 @@ class Product extends BaseController
 		
 		$data['categories'] = $this->_custom_query("SELECT * FROM tbl_category ORDER BY id DESC");
 		$data['brands'] = $this->_custom_query("SELECT * FROM tbl_brand ORDER BY brand_id DESC");
+
+		$data['sizes'] = $this->getSizes();
+		$data['colors'] = $this->getColors();
 
         $data['update_id'] = $update_id;
         $data['flash'] = $this->session->flashdata('item');

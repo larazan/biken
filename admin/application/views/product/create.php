@@ -113,6 +113,18 @@ $backlink = base_url() . "product/manage";
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Size (optional)</label>
+                                <div class="col-sm-6">
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_quantity'); ?></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Color (optional)</label>
+                                <div class="col-sm-6">
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_quantity'); ?></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Product Description</label>
                                 <div class="col-sm-6">
                                     <textarea class="textarea" placeholder="Product Description" name="product_description" ><?=$product_description?></textarea>
