@@ -25,7 +25,7 @@ class Ongkir extends CI_Controller {
 	  CURLOPT_HTTPHEADER => array(
 	    "content-type: application/x-www-form-urlencoded",
 	    /* masukan api key disini*/
-	    "key: ganti api key"
+	    "key: 18c1ae365c10fea954e08449b1c2e185"
 		  ),
 		));
 
@@ -61,7 +61,7 @@ class Ongkir extends CI_Controller {
 		  CURLOPT_CUSTOMREQUEST => "GET",		  
 		  CURLOPT_HTTPHEADER => array(
 		  	/* masukan api key disini*/
-		    "key: ganti api key"
+		    "key: 18c1ae365c10fea954e08449b1c2e185"
 		  ),
 		));
 

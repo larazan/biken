@@ -52,17 +52,31 @@ class Product extends BaseController
 	}
 	
 	function getSizes() {
-		$this->db->where('status', 1);
+		$this->db->where('size_status', 1);
     	$this->db->order_by('size_id');
 		$query=$this->db->get('tbl_size');
 		return $query;
 	}
 
 	function getColors() {
-		$this->db->where('status', 1);
+		$this->db->where('color_status', 1);
     	$this->db->order_by('color_id');
 		$query=$this->db->get('tbl_color');
 		return $query;
+	}
+
+	function serializeData($data) {
+		$arr = [];
+		if ($data != '') {
+			for ($i=0; $i < sizeof($data); $i++) { 
+				$pageId = $data[$i];
+				array_push($arr, $pageId);
+			}
+		}
+
+		// serialize array
+		$dataArr = serialize($arr);
+		return $dataArr;
 	}
 
 	function create() {
@@ -125,7 +139,10 @@ class Product extends BaseController
                                 'product_url' => url_title($this->input->post('product_title', true)),
 								'product_description' => $this->input->post('product_description', true),
 								'product_specification' => $arr_spec,
+								'product_size' => $this->serializeData($this->input->post('size', true)),
+								'product_color' => $this->serializeData($this->input->post('color', true)),
 								'product_price' => $this->input->post('product_price', true),
+								'product_weight' => $this->input->post('product_weight', true),
 								'product_quantity' => $this->input->post('product_quantity', true),
 								'product_category' => $this->input->post('product_category', true),
 								'product_brand' => $this->input->post('product_brand', true),
@@ -181,7 +198,10 @@ class Product extends BaseController
 						'product_url' => url_title($this->input->post('product_title', true)),
 						'product_description' => $this->input->post('product_description', true),
 						'product_specification' => $arr_spec,
+						'product_size' => $this->serializeData($this->input->post('size', true)),
+						'product_color' => $this->serializeData($this->input->post('color', true)),
 						'product_price' => $this->input->post('product_price', true),
+						'product_weight' => $this->input->post('product_weight', true),
 						'product_quantity' => $this->input->post('product_quantity', true),
 						'product_category' => $this->input->post('product_category', true),
 						'product_brand' => $this->input->post('product_brand', true),
@@ -214,9 +234,15 @@ class Product extends BaseController
         }
 
         if ((is_numeric($update_id)) && ($submit!="Submit")) {
-            $data = $this->fetch_data_from_db($update_id);
+			$data = $this->fetch_data_from_db($update_id);
+			$size = $data['product_size'];
+			$data['sizeList'] = unserialize($size);
+			$color = $data['product_color'];
+			$data['colorList'] = unserialize($color);
         } else {
-            $data = $this->fetch_data_from_post();
+			$data = $this->fetch_data_from_post();
+			$data['sizeList'] = []; 
+        	$data['colorList'] = [];
         }
 
         if (!is_numeric($update_id)) {
@@ -248,8 +274,7 @@ class Product extends BaseController
             // delete the item record from db
             $this->_delete($update_id); 
 
-            //DELETE TAG POST
-            $this->db->delete('post_tag', array('post_id' => $update_id));
+           
             
             $flash_msg = "The product were successfully deleted.";
             $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
@@ -290,6 +315,7 @@ class Product extends BaseController
 		$data['product_description'] = $this->input->post('product_description', true);
 		$data['product_image'] = $this->input->post('product_image', true);
 		$data['product_price'] = $this->input->post('product_price', true);
+		$data['product_weight'] = $this->input->post('product_weight', true);
 		$data['product_quantity'] = $this->input->post('product_quantity', true);
 		$data['product_category'] = $this->input->post('product_category', true);
 		$data['product_brand'] = $this->input->post('product_brand', true);
@@ -309,6 +335,7 @@ class Product extends BaseController
 			$data['product_description'] = $row->product_description;
 			$data['product_image'] = $row->product_image;
 			$data['product_price'] = $row->product_price;
+			$data['product_weight'] = $row->product_weight;
 			$data['product_quantity'] = $row->product_quantity;
 			$data['product_category'] = $row->product_category;
 			$data['product_brand'] = $row->product_brand;
