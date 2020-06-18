@@ -108,6 +108,15 @@
           </a>
         </li>
 
+        <li class="nav-item">
+          <a href="<?= base_url() ?>kurir/manage" class="nav-link <?= ($this->uri->segment(1) == 'kurir') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-bus"></i>
+            <p>
+              Kurir
+            </p>
+          </a>
+        </li>
+
         <li class="nav-header">MANAJEMEN PRODUK</li>
 
         <li class="nav-item">
