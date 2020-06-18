@@ -5,69 +5,215 @@ require APPPATH . '/libraries/BaseController.php';
 
 class Site_management extends BaseController
 {
-
+	private $loca = './assets/settings/';
+	var $destination;
+	var $path_background;
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->library('form_validation');
+        // $this->form_validation->CI=& $this;
+		$this->load->helper('text');
+		$this->destination = realpath(APPPATH. '../marketplace/logo/');
+    	$this->path_background = realpath(APPPATH. '../marketplace/images/');
+		$this->isLoggedIn();
     }
 
-    public function index() {
-        $data['kosong'] = [];
-        $this->template->views('site/manage', $data);
-    }
+    function _compress($file_name) {
+		// create thumbnail
+		$config['image_library'] = 'gd2';
+		// $config['source_image'] = $loca.$file_name;
+		// $config['new_image'] = $loca.'2080x1000/'.$file_name;
+		$config['maintain_ratio'] = TRUE;
+		$config['width']         = 2080;
+		$config['height']       = 1000;
+	
+		// $this->image_lib->initialize($config);
+		$this->load->library('image_lib', $config);
+		$this->image_lib->resize();
+	}
+	
+	function do_update() {
+		$data['description'] = $this->input->post('shop_name');
+		$this->db->where('type' , 'shop_name');
+		$this->db->update('tbl_settings' , $data);
+
+		$data['description'] = $this->input->post('tagline');
+		$this->db->where('type' , 'tagline');
+		$this->db->update('tbl_settings' , $data);
+	
+		$data['description'] = $this->input->post('address');
+		$this->db->where('type' , 'address');
+		$this->db->update('tbl_settings' , $data);
+	
+		$data['description'] = $this->input->post('phone');
+		$this->db->where('type' , 'phone');
+		$this->db->update('tbl_settings' , $data);
+	
+		$data['description'] = $this->input->post('email');
+		$this->db->where('type' , 'email');
+		$this->db->update('tbl_settings' , $data);
+	
+		$data['description'] = $this->input->post('author');
+		$this->db->where('type' , 'author');
+		$this->db->update('tbl_settings' , $data);
+	
+		$data['description'] = $this->input->post('description');
+		$this->db->where('type' , 'description');
+		$this->db->update('tbl_settings' , $data);
+	
+		$data['description'] = $this->input->post('keyword');
+		$this->db->where('type' , 'keyword');
+		$this->db->update('tbl_settings' , $data);
+
+		$data['description'] = $this->input->post('metatext');
+		$this->db->where('type' , 'metatext');
+		$this->db->update('tbl_settings' , $data);
+	
+		$data['description'] = $this->input->post('rekening_pembayaran');
+		$this->db->where('type' , 'rekening_pembayaran');
+		$this->db->update('tbl_settings' , $data);
+	
+		$data['description'] = $this->input->post('facebook');
+		$this->db->where('type' , 'facebook');
+		$this->db->update('tbl_settings' , $data);
+	
+		$data['description'] = $this->input->post('instagram');
+		$this->db->where('type' , 'instagram');
+		$this->db->update('tbl_settings' , $data);
+	
+	
+		$flash_msg = "The file were successfully added.";
+		$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
+		$this->session->set_flashdata('item', $value);
+		redirect('site_management/manage');             
+	}
+	
+	function upload_logo() {
+		$this->load->library('upload');
+	
+		$nmfile = "logo_".time(); //nama file saya beri nama langsung dan diikuti fungsi time
+	   
+		$config['upload_path'] = $this->destination; //path folder
+		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
+		$config['max_size'] = '2048'; //maksimum besar file 2M
+		$config['max_width']  = '1288'; //lebar maksimum 1288 px
+		$config['max_height']  = '768'; //tinggi maksimu 768 px    
+		$config['file_name'] = $nmfile; //nama yang terupload nantinya
+	
+		$this->upload->initialize($config);
+	
+		if($_FILES['name_field']['name'])
+		{
+			if ($this->upload->do_upload('name_field'))
+			{
+				$gbr = $this->upload->data();
+				$data = array(
+				  'description' =>$gbr['file_name'],
+				);
+	
+				$this->db->where('type' , 'logo');
+				$this->db->update('settings' , $data);
+	
+				$nama = $this->db->get_where('settings' , array('type' =>'logo'))->row()->description;
+				
+				//hapus image dari server
+				   
+				// lokasi folder image
+				$map = $_SERVER['DOCUMENT_ROOT'];
+				$path = $this->destination . '/';//$map . '/ci_3_admin/assets/logo/';
+				// $path2 = $this->destination . '/resized/';//$map . '/ci_3_admin/assets/logo/resized/';
+				//lokasi gambar secara spesifik
+				$image1 = $path.$nama;
+				// $image2 = $path2.$nama;
+				//hapus image
+				unlink($image1);
+				// unlink($image2);
+	
+				// $this->m_logo->do_upload('name_field');
+				//pesan yang muncul jika berhasil diupload pada session flashdata
+				$flash_msg = "The file were successfully added.";
+				$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
+				$this->session->set_flashdata('item', $value);
+				redirect('site_management/manage');              
+			}
+			else
+			{
+				//pesan yang muncul jika terdapat error dimasukkan pada session flashdata
+				$flash_msg = "The file were could not be added.";
+				$value = '<div class="alert alert-danger alert-dismissible show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
+				$this->session->set_flashdata('item', $value);
+				redirect('site_management/manage');                
+			}
+		}
+	}
+	
+	function upload_background() {
+		$this->load->library('upload');
+	
+		$nmfile = "bg_".time(); //nama file saya beri nama langsung dan diikuti fungsi time
+	   
+		$config['upload_path'] = $this->path_background; //path folder
+		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
+		$config['max_size'] = '2048'; //maksimum besar file 2M
+		$config['max_width']  = '1288'; //lebar maksimum 1288 px
+		$config['max_height']  = '768'; //tinggi maksimu 768 px    
+		$config['file_name'] = $nmfile; //nama yang terupload nantinya
+	
+		$this->upload->initialize($config);
+	
+		if($_FILES['name_field2']['name'])
+		{
+			if ($this->upload->do_upload('name_field2'))
+			{
+				$gbr = $this->upload->data();
+				$data = array(
+				  'description' =>$gbr['file_name'],
+				);
+	
+				$this->db->where('type' , 'homepage_background');
+				$this->db->update('settings' , $data);
+	
+				$nama = $this->db->get_where('settings' , array('type' =>'homepage_background'))->row()->description;
+				
+				//hapus image dari server
+				   
+				// lokasi folder image
+				$map = $_SERVER['DOCUMENT_ROOT'];
+				$path = $this->path_background . '/';
+				$path2 = $this->path_background . '/2080x1000/';
+				//lokasi gambar secara spesifik
+				$image1 = $path.$nama;
+				$image2 = $path2.$nama;
+				//hapus image
+				unlink($image1);
+				unlink($image2);
+	
+				$this->_compress($nmfile);
+				//pesan yang muncul jika berhasil diupload pada session flashdata
+				$flash_msg = "The file were successfully added.";
+				$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
+				$this->session->set_flashdata('item', $value);
+				redirect('site_management/manage');              
+			}
+			else
+			{
+				//pesan yang muncul jika terdapat error dimasukkan pada session flashdata
+				$flash_msg = "The file were could not be added.";
+				$value = '<div class="alert alert-danger alert-dismissible show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
+				$this->session->set_flashdata('item', $value);
+				redirect('site_management/manage');                
+			}
+		}
+	}
 
     public function manage() {
-        
+		$this->load->library('session');
+
+		$data['flash'] = $this->session->flashdata('item');
+        $this->template->views('site/manage', $data);
     } 
     
-    function fetch_data_from_post()
-	{
-		$data['namaweb'] = $this->input->post('namaweb', true);
-        $data['tagline'] = $this->input->post('tagline', true);
-        $data['email'] = $this->input->post('email', true);
-        $data['website'] = $this->input->post('website', true);
-        $data['keyword'] = $this->input->post('keyword', true);
-        $data['metatext'] = $this->input->post('metatext', true);
-        $data['telepon'] = $this->input->post('telepon', true);
-        $data['alamat'] = $this->input->post('alamat', true);
-        $data['facebook'] = $this->input->post('facebook', true);
-        $data['instagram'] = $this->input->post('instagram', true);
-        $data['deskripsi'] = $this->input->post('deskripsi', true);
-        $data['logo'] = $this->input->post('logo', true);
-        $data['icon'] = $this->input->post('icon', true);
-        $data['rekening'] = $this->input->post('rekening', true);
-        $data['created_at'] = time();
-		return $data;
-	}
-
-	function fetch_data_from_db($updated_id)
-	{
-		$query = $this->get_where($updated_id);
-		foreach ($query->result() as $row) {
-			$data['id_config'] = $row->id_config;
-			$data['namaweb'] = $row->namaweb;
-            $data['tagline'] = $row->tagline;
-            $data['email'] = $row->email;
-			$data['website'] = $row->website;
-            $data['keyword'] = $row->keyword;
-            $data['metatext'] = $row->metatext;
-			$data['telepon'] = $row->telepon;
-            $data['alamat'] = $row->alamat;
-            $data['facebook'] = $row->facebook;
-			$data['instagram'] = $row->instagram;
-			$data['deskripsi'] = $row->deskripsi;
-            $data['logo'] = $row->logo;
-			$data['icon'] = $row->icon;
-            $data['rekening'] = $row->rekening;
-            $data['created_at'] = $row->created_at;
-		}
-
-		if (!isset($data)) {
-			$data = "";
-		}
-
-		return $data;
-	}
 
 	function get($order_by)
 	{

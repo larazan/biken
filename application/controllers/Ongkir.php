@@ -1,32 +1,32 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Ongkir extends CI_Controller {
+class Ongkir extends CI_Controller
+{
 
 	function __construct()
 	{
-		parent::__construct();		
-
+		parent::__construct();
 	}
 
 
-	function _api_ongkir_post($origin,$des,$qty,$cour)
-   {
-  	  $curl = curl_init();
-	  curl_setopt_array($curl, array(
-	  CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
-	  CURLOPT_RETURNTRANSFER => true,
-	  CURLOPT_ENCODING => "",
-	  CURLOPT_MAXREDIRS => 10,
-	  CURLOPT_TIMEOUT => 30,
-	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-	  CURLOPT_CUSTOMREQUEST => "POST",
-	  CURLOPT_POSTFIELDS => "origin=".$origin."&destination=".$des."&weight=".$qty."&courier=".$cour,	  
-	  CURLOPT_HTTPHEADER => array(
-	    "content-type: application/x-www-form-urlencoded",
-	    /* masukan api key disini*/
-	    "key: 18c1ae365c10fea954e08449b1c2e185"
-		  ),
+	function _api_ongkir_post($origin, $des, $qty, $cour)
+	{
+		$curl = curl_init();
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => "",
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "POST",
+			CURLOPT_POSTFIELDS => "origin=" . $origin . "&destination=" . $des . "&weight=" . $qty . "&courier=" . $cour,
+			CURLOPT_HTTPHEADER => array(
+				"content-type: application/x-www-form-urlencoded",
+				/* masukan api key disini*/
+				"key: 18c1ae365c10fea954e08449b1c2e185"
+			),
 		));
 
 		$response = curl_exec($curl);
@@ -35,34 +35,34 @@ class Ongkir extends CI_Controller {
 		curl_close($curl);
 
 		if ($err) {
-		  return $err;
+			return $err;
 		} else {
-		  return $response;
+			return $response;
 		}
-   }
+	}
 
 
 
 
 
-   function _api_ongkir($data)
-   {
-	   	$curl = curl_init();
+	function _api_ongkir($data)
+	{
+		$curl = curl_init();
 
 		curl_setopt_array($curl, array(
-		  //CURLOPT_URL => "https://api.rajaongkir.com/starter/province?id=12",
-		  //CURLOPT_URL => "http://api.rajaongkir.com/starter/province",
-		  CURLOPT_URL => "http://api.rajaongkir.com/starter/".$data,
-		  CURLOPT_RETURNTRANSFER => true,
-		  CURLOPT_ENCODING => "",
-		  CURLOPT_MAXREDIRS => 10,
-		  CURLOPT_TIMEOUT => 30,
-		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		  CURLOPT_CUSTOMREQUEST => "GET",		  
-		  CURLOPT_HTTPHEADER => array(
-		  	/* masukan api key disini*/
-		    "key: 18c1ae365c10fea954e08449b1c2e185"
-		  ),
+			//CURLOPT_URL => "https://api.rajaongkir.com/starter/province?id=12",
+			//CURLOPT_URL => "http://api.rajaongkir.com/starter/province",
+			CURLOPT_URL => "http://api.rajaongkir.com/starter/" . $data,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => "",
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "GET",
+			CURLOPT_HTTPHEADER => array(
+				/* masukan api key disini*/
+				"key: 18c1ae365c10fea954e08449b1c2e185"
+			),
 		));
 
 		$response = curl_exec($curl);
@@ -71,11 +71,11 @@ class Ongkir extends CI_Controller {
 		curl_close($curl);
 
 		if ($err) {
-		  return  $err;
+			return  $err;
 		} else {
-		  return $response;
+			return $response;
 		}
-   }
+	}
 
 
 	public function provinsi()
@@ -89,41 +89,30 @@ class Ongkir extends CI_Controller {
 
 	public function lokasi()
 	{
-		
+
 		$this->load->view('ongkir');
-		
 	}
 
-	public function kota($provinsi="")
+	public function kota($provinsi = "")
 	{
-		if(!empty($provinsi))
-		{
-			if(is_numeric($provinsi))
-			{
-				$kota = $this->_api_ongkir('city?province='.$provinsi);	
+		if (!empty($provinsi)) {
+			if (is_numeric($provinsi)) {
+				$kota = $this->_api_ongkir('city?province=' . $provinsi);
 				$data = json_decode($kota, true);
-				echo json_encode($data['rajaongkir']['results']);		  					 
-			}
-			else
-			{
+				echo json_encode($data['rajaongkir']['results']);
+			} else {
 				show_404();
 			}
+		} else {
+			show_404();
 		}
-	   else
-	   {
-	   	show_404();
-	   }
 	}
 
-	public function tarif($origin,$des,$qty,$cour)
+	public function tarif($origin, $des, $qty, $cour)
 	{
-		$berat = $qty*1000;
-		$tarif = $this->_api_ongkir_post($origin,$des,$berat,$cour);		
+		$berat = $qty * 1000;
+		$tarif = $this->_api_ongkir_post($origin, $des, $berat, $cour);
 		$data = json_decode($tarif, true);
-		echo json_encode($data['rajaongkir']['results']);		
+		echo json_encode($data['rajaongkir']['results']);
 	}
-
-
-
-
 }

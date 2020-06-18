@@ -213,7 +213,7 @@
 
         <li class="nav-header">MANAJEMEN PENGATURAN</li>
         <li class="nav-item">
-          <a href="<?= base_url() ?>site/manage" class="nav-link <?= ($this->uri->segment(1) == 'user') ? 'active' : '' ?>">
+          <a href="<?= base_url() ?>site/manage" class="nav-link <?= ($this->uri->segment(1) == 'site') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-globe"></i>
             <p>
               Situs
@@ -222,7 +222,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="<?= base_url() ?>rajaongkir/manage" class="nav-link <?= ($this->uri->segment(1) == 'customer') ? 'active' : '' ?>">
+          <a href="<?= base_url() ?>rajaongkir/manage" class="nav-link <?= ($this->uri->segment(1) == 'rajaongkir') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-truck"></i>
             <p>
               Raja Ongkir
@@ -231,7 +231,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="<?= base_url() ?>address/manage" class="nav-link <?= ($this->uri->segment(1) == 'contact') ? 'active' : '' ?>">
+          <a href="<?= base_url() ?>location/manage" class="nav-link <?= ($this->uri->segment(1) == 'location') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-map-marker"></i>
             <p>
               Alamat Pengiriman

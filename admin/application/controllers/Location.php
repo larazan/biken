@@ -10,54 +10,131 @@ class Location extends BaseController
 	{
 		parent::__construct();
 		$this->isLoggedIn();
+		$this->key_api_rajaongkir = $this->db->get_where('tbl_settings', array('type' => 'rajaongkir_key'))->row()->description;
 	}
 
-	public function index()
+	function _api_ongkir_post($origin, $des, $qty, $cour)
 	{
-		$this->template->views('size/manage');
+		$curl = curl_init();
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => "",
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "POST",
+			CURLOPT_POSTFIELDS => "origin=" . $origin . "&destination=" . $des . "&weight=" . $qty . "&courier=" . $cour,
+			CURLOPT_HTTPHEADER => array(
+				"content-type: application/x-www-form-urlencoded",
+				/* masukan api key disini*/
+				"key: $this->key_api_rajaongkir"
+			),
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+			return $err;
+		} else {
+			return $response;
+		}
+	}
+
+	function _api_ongkir($data)
+	{
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+			//CURLOPT_URL => "https://api.rajaongkir.com/starter/province?id=12",
+			//CURLOPT_URL => "http://api.rajaongkir.com/starter/province",
+			CURLOPT_URL => "http://api.rajaongkir.com/starter/" . $data,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => "",
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "GET",
+			CURLOPT_HTTPHEADER => array(
+				/* masukan api key disini*/
+				"key: $this->key_api_rajaongkir"
+			),
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+			return  $err;
+		} else {
+			return $response;
+		}
+	}
+
+	public function provinsi()
+	{
+
+		$provinsi = $this->_api_ongkir('province');
+		$data = json_decode($provinsi, true);
+		echo json_encode($data['rajaongkir']['results']);
+	}
+
+	public function kota($provinsi = "")
+	{
+		if (!empty($provinsi)) {
+			if (is_numeric($provinsi)) {
+				$kota = $this->_api_ongkir('city?province=' . $provinsi);
+				$data = json_decode($kota, true);
+				echo json_encode($data['rajaongkir']['results']);
+			} else {
+				show_404();
+			}
+		} else {
+			show_404();
+		}
 	}
 
 	public function manage()
 	{
-		$mysql_query = "SELECT * FROM tbl_size ORDER BY size_id DESC";
-        $data['query'] = $this->_custom_query($mysql_query);
+		$data['query'] = $this->get_where('1');
 		$data['flash'] = $this->session->flashdata('item');
-		$this->template->views('size/manage', $data);
+		$this->template->views('location/manage', $data);
 	}
 
-	public function create()
+	public function submit()
 	{
 		$this->load->library('session');
 
-		$update_id = $this->uri->segment(3);
+		$update_id = 1;
 		$submit = $this->input->post('submit');
-
-		if ($submit == "Cancel") {
-			redirect('size/manage');
-		}
 
 		if ($submit == "Submit") {
 			// process the form
 			$this->load->library('form_validation');
-			$this->form_validation->set_rules('name', 'name', 'trim|required');
+			$this->form_validation->set_rules('provinsi', 'provinsi', 'trim|required');
 			
 			if ($this->form_validation->run() == TRUE) {
 				$data = $this->fetch_data_from_post();
 
 				if (is_numeric($update_id)) {
 					$this->_update($update_id, $data);
-					$flash_msg = "The size were successfully updated.";
+					$flash_msg = "The location were successfully updated.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
-					redirect('size/create/' . $update_id);
+					redirect('location/manage');
 				} else {
 					$this->_insert($data);
 					$update_id = $this->get_max();
 
-					$flash_msg = "The size was successfully added.";
+					$flash_msg = "The location was successfully added.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
-					redirect('size/create/' . $update_id);
+					redirect('location/manage');
 				}
 			}
 		}
@@ -68,41 +145,17 @@ class Location extends BaseController
 			$data = $this->fetch_data_from_post();
 		}
 
-		if (!is_numeric($update_id)) {
-			$data['headline'] = "Tambah Size";
-		} else {
-			$data['headline'] = "Edit Size";
-		}
-
-
 		$data['update_id'] = $update_id;
 		$data['flash'] = $this->session->flashdata('item');
 
-		$this->template->views('size/create', $data);
-	}
-
-	function delete()
-	{	
-		$this->load->library('session');
-		$update_id = $this->input->post('id');
-
-		$submit = $this->input->post('submit', TRUE);
-		if ($submit == "Delete") {
-			// delete the item record from db
-			$this->_delete($update_id);
-
-			$flash_msg = "The size were successfully deleted.";
-			$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
-			$this->session->set_flashdata('item', $value);
-
-			redirect('size/manage');
-		}
+		$this->template->views('location/manage', $data);
 	}
 
 	function fetch_data_from_post()
 	{
-		$data['name'] = $this->input->post('name', true);
-		$data['size_status'] = $this->input->post('size_status', true);
+		$data['provinsi'] = $this->input->post('provinsi', true);
+		$data['kabupaten'] = $this->input->post('kabupaten', true);
+		$data['created_at'] = $this->input->post('created_at', true);
 		return $data;
 	}
 
@@ -110,9 +163,11 @@ class Location extends BaseController
 	{
 		$query = $this->get_where($updated_id);
 		foreach ($query->result() as $row) {
-			$data['size_id'] = $row->size_id;
-			$data['name'] = $row->name;
-			$data['size_status'] = $row->size_status;
+			$data['id_location'] = $row->id_location;
+			$data['provinsi'] = $row->provinsi;
+			$data['kabupaten'] = $row->kabupaten;
+			$data['created_at'] = $row->created_at;
+			$data['updated_at'] = $row->updated_at;
 		}
 
 		if (!isset($data)) {

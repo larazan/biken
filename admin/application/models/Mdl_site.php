@@ -3,7 +3,7 @@
 class Mdl_site extends CI_Model
 {
     function get_table() {
-        $table = "tbl_config";
+        $table = "tbl_settings";
         return $table;
     }
     
@@ -24,7 +24,7 @@ class Mdl_site extends CI_Model
     
     function get_where($id){
         $table = $this->get_table();
-        $this->db->where('id_config', $id);
+        $this->db->where('settings_id', $id);
         $query=$this->db->get($table);
         return $query;
     }
@@ -43,13 +43,13 @@ class Mdl_site extends CI_Model
     
     function _update($id, $data){
         $table = $this->get_table();
-        $this->db->where('id_config', $id);
+        $this->db->where('settings_id', $id);
         $this->db->update($table, $data);
     }
     
     function _delete($id){
         $table = $this->get_table();
-        $this->db->where('id_config', $id);
+        $this->db->where('settings_id', $id);
         $this->db->delete($table);
     }
     
@@ -70,10 +70,10 @@ class Mdl_site extends CI_Model
     
     function get_max() {
         $table = $this->get_table();
-        $this->db->select_max('id_config');
+        $this->db->select_max('settings_id');
         $query = $this->db->get($table);
         $row=$query->row();
-        $id=$row->id_config;
+        $id=$row->settings_id;
         return $id;
     }
     
