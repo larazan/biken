@@ -187,7 +187,7 @@
           <a href="<?= base_url() ?>user/manage" class="nav-link <?= ($this->uri->segment(1) == 'user') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-user-alt"></i>
             <p>
-              Users
+              Admin
             </p>
           </a>
         </li>

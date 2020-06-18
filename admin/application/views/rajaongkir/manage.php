@@ -1,3 +1,20 @@
+<style type="text/css">
+    .checkbox-inline {
+        -webkit-columns: 3;
+        -moz-columns: 3;
+        columns: 3;
+        /*border: solid 5px #F00;*/
+        /* padding: 10px 15px; */
+        display: inline-block;
+        position: relative;
+    }
+
+    .checkbox-inline label {
+        display: block;
+        white-space: nowrap;
+    }
+</style>
+
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
@@ -45,7 +62,29 @@ if (isset($flash)) {
                             <input type="text" class="form-control m-input" id="rajaongkir_key" name="rajaongkir_key" placeholder="Enter API key" value="<?php echo $this->db->get_where('tbl_settings', array('type' => 'rajaongkir_key'))->row()->description; ?>">
                             <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('rajaongkir_key'); ?></div>
                         </div>
-
+                        <div class="form-group row">
+                            <label for="">
+                                Daftar Kurir
+                            </label>
+                            
+                        </div>
+                        <div class="form-check row">
+                            <div class="checkbox-inline">
+                                <label class="m-checkbox2">
+                                    <input type="checkbox" class="kurir" id="kurir" value="jne" name="kurir[]"> JNE
+                                </label>
+                                <label class="m-checkbox2">
+                                    <input type="checkbox" class="kurir" id="kurir" value="tiki" name="kurir[]"> TIKI
+                                </label>
+                                <label class="m-checkbox2">
+                                    <input type="checkbox" class="kurir" id="kurir" value="jnt" name="kurir[]"> J&T
+                                </label>
+                                <label class="m-checkbox2">
+                                    <input type="checkbox" class="kurir" id="kurir" value="pos" name="kurir[]"> POS Indonesia
+                                </label>
+                               
+                            </div>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">

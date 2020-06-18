@@ -151,7 +151,7 @@ $backlink = base_url() . "product/manage";
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body" style="display: block;">
-                                    <label for="" style="margin-top: 10px;">
+                                        <label for="" style="margin-top: 10px;">
                                             <input type="checkbox" id="pilih_semua" /> Select All<br />
                                         </label>
                                         <div class="m-checkbox-list2">
@@ -168,7 +168,7 @@ $backlink = base_url() . "product/manage";
 
                                                     ?>
                                                     <label class="m-checkbox2">
-                                                        <input type="checkbox" class="size" id="size" value="<?= $row->size_id ?>" name="size[]" <?=$checked?> > <?=$row->name?>
+                                                        <input type="checkbox" class="size" id="size" value="<?= $row->size_id ?>" name="size[]" <?= $checked ?>> <?= $row->name ?>
                                                     </label>
                                                 <?php } ?>
                                             </div>
@@ -211,7 +211,7 @@ $backlink = base_url() . "product/manage";
 
                                                     ?>
                                                     <label class="m-checkbox2">
-                                                        <input type="checkbox" class="color" id="color" value="<?= $row->color_id ?>" name="color[]" <?=$checked?> > <?=$row->name?>
+                                                        <input type="checkbox" class="color" id="color" value="<?= $row->color_id ?>" name="color[]" <?= $checked ?>> <?= $row->name ?>
                                                     </label>
                                                 <?php } ?>
                                             </div>
@@ -336,47 +336,47 @@ $backlink = base_url() . "product/manage";
 </script>
 
 <script>
-var select_all = document.getElementById("select_all"); //select all checkbox
-var checkboxes = document.getElementsByClassName("color"); //checkbox items
-var pilihSemua = document.getElementById("pilih_semua"); //select all checkbox
-var checkboxesPermiss = document.getElementsByClassName("size"); //checkbox items
+    var select_all = document.getElementById("select_all"); //select all checkbox
+    var checkboxes = document.getElementsByClassName("color"); //checkbox items
+    var pilihSemua = document.getElementById("pilih_semua"); //select all checkbox
+    var checkboxesPermiss = document.getElementsByClassName("size"); //checkbox items
 
-//select all checkboxes
-select_all.addEventListener("change", function(e){
-	for (i = 0; i < checkboxes.length; i++) { 
-		checkboxes[i].checked = select_all.checked;
-	}
-});
+    //select all checkboxes
+    select_all.addEventListener("change", function(e) {
+        for (i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = select_all.checked;
+        }
+    });
 
-pilihSemua.addEventListener("change", function(e){
-	for (i = 0; i < checkboxesPermiss.length; i++) { 
-		checkboxesPermiss[i].checked = pilihSemua.checked;
-	}
-});
+    pilihSemua.addEventListener("change", function(e) {
+        for (i = 0; i < checkboxesPermiss.length; i++) {
+            checkboxesPermiss[i].checked = pilihSemua.checked;
+        }
+    });
 
-for (var i = 0; i < checkboxesPermiss.length; i++) {
-	checkboxesPermiss[i].addEventListener('change', function(e){ //".checkbox" change 
-		//uncheck "select all", if one of the listed checkbox item is unchecked
-		if(this.checked == false){
-			pilihSemua.checked = false;
-		}
-		//check "select all" if all checkbox items are checked
-		if(document.querySelectorAll('.checkbox:checked').length == checkboxesPermiss.length){
-			pilihSemua.checked = true;
-		}
-	});
-}
+    for (var i = 0; i < checkboxesPermiss.length; i++) {
+        checkboxesPermiss[i].addEventListener('change', function(e) { //".checkbox" change 
+            //uncheck "select all", if one of the listed checkbox item is unchecked
+            if (this.checked == false) {
+                pilihSemua.checked = false;
+            }
+            //check "select all" if all checkbox items are checked
+            if (document.querySelectorAll('.checkbox:checked').length == checkboxesPermiss.length) {
+                pilihSemua.checked = true;
+            }
+        });
+    }
 
-for (var i = 0; i < checkboxes.length; i++) {
-	checkboxes[i].addEventListener('change', function(e){ //".checkbox" change 
-		//uncheck "select all", if one of the listed checkbox item is unchecked
-		if(this.checked == false){
-			select_all.checked = false;
-		}
-		//check "select all" if all checkbox items are checked
-		if(document.querySelectorAll('.checkbox:checked').length == checkboxes.length){
-			select_all.checked = true;
-		}
-	});
-}
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener('change', function(e) { //".checkbox" change 
+            //uncheck "select all", if one of the listed checkbox item is unchecked
+            if (this.checked == false) {
+                select_all.checked = false;
+            }
+            //check "select all" if all checkbox items are checked
+            if (document.querySelectorAll('.checkbox:checked').length == checkboxes.length) {
+                select_all.checked = true;
+            }
+        });
+    }
 </script>
