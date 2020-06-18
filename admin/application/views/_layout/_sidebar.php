@@ -119,16 +119,7 @@
           </a>
         </li>
 
-        <li class="nav-header">MANAJEMEN LAPORAN</li>
-
-        <li class="nav-item">
-          <a href="<?= base_url() ?>payment/manage" class="nav-link <?= ($this->uri->segment(1) == 'payment') ? 'active' : '' ?>">
-            <i class="nav-icon fa fa-credit-card"></i>
-            <p>
-              Payment
-            </p>
-          </a>
-        </li>
+        
 
         <li class="nav-header">MANAJEMEN PENJUALAN</li>
         <li class="nav-item">
@@ -136,6 +127,57 @@
             <i class="nav-icon fas fa-shopping-basket"></i>
             <p>
               Order
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(1) == 'order') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-calendar"></i>
+            <p>
+              Hari ini
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(1) == 'order') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-exclamation-triangle"></i>
+            <p>
+              Belum Bayar
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(1) == 'order') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-clock"></i>
+            <p>
+              Pending
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(1) == 'order') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-retweet"></i>
+            <p>
+              Diproses
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(1) == 'order') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-ship"></i>
+            <p>
+              Dikirim
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-header">MANAJEMEN LAPORAN</li>
+
+        <li class="nav-item">
+          <a href="<?= base_url() ?>payment/manage" class="nav-link <?= ($this->uri->segment(1) == 'payment') ? 'active' : '' ?>">
+            <i class="nav-icon fa fa-credit-card"></i>
+            <p>
+              Payment
             </p>
           </a>
         </li>
