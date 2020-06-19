@@ -76,9 +76,52 @@ class Location extends BaseController
 		}
 	}
 
+	public function tes() {	
+		$id = $this->getProvinsi();
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => "https://api.rajaongkir.com/starter/province?id=$id",
+			//CURLOPT_URL => "http://api.rajaongkir.com/starter/province",
+			// CURLOPT_URL => "http://api.rajaongkir.com/starter/" . $data,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => "",
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "GET",
+			CURLOPT_HTTPHEADER => array(
+				/* masukan api key disini*/
+				"key: $this->key_api_rajaongkir"
+			),
+		));
+
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+			return  $err;
+		} else {
+			// return $response;
+			var_dump($response);
+		}
+	}
+	
+	public function getProvinsi() {
+		$id_location = 1;
+		$provinsi_id = $this->db->where('id_location', $id_location)->get('tbl_location')->row()->provinsi;
+		if ($provinsi_id != '') {
+			$id = $provinsi_id;
+		} else {
+			$id = '';
+		}
+		return $id;
+	}
+
 	public function provinsi()
 	{
-
 		$provinsi = $this->_api_ongkir('province');
 		$data = json_decode($provinsi, true);
 		echo json_encode($data['rajaongkir']['results']);
@@ -101,6 +144,11 @@ class Location extends BaseController
 
 	public function manage()
 	{
+		$update_id = 1;
+		$data = $this->fetch_data_from_db($update_id);
+		$data['provinsi'] = $data['provinsi'];
+		$data['kabupaten'] = $data['kabupaten'];
+		$data['kecamatan'] = $data['kecamatan'];
 		$data['query'] = $this->get_where('1');
 		$data['flash'] = $this->session->flashdata('item');
 		$this->template->views('location/manage', $data);
@@ -122,6 +170,7 @@ class Location extends BaseController
 				$data = $this->fetch_data_from_post();
 
 				if (is_numeric($update_id)) {
+					$data['updated_at'] = time();
 					$this->_update($update_id, $data);
 					$flash_msg = "The location were successfully updated.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
@@ -155,7 +204,7 @@ class Location extends BaseController
 	{
 		$data['provinsi'] = $this->input->post('provinsi', true);
 		$data['kabupaten'] = $this->input->post('kabupaten', true);
-		$data['created_at'] = $this->input->post('created_at', true);
+		$data['created_at'] = time();
 		return $data;
 	}
 
@@ -166,6 +215,7 @@ class Location extends BaseController
 			$data['id_location'] = $row->id_location;
 			$data['provinsi'] = $row->provinsi;
 			$data['kabupaten'] = $row->kabupaten;
+			$data['kecamatan'] = $row->kecamatan;
 			$data['created_at'] = $row->created_at;
 			$data['updated_at'] = $row->updated_at;
 		}

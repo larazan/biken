@@ -1,3 +1,5 @@
+
+
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
@@ -42,8 +44,16 @@
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Provinsi</label>
                                 <div class="col-sm-6">
                                     <select class="form-control" name="provinsi" id="sel1">
-                                        <option value=""> Pilih Provinsi</option>
-                                       
+                                    <option value=""> Pilih Provinsi</option>
+                                        <!-- <?php
+                                            if ($provinsi != '') { 
+                                        ?>
+                                            <option value="<?=$provinsi?>"> <?=$provinsi?></option>
+                                        <?php
+                                            } else {   
+                                        ?>
+                                            <option value=""> Pilih Provinsi</option>
+                                        <?php } ?> -->
                                     </select>
                                     <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('provinsi'); ?></div>
                                 </div>
@@ -83,10 +93,10 @@
   
 function getLokasi() {
   var $op = $("#sel1");
-  
-  $.getJSON("provinsi", function(data){  
-    $.each(data, function(i,field){  
-       $op.append('<option value="'+field.province_id+'">'+field.province+'</option>'); 
+  var prov_id = '<?=$provinsi?>';
+  $.getJSON("provinsi", function(data){        
+    $.each(data, function(i,field){ 
+       $op.append(`<option value="${field.province_id}" ${field.province_id === prov_id ? 'selected' : ''}>${field.province}</option>`); 
     });
   });
 }
@@ -112,10 +122,11 @@ $("#sel1").on("change", function(e){
 
 function getKota(idpro) {
   var $op = $("#sel2"); 
-  
+  var kab_id = '<?=$kabupaten?>';
   $.getJSON("kota/"+idpro, function(data){      
     $.each(data, function(i,field){  
-       $op.append('<option value="'+field.city_id+'">'+field.type+' '+field.city_name+'</option>'); 
+    //    $op.append('<option value="'+field.city_id+'">'+field.type+' '+field.city_name+'</option>'); 
+       $op.append(`<option value="${field.city_id}" ${field.city_id === kab_id ? 'selected' : ''}>${field.type} ${field.city_name}</option>`); 
     });
   });
 }

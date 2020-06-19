@@ -47,10 +47,6 @@ class RajaOngkir extends BaseController
 		}
 	}
 
-
-
-
-
 	function _api_ongkir($data)
 	{
 		$curl = curl_init();
@@ -122,9 +118,27 @@ class RajaOngkir extends BaseController
 		echo json_encode($data['rajaongkir']['results']);
 	}
 
+	public function tesTarif() {
+		$id_location = 1;
+		$kab_id = $this->db->where('id_location', $id_location)->get('tbl_location')->row()->kabupaten;
+		$origin = $kab_id; 
+		$des = '444'; 
+		$qty = 1; 
+		$cour = 'jne';
+
+		$berat = $qty * 1000;
+		$tarif = $this->_api_ongkir_post($origin, $des, $berat, $cour);
+		$data = json_decode($tarif, true);
+		echo json_encode($data['rajaongkir']['results']);
+	}
+
 	function do_update() {
 		$data['description'] = $this->input->post('rajaongkir_key');
 		$this->db->where('type' , 'rajaongkir_key');
+		$this->db->update('tbl_settings' , $data);
+
+		$data['description'] = $this->serializeData($this->input->post('kurir'));
+		$this->db->where('type' , 'kurir');
 		$this->db->update('tbl_settings' , $data);
 	
 		$flash_msg = "The key were successfully added.";
@@ -133,9 +147,44 @@ class RajaOngkir extends BaseController
 		redirect('rajaOngkir/manage');             
 	}
 
+	function serializeData($data) {
+		$arr = [];
+		if ($data != '') {
+			for ($i=0; $i < sizeof($data); $i++) { 
+				$pageId = $data[$i];
+				array_push($arr, $pageId);
+			}
+		}
+
+		// serialize array
+		$dataArr = serialize($arr);
+		return $dataArr;
+	}
+
+	public function getCarrier() {
+		$this->db->where('status', 1);
+    	$this->db->order_by('kurir_id');
+		$query=$this->db->get('tbl_kurir');
+		return $query;
+	}
+
+	function tes() {
+		$kurirList = $this->db->get_where('tbl_settings', array('type' => 'kurir'))->row()->description;
+		$carriers = unserialize($kurirList);
+		var_dump($carriers);
+	}
+
     public function manage() {
 		$this->load->library('session');
 
+		$kurirList = $this->db->get_where('tbl_settings', array('type' => 'kurir'))->row()->description;
+		if($kurirList != '') {
+			$carriers = unserialize($kurirList);
+		} else {
+			$carriers = [];
+		}
+		$data['carrierList'] = $carriers;
+		$data['carrier'] = $this->getCarrier();
 		$data['flash'] = $this->session->flashdata('item');
         $this->template->views('rajaongkir/manage', $data);
     }     

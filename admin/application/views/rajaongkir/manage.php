@@ -66,30 +66,32 @@ if (isset($flash)) {
                             <label for="">
                                 Daftar Kurir
                             </label>
-                            
+
                         </div>
                         <div class="form-check row">
                             <div class="checkbox-inline">
-                                <label class="m-checkbox2">
-                                    <input type="checkbox" class="kurir" id="kurir" value="jne" name="kurir[]"> JNE
-                                </label>
-                                <label class="m-checkbox2">
-                                    <input type="checkbox" class="kurir" id="kurir" value="tiki" name="kurir[]"> TIKI
-                                </label>
-                                <label class="m-checkbox2">
-                                    <input type="checkbox" class="kurir" id="kurir" value="jnt" name="kurir[]"> J&T
-                                </label>
-                                <label class="m-checkbox2">
-                                    <input type="checkbox" class="kurir" id="kurir" value="pos" name="kurir[]"> POS Indonesia
-                                </label>
-                               
+                                <?php
+                                foreach ($carrier->result() as $row) {
+                                ?>
+                                    <?php
+                                    if ($carrierList != '') {
+                                        $checked = in_array($row->value, $carrierList) ? " checked " : null;
+                                    } else {
+                                        $checked = null;
+                                    }
+
+                                    ?>
+                                    <label class="m-checkbox2">
+                                        <input type="checkbox" class="kurir" id="" value="<?= $row->value ?>" name="kurir[]" <?= $checked ?>> <?= $row->name ?>
+                                    </label>
+                                <?php } ?>
+
                             </div>
                         </div>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="submit" name="submit" class="btn btn-default" value="Cancel">Cancel</button>
-                        <button type="submit" name="submit" class="btn btn-info float-right" value="Submit">Submit</button>
+                        <button type="submit" name="submit" class="btn btn-info btn-block" value="Submit">Submit</button>
                     </div>
                     <!-- /.card-footer -->
                     </form>
@@ -166,9 +168,20 @@ if (isset($flash)) {
                                 <div class="col-sm-8">
                                     <select class="form-control" name="kabupaten" id="kurir" disabled>
                                         <option value=""> Pilih Kurir</option>
-                                        <option value="jne">JNE</option>
-                                        <option value="tiki">TIKI</option>
-                                        <option value="pos">POS Indonesia</option>
+                                        <?php
+                                        foreach ($carrier->result() as $row) {
+                                        ?>
+                                            <?php
+                                            if ($carrierList != '') {
+                                                if (in_array($row->value, $carrierList)) { ?>
+                                                    <option value="<?= $row->value ?>"><?= $row->name ?></option>
+                                            <?php    
+                                                }
+                                            } 
+                                            ?>
+                                            
+                                        <?php } ?>
+                                       
                                     </select>
                                     <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('provinsi'); ?></div>
                                 </div>
