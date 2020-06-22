@@ -6,24 +6,21 @@ require APPPATH . '/libraries/BaseController.php';
 class Site_management extends BaseController
 {
 	private $loca = './assets/settings/';
-	var $destination;
-	var $path_background;
+	
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->library('form_validation');
         // $this->form_validation->CI=& $this;
 		$this->load->helper('text');
-		$this->destination = realpath(APPPATH. '../marketplace/logo/');
-    	$this->path_background = realpath(APPPATH. '../marketplace/images/');
 		$this->isLoggedIn();
     }
 
     function _compress($file_name) {
 		// create thumbnail
 		$config['image_library'] = 'gd2';
-		// $config['source_image'] = $loca.$file_name;
-		// $config['new_image'] = $loca.'2080x1000/'.$file_name;
+		$config['source_image'] = $this->loca.$file_name;
+		$config['new_image'] = $this->loca.'2080x1000/'.$file_name;
 		$config['maintain_ratio'] = TRUE;
 		$config['width']         = 2080;
 		$config['height']       = 1000;
@@ -94,7 +91,7 @@ class Site_management extends BaseController
 	
 		$nmfile = "logo_".time(); //nama file saya beri nama langsung dan diikuti fungsi time
 	   
-		$config['upload_path'] = $this->destination; //path folder
+		$config['upload_path'] = $this->loca; //path folder
 		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
 		$config['max_size'] = '2048'; //maksimum besar file 2M
 		$config['max_width']  = '1288'; //lebar maksimum 1288 px
@@ -121,18 +118,69 @@ class Site_management extends BaseController
 				   
 				// lokasi folder image
 				$map = $_SERVER['DOCUMENT_ROOT'];
-				$path = $this->destination . '/';//$map . '/ci_3_admin/assets/logo/';
-				// $path2 = $this->destination . '/resized/';//$map . '/ci_3_admin/assets/logo/resized/';
+				$path = $this->loca . '/';
 				//lokasi gambar secara spesifik
 				$image1 = $path.$nama;
-				// $image2 = $path2.$nama;
 				//hapus image
 				unlink($image1);
-				// unlink($image2);
 	
-				// $this->m_logo->do_upload('name_field');
 				//pesan yang muncul jika berhasil diupload pada session flashdata
-				$flash_msg = "The file were successfully added.";
+				$flash_msg = "The logo file were successfully added.";
+				$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
+				$this->session->set_flashdata('item', $value);
+				redirect('site_management/manage');              
+			}
+			else
+			{
+				//pesan yang muncul jika terdapat error dimasukkan pada session flashdata
+				$flash_msg = "The logo file were could not be added.";
+				$value = '<div class="alert alert-danger alert-dismissible show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
+				$this->session->set_flashdata('item', $value);
+				redirect('site_management/manage');                
+			}
+		}
+	}
+
+	function upload_icon() {
+		$this->load->library('upload');
+	
+		$nmfile = "icon_".time(); //nama file saya beri nama langsung dan diikuti fungsi time
+	   
+		$config['upload_path'] = $this->loca; //path folder
+		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
+		$config['max_size'] = '2048'; //maksimum besar file 2M
+		$config['max_width']  = '1288'; //lebar maksimum 1288 px
+		$config['max_height']  = '768'; //tinggi maksimu 768 px    
+		$config['file_name'] = $nmfile; //nama yang terupload nantinya
+	
+		$this->upload->initialize($config);
+	
+		if($_FILES['name_field']['name'])
+		{
+			if ($this->upload->do_upload('name_field'))
+			{
+				$gbr = $this->upload->data();
+				$data = array(
+				  'description' =>$gbr['file_name'],
+				);
+	
+				$this->db->where('type' , 'icon');
+				$this->db->update('settings' , $data);
+	
+				$nama = $this->db->get_where('settings' , array('type' =>'icon'))->row()->description;
+				
+				//hapus image dari server
+				   
+				// lokasi folder image
+				$map = $_SERVER['DOCUMENT_ROOT'];
+				$path = $this->loca . '/';
+				//lokasi gambar secara spesifik
+				$image1 = $path.$nama;
+				//hapus image
+				unlink($image1);
+	
+				//pesan yang muncul jika berhasil diupload pada session flashdata
+				$flash_msg = "The icon file were successfully added.";
 				$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
 				$this->session->set_flashdata('item', $value);
 				redirect('site_management/manage');              
@@ -153,7 +201,7 @@ class Site_management extends BaseController
 	
 		$nmfile = "bg_".time(); //nama file saya beri nama langsung dan diikuti fungsi time
 	   
-		$config['upload_path'] = $this->path_background; //path folder
+		$config['upload_path'] = $this->loca; //path folder
 		$config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //type yang dapat diakses bisa anda sesuaikan
 		$config['max_size'] = '2048'; //maksimum besar file 2M
 		$config['max_width']  = '1288'; //lebar maksimum 1288 px
@@ -180,8 +228,8 @@ class Site_management extends BaseController
 				   
 				// lokasi folder image
 				$map = $_SERVER['DOCUMENT_ROOT'];
-				$path = $this->path_background . '/';
-				$path2 = $this->path_background . '/2080x1000/';
+				$path = $this->loca . '/';
+				$path2 = $this->loca . '/2080x1000/';
 				//lokasi gambar secara spesifik
 				$image1 = $path.$nama;
 				$image2 = $path2.$nama;

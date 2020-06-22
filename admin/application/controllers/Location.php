@@ -120,6 +120,17 @@ class Location extends BaseController
 		return $id;
 	}
 
+	public function getKota() {
+		$id_location = 1;
+		$kabupaten_id = $this->db->where('id_location', $id_location)->get('tbl_location')->row()->kabupaten;
+		if ($kabupaten_id != '') {
+			$id = $kabupaten_id;
+		} else {
+			$id = '';
+		}
+		return $id;
+	}
+
 	public function provinsi()
 	{
 		$provinsi = $this->_api_ongkir('province');
@@ -132,6 +143,22 @@ class Location extends BaseController
 		if (!empty($provinsi)) {
 			if (is_numeric($provinsi)) {
 				$kota = $this->_api_ongkir('city?province=' . $provinsi);
+				$data = json_decode($kota, true);
+				echo json_encode($data['rajaongkir']['results']);
+			} else {
+				show_404();
+			}
+		} else {
+			show_404();
+		}
+	}
+
+	public function getCity() {
+		$provinsi = $this->getProvinsi();
+		$kota = $this->getKota();
+		if (!empty($provinsi)) {
+			if (is_numeric($provinsi)) {
+				$kota = $this->_api_ongkir('city?id='.$kota.'&province=' . $provinsi);
 				$data = json_decode($kota, true);
 				echo json_encode($data['rajaongkir']['results']);
 			} else {

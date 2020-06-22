@@ -93,12 +93,22 @@
   
 function getLokasi() {
   var $op = $("#sel1");
+  var $ok = $('#sel2');
   var prov_id = '<?=$provinsi?>';
+  var kab_id = '<?=$kabupaten?>';
   $.getJSON("provinsi", function(data){        
     $.each(data, function(i,field){ 
        $op.append(`<option value="${field.province_id}" ${field.province_id === prov_id ? 'selected' : ''}>${field.province}</option>`); 
     });
   });
+
+  if (kab_id !== '') {
+    $.getJSON("kota/"+prov_id, function(data){      
+        $.each(data, function(i,field){  
+            $ok.append(`<option value="${field.city_id}" ${field.city_id === kab_id ? 'selected' : ''}>${field.type} ${field.city_name}</option>`); 
+        });
+    });
+  }
 }
 
 getLokasi();

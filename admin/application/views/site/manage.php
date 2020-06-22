@@ -8,7 +8,7 @@ $system_icon = $this->db->get_where('tbl_settings' , array('type'=>'icon'))->row
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h3 class="m-0 text-dark">Site <small>/ </small></h3>
+                <h3 class="m-0 text-dark">Site Management<small> </small></h3>
 
             </div><!-- /.col -->
 
@@ -138,8 +138,7 @@ if (isset($flash)) {
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="submit" name="submit" class="btn btn-default" value="Cancel">Cancel</button>
-                        <button type="submit" name="submit" class="btn btn-info float-right" value="Submit">Submit</button>
+                        <button type="submit" name="submit" class="btn btn-info btn-block" value="Submit">Submit</button>
                     </div>
                     <!-- /.card-footer -->
                     </form>
@@ -174,7 +173,7 @@ if (isset($flash)) {
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Ganti Logo</label>
                             <div class="col-sm-10">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFile" name="logo">
+                                    <input type="file" class="custom-file-input" id="customFile" name="name_field">
 
                                     <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
@@ -184,8 +183,7 @@ if (isset($flash)) {
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="submit" name="submit" class="btn btn-default" value="Cancel">Cancel</button>
-                        <button type="submit" name="submit" class="btn btn-info float-right" value="Submit">Submit</button>
+                        <button type="submit" name="submit" class="btn btn-info btn-block" value="Submit">Submit</button>
                     </div>
                     <!-- /.card-footer -->
                     </form>
@@ -196,7 +194,7 @@ if (isset($flash)) {
                         <h3 class="card-title">Icon</h3>
                     </div>
 
-                    <?php echo form_open_multipart('site_management/upload_logo', 'class=m-form'); ?>
+                    <?php echo form_open_multipart('site_management/upload_icon', 'class=m-form'); ?>
                     <div class="card-body">
                         <?php
                         $path_img = base_url() . 'assets/icon/' . $system_icon;
@@ -215,7 +213,7 @@ if (isset($flash)) {
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Ganti Icon</label>
                             <div class="col-sm-10">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFile" name="icon">
+                                    <input type="file" class="custom-file-input" id="customFile" name="name_field">
 
                                     <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
@@ -225,8 +223,7 @@ if (isset($flash)) {
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="submit" name="submit" class="btn btn-default" value="Cancel">Cancel</button>
-                        <button type="submit" name="submit" class="btn btn-info float-right" value="Submit">Submit</button>
+                        <button type="submit" name="submit" class="btn btn-info btn-block" value="Submit">Submit</button>
                     </div>
                     <!-- /.card-footer -->
                     </form>
