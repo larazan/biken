@@ -76,7 +76,7 @@
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <section class="tracking">
+                    <!-- <section class="tracking">
                         <div class="content">
                             <h2>Lacak status dan posisi paket</h2>
                             <div class="input-group">
@@ -86,11 +86,14 @@
                                 </span>
                             </div>
                         </div>
-                    </section>
+                    </section> -->
+                    <div id="cp_widget_free"></div>
+                    <script src="https://www.cekpengiriman.com/widget/cp_widget.js"></script>
                 </div>
                 <div class="col-md-2"></div>
             </div>
         </div>
+
         <!-- /container -->
     </div>
     <!-- /SECTION -->

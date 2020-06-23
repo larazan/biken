@@ -52,7 +52,7 @@ class Snap extends CI_Controller {
 		  'id' => 'a1',
 		  'price' => 18000,
 		  'quantity' => 3,
-		  'name' => "Apple"
+		  'name' => "Apple2"
 		);
 
 		// Optional
@@ -61,6 +61,14 @@ class Snap extends CI_Controller {
 		  'price' => 20000,
 		  'quantity' => 2,
 		  'name' => "Orange"
+		);
+
+		// Optional Ongkir
+		$item3_details = array(
+			'id' => 'a3',
+			'price' => 40000,
+			'quantity' => 3,
+			'name' => "Ongkir"
 		);
 
 		// Optional
@@ -90,7 +98,7 @@ class Snap extends CI_Controller {
 
 		// Optional
 		$customer_details = array(
-		  'first_name'    => "Andri",
+		  'first_name'    => "Andri2",
 		  'last_name'     => "Litani",
 		  'email'         => "andri@litani.com",
 		  'phone'         => "081122334455",

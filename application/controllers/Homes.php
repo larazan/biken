@@ -21,4 +21,8 @@ class Homes extends CI_Controller {
 	public function tracking() {
 		$this->load->view('pages/tracking');
 	}
+
+	public function feed() {
+		$this->load->view('pages/feed');
+	}
 }

@@ -18,6 +18,7 @@ function __construct() {
     $this->mailPass = $this->db->get_where('tbl_settings' , array('type'=>'password'))->row()->description;
 }
 
+
 function replyAll() {
     $this->load->library('session');
 
@@ -89,6 +90,7 @@ function reply() {
 
 function test() {
     // get email address
+    $email = [];
     $query = $this->get_where_custom('status', 1);
     if ($query->num_rows() > 0) {
         foreach ($query->result() as $row) {
@@ -96,7 +98,19 @@ function test() {
         }
     }
 
-    return $email;
+    if ($email != '') {
+        $wrap = array_map(
+            function ($el) {
+                return "<span class=\"vr\">{$el}</span>";
+            },
+            $email
+        );
+
+        echo implode(' ', $wrap);
+    }
+
+    echo 'email kosong';
+    
 }
 
 function sendMail($data) {
@@ -158,7 +172,7 @@ function blast() {
     $data['query'] = $this->get_where_custom('status', 1);
     $data['flash'] = $this->session->flashdata('item');
     $data['view_file'] = "reply_all";
-    $this->template->views('subscribe/manage', $data);  
+    $this->template->views('subscribe/reply_all', $data);  
 }
 
 function view() {

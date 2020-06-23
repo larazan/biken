@@ -1,5 +1,5 @@
 <?php
-$addlink = base_url() . "subscribe/create";
+$replylink = base_url() . "subscribe/blast";
 ?>
 
 <!-- Content Header (Page header) -->
@@ -32,7 +32,7 @@ $addlink = base_url() . "subscribe/create";
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">DataTable with default features</h3>
-                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah Subscribe</a>
+                        <a href="<?= $replylink ?>" class="btn bg-primary float-right">Reply</a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
