@@ -132,12 +132,83 @@ class Snap extends CI_Controller {
 		echo $snapToken;
     }
 
-    public function finish()
-    {
-    	$result = json_decode($this->input->post('result_data'));
-    	echo 'RESULT <br><pre>';
-    	var_dump($result);
-    	echo '</pre>' ;
+    // public function finish2()
+    // {
+    // 	$result = json_decode($this->input->post('result_data'));
+    // 	echo 'RESULT <br><pre>';
+    // 	var_dump($result);
+    // 	echo '</pre>' ;
 
-    }
+	// }
+	
+	public function finish() {
+		$result = json_decode($this->input->post('result_data'));
+
+		if(isset($result->va_number[0]->bank)) {
+			$bank = $result->va_number[0]->bank;
+		} else {
+			$bank = '-';
+		}
+
+		if(isset($result->va_number[0]->va_number)) {
+			$va_number = $result->va_number[0]->va_number;
+		} else {
+			$va_number = '-';
+		}
+
+		if(isset($result->bca_va_number)) {
+			$bca_va_number = $result->bca_va_number;
+		} else {
+			$bca_va_number = '-';
+		}
+
+		if(isset($result->bill_key)) {
+			$bill_key = $result->bill_key;
+		} else {
+			$bill_key = '-';
+		}
+
+		if(isset($result->biller_code)) {
+			$biller_code = $result->biller_code;
+		} else {
+			$biller_code = '-';
+		}
+
+		if(isset($result->permata_va_number)) {
+			$permata_va_number = $result->permata_va_number;
+		} else {
+			$permata_va_number = '-';
+		}
+
+		$data = [
+				'status_code' => $result->status_code,
+				'status_message' => $result->status_message,
+				'transaction_id' => $result->transaction_id,
+				'order_id' => $result->order_id,
+				'gross_amount' => $result->gross_amount,
+				'payment_type' => $result->payment_type,
+				'transaction_time' => $result->transaction_time,
+				'transaction_status' => $result->transaction_status,
+				'bank' => $bank,
+				'va_number' => $va_number,
+				'fraud_status' => $result->fraud_status,
+				'bca_va_number' => $bca_va_number,
+				'permata_va_number' => $permata_va_number,
+				'pdf_url' => $result->pdf_url,
+				'finish_redirect_url' => $result->finish_redirect_url,
+				'bill_key' => $bill_key,
+				'biller_code' => $biller_code,
+		];
+
+		$return = $this->snapmodel->insert($data);
+		if ($return) {
+			echo "request pembayaran berhasil dilakukan";
+		} else {
+			echo "request pembayana gagal dilakukan";
+		}
+
+		$this->data['finish'] = json_decode($this->input->post('result_data'));
+		$this->load->view('konfirmasi', $data);
+
+	}
 }

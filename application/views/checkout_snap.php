@@ -12,6 +12,38 @@
     <form id="payment-form" method="post" action="<?=site_url()?>/snap/finish">
       <input type="hidden" name="result_type" id="result-type" value=""></div>
       <input type="hidden" name="result_data" id="result-data" value=""></div>
+      <div>
+        <table>
+          <tr>
+            <td>
+              <label for="">Item id</label>
+              <input type="text" id="item_id" name="item_id" value="">
+            </td>
+            <td>
+              <label for="">Price</label>
+              <input type="text" id="price" name="price" value="">
+            </td>
+            <td>
+              <label for="">Quantity</label>
+              <input type="number" id="qty" name="qty" value="">
+            </td>
+            <td>
+              <label for="">Nama barang</label>
+              <input type="text" id="name" name="name" value="">
+            </td>
+            <td>
+              <label for="">Total</label>
+              <input type="text" id="total" name="total" value="">
+            </td>
+            <td>
+              <button id="pay-button">Bayar</button>
+            </td>
+          </tr>
+        </table>
+        
+      </div>
+      
+
     </form>
     
     <button id="pay-button">Pay!</button>
