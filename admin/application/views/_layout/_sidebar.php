@@ -43,14 +43,7 @@
           </a>
           <ul class="nav nav-treeview">
 
-            <li class="nav-item">
-              <a href="<?= base_url() ?>brand/manage" class="nav-link <?= ($this->uri->segment(1) == 'brand') ? 'active' : '' ?>">
-                <i class="far fa-circle nav-icon"></i>
-                <p>
-                  Brand
-                </p>
-              </a>
-            </li>
+
 
             <li class="nav-item">
               <a href="<?= base_url() ?>category/manage" class="nav-link <?= ($this->uri->segment(1) == 'category') ? 'active' : '' ?>">
@@ -62,23 +55,52 @@
             </li>
 
             <li class="nav-item">
-              <a href="<?= base_url() ?>color/manage" class="nav-link <?= ($this->uri->segment(1) == 'color') ? 'active' : '' ?>">
+              <a href="<?= base_url() ?>SubCategory/manage" class="nav-link <?= ($this->uri->segment(1) == 'SubCategory') ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
-                  Color
+                  SubCategory
                 </p>
               </a>
             </li>
 
             <li class="nav-item">
-              <a href="<?= base_url() ?>size/manage" class="nav-link <?= ($this->uri->segment(1) == 'size') ? 'active' : '' ?>">
+              <a href="<?= base_url() ?>SubSubCategory/manage" class="nav-link <?= ($this->uri->segment(1) == 'SubSubCategory') ? 'active' : '' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>
-                  Size
+                  SubSubCategory
                 </p>
               </a>
             </li>
+
+
           </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url() ?>brand/manage" class="nav-link <?= ($this->uri->segment(1) == 'brand') ? 'active' : '' ?>">
+            <i class="fas fa-tags nav-icon"></i>
+            <p>
+              Brand
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url() ?>color/manage" class="nav-link <?= ($this->uri->segment(1) == 'color') ? 'active' : '' ?>">
+            <i class="fas fa-database nav-icon"></i>
+            <p>
+              Color
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url() ?>size/manage" class="nav-link <?= ($this->uri->segment(1) == 'size') ? 'active' : '' ?>">
+            <i class="fas fa-arrows-alt nav-icon"></i>
+            <p>
+              Size
+            </p>
+          </a>
         </li>
 
         <li class="nav-item">
@@ -160,7 +182,7 @@
           </a>
         </li>
 
-        
+
 
         <li class="nav-header">MANAJEMEN PENJUALAN</li>
         <li class="nav-item">
@@ -250,6 +272,19 @@
             </p>
           </a>
         </li>
+
+
+        <li class="nav-header">MANAJEMEN INFORMASI</li>
+        <li class="nav-item">
+          <a href="<?= base_url() ?>information/manage" class="nav-link <?= ($this->uri->segment(1) == 'information') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-bullhorn"></i>
+            <p>
+              Informasi
+            </p>
+          </a>
+        </li>
+
+        
 
 
         <li class="nav-header">MANAJEMEN PENGATURAN</li>
