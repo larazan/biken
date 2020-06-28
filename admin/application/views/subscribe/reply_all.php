@@ -84,7 +84,7 @@ if ($email != '') {
 							<div class="form-group row">
 								<label for="inputEmail3" class="col-sm-2 col-form-label">Subjek</label>
 								<div class="col-sm-6">
-									<input type="text" class="form-control" placeholder="subjek" id="subjek" name="subjek" value="" required>
+									<input type="text" class="form-control" placeholder="subjek" id="subjek" name="subjek" value="" >
 									<div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('subjek'); ?></div>
 								</div>
 							</div>

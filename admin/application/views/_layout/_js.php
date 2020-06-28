@@ -35,6 +35,7 @@
 <script src="<?php echo base_url(); ?>assets/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
 <!-- bs-custom-file-input -->
 <script src="<?php echo base_url(); ?>assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
 <!-- AdminLTE App -->
 <script src="<?php echo base_url(); ?>assets/dist/js/adminlte.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -75,7 +76,7 @@
       });
     });
 
-    $('.filter-container').filterizr({gutterPixels: 3});
+    // $('.filter-container').filterizr({gutterPixels: 3});
     $('.btn[data-filter]').on('click', function() {
       $('.btn[data-filter]').removeClass('active');
       $(this).addClass('active');
@@ -85,5 +86,6 @@
 <script type="text/javascript">
 $(document).ready(function () {
   bsCustomFileInput.init();
+  $('.sidebar').overlayScrollbars();
 });
 </script>

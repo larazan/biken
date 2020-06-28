@@ -33,8 +33,8 @@
         </li>
 
         <li class="nav-header">MANAJEMEN MASTER</li>
-        <li class="nav-item has-treeview">
-          <a href="" class="nav-link">
+        <li class="nav-item has-treeview <?= ($this->uri->segment(1) == 'category' || $this->uri->segment(1) == 'SubCategory' || $this->uri->segment(1) == 'SubSubCategory') ? 'menu-open' : '' ?>">
+          <a href="" class="nav-link <?= ($this->uri->segment(1) == 'category' || $this->uri->segment(1) == 'SubCategory' || $this->uri->segment(1) == 'SubSubCategory') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-bookmark"></i>
             <p>
               Kategori
