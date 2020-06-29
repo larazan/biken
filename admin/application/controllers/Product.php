@@ -298,7 +298,9 @@ class Product extends BaseController
 			$data['headline'] = "Update Product";
 		}
 
-		$data['categories'] = $this->_custom_query("SELECT * FROM tbl_category ORDER BY id DESC");
+		$mysql_query = "SELECT tbl_subsubcategory.*, tbl_subcategory.*, tbl_category.*, tbl_subcategory.created_at AS sub_date, tbl_subsubcategory.created_at AS subsub_date  FROM tbl_subsubcategory LEFT JOIN tbl_subcategory ON tbl_subsubcategory.subcat_id = tbl_subcategory.sub_id LEFT JOIN tbl_category ON tbl_subcategory.cat_id = tbl_category.id ORDER BY subsub_id DESC";
+        $categories = $this->_custom_query($mysql_query);
+		$data['categories'] = $categories; //$this->_custom_query("SELECT * FROM tbl_category ORDER BY id DESC");
 		$data['brands'] = $this->_custom_query("SELECT * FROM tbl_brand ORDER BY brand_id DESC");
 
 		$data['sizes'] = $this->getSizes();

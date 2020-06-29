@@ -123,7 +123,7 @@ class Information extends BaseController
         }
     }
 
-    public function manage()
+    public function tentang_kami()
     {
         $this->load->library('session');
 

@@ -38,7 +38,7 @@ $backlink = base_url() . "SubSubCategory/manage";
                     <!-- /.card-header -->
                     <!-- form start -->
                     <?php
-                    $form_location = base_url() . "SubCategory/create/" . $update_id;
+                    $form_location = base_url() . "SubSubCategory/create/" . $update_id;
                     ?>
                     <form class="form-horizontal" method="post" action="<?= $form_location ?>">
 
@@ -46,23 +46,31 @@ $backlink = base_url() . "SubSubCategory/manage";
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">SubSubCategory Name</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="SubCategory Name" id="sub_name" name="sub_name" value="<?= $sub_name ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('sub_name'); ?></div>
+                                    <input type="text" class="form-control" placeholder="SubSubCategory Name" id="subsub_name" name="subsub_name" value="<?= $subsub_name ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('subsub_name'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">SubCategory</label>
                                 <div class="col-sm-6">
-                                    <?php
+                                    <select name="subcat_id" class="form-control">  
+                                        <option value="" selected="selected">Please Select</option>
+                                    <?php 
+                                    foreach ($subcategories->result_array() as $row) {
+                                    ?> 
+                                        <option value="<?=$row['sub_id']?>"><?=$row['category_name'] .' / '. $row['sub_name']?></option>
+                                    <?php } ?>
+                                    </select>
+                                    <!-- <?php
                                     $additional_dd_code = 'class="form-control"';
                                     $kategori_induk = array('' => 'Please Select');
                                     foreach ($subcategories->result_array() as $row) {
                                         $kategori_induk[$row['sub_id']] = $row['sub_name'];
                                     }
                                     echo form_dropdown('subcat_id', $kategori_induk, $subcat_id, $additional_dd_code);
-                                    ?>
+                                    ?> -->
 
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('cat_id'); ?></div>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('subcat_id'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -75,9 +83,9 @@ $backlink = base_url() . "SubSubCategory/manage";
                                         '1' => 'Active',
                                         '0' => 'Inactive'
                                     );
-                                    echo form_dropdown('status', $options, $status, $additional_dd_code);
+                                    echo form_dropdown('subsub_status', $options, $subsub_status, $additional_dd_code);
                                     ?>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('status'); ?></div>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('subsub_status'); ?></div>
                                 </div>
                             </div>
 

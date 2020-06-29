@@ -51,6 +51,7 @@ class Category extends BaseController
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
 					redirect('Category/create/' . $update_id);
+					// redirect('Category/manage');
 				} else {
 					$this->_insert($data);
 					$update_id = $this->get_max();
@@ -58,7 +59,8 @@ class Category extends BaseController
 					$flash_msg = "The category was successfully added.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
-					redirect('Category/create/' . $update_id);
+					// redirect('Category/create/' . $update_id);
+					redirect('Category/manage');
 				}
 			}
 		}

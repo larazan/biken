@@ -12,6 +12,12 @@ class SubSubCategory extends BaseController
 		$this->isLoggedIn();
 	}
 
+	function tes() {
+		// $mysql_query = "SELECT tbl_subsubcategory.*, tbl_subcategory.*, tbl_subsubcategory.created_at AS subsub_date FROM tbl_subsubcategory LEFT JOIN tbl_subcategory ON tbl_subsubcategory.subcat_id = tbl_subcategory.sub_id ORDER BY subsub_id DESC";
+		$mysql_query = "SELECT tbl_subsubcategory.*, tbl_subcategory.*, tbl_category.*, tbl_subcategory.created_at AS sub_date, tbl_subsubcategory.created_at AS subsub_date  FROM tbl_subsubcategory LEFT JOIN tbl_subcategory ON tbl_subsubcategory.subcat_id = tbl_subcategory.sub_id LEFT JOIN tbl_category ON tbl_subcategory.cat_id = tbl_category.id ORDER BY subsub_id DESC";
+        $query = $this->_custom_query($mysql_query);
+	}
+
 	public function index()
 	{
 		$this->template->views('subsubcategory/manage');
@@ -19,8 +25,8 @@ class SubSubCategory extends BaseController
 
 	public function manage()
 	{
-        // $mysql_query = "SELECT * FROM tbl_subsubcategory ORDER BY subsub_id DESC";
-        $mysql_query = "SELECT tbl_subsubcategory.*, tbl_subcategory.*, tbl_subsubcategory.created_at AS subsub_date FROM tbl_subsubcategory LEFT JOIN tbl_subcategory ON tbl_subsubcategory.subcat_id = tbl_subcategory.sub_id ORDER BY subsub_id DESC";
+		$mysql_query = "SELECT tbl_subsubcategory.*, tbl_subcategory.*, tbl_category.*, tbl_subcategory.created_at AS sub_date, tbl_subsubcategory.created_at AS subsub_date  FROM tbl_subsubcategory LEFT JOIN tbl_subcategory ON tbl_subsubcategory.subcat_id = tbl_subcategory.sub_id LEFT JOIN tbl_category ON tbl_subcategory.cat_id = tbl_category.id ORDER BY subsub_id DESC";
+		// $mysql_query = "SELECT tbl_subsubcategory.*, tbl_subcategory.*, tbl_subsubcategory.created_at AS subsub_date FROM tbl_subsubcategory LEFT JOIN tbl_subcategory ON tbl_subsubcategory.subcat_id = tbl_subcategory.sub_id ORDER BY subsub_id DESC";
         $data['query'] = $this->_custom_query($mysql_query);
 		$data['flash'] = $this->session->flashdata('item');
 		$this->template->views('subsubcategory/manage', $data);
@@ -59,7 +65,8 @@ class SubSubCategory extends BaseController
 					$flash_msg = "The subsubcategory was successfully added.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
-					redirect('SubSubCategory/create/' . $update_id);
+					// redirect('SubSubCategory/create/' . $update_id);
+					redirect('SubSubCategory/manage');
 				}
 			}
 		}
@@ -76,7 +83,9 @@ class SubSubCategory extends BaseController
 			$data['headline'] = "Edit SubSubCategory";
 		}
 
-        $data['subcategories'] = $this->_custom_query("SELECT * FROM tbl_subcategory ORDER BY sub_id DESC");
+		$mysql_query = "SELECT tbl_subcategory.*, tbl_category.*, tbl_subcategory.created_at AS sub_date FROM tbl_subcategory LEFT JOIN tbl_category ON tbl_subcategory.cat_id = tbl_category.id ORDER BY sub_id DESC";
+        $query = $this->_custom_query($mysql_query);
+        $data['subcategories'] = $query; //$this->_custom_query("SELECT * FROM tbl_subcategory ORDER BY sub_id DESC");
 		$data['update_id'] = $update_id;
 		$data['flash'] = $this->session->flashdata('item');
 

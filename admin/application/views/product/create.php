@@ -68,17 +68,23 @@ $backlink = base_url() . "product/manage";
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">SKU</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder=" SKU" id="sku" name="sku" value="<?= $sku ?>" required>
+                                <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('sku'); ?></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Category</label>
                             <div class="col-sm-6">
-                                <?php
-                                $additional_dd_code = 'class="form-control"';
-                                $kategori_produk = array('' => 'Please Select');
-                                foreach ($categories->result_array() as $row) {
-                                    $kategori_produk[$row['id']] = $row['category_name'];
-                                }
-                                echo form_dropdown('product_category', $kategori_produk, $product_category, $additional_dd_code);
-                                ?>
-
+                                <select name="product_category" class="form-control">
+                                    <option value="" selected="selected">Please Select</option>
+                                    <?php
+                                    foreach ($categories->result_array() as $row) {
+                                    ?>
+                                        <option value="<?= $row['subsub_id'] ?>"><?= $row['category_name'] . ' / ' . $row['sub_name'] . ' / ' . $row['subsub_name'] ?></option>
+                                    <?php } ?>
+                                </select>
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_category'); ?></div>
                             </div>
                         </div>
@@ -108,13 +114,7 @@ $backlink = base_url() . "product/manage";
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_image'); ?></div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">SKU</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" placeholder=" SKU" id="sku" name="sku" value="<?= $sku ?>" required>
-                                <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('sku'); ?></div>
-                            </div>
-                        </div>
+                        
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Price</label>
                             <div class="col-sm-6">

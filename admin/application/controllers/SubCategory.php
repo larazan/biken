@@ -60,6 +60,7 @@ class SubCategory extends BaseController
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
 					redirect('SubCategory/create/' . $update_id);
+					// redirect('Category/manage');
 				} else {
 					$this->_insert($data);
 					$update_id = $this->get_max();
@@ -67,7 +68,8 @@ class SubCategory extends BaseController
 					$flash_msg = "The subcategory was successfully added.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
-					redirect('SubCategory/create/' . $update_id);
+					// redirect('SubCategory/create/' . $update_id);
+					redirect('SubCategory/manage');
 				}
 			}
 		}

@@ -276,7 +276,7 @@
 
         <li class="nav-header">MANAJEMEN INFORMASI</li>
         <li class="nav-item">
-          <a href="<?= base_url() ?>information/manage" class="nav-link <?= ($this->uri->segment(1) == 'information') ? 'active' : '' ?>">
+          <a href="<?= base_url() ?>information/tentang_kami" class="nav-link <?= ($this->uri->segment(1) == 'information') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-bullhorn"></i>
             <p>
               Informasi

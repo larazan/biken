@@ -75,9 +75,9 @@ $backlink = base_url() . "SubCategory/manage";
                                         '1' => 'Active',
                                         '0' => 'Inactive'
                                     );
-                                    echo form_dropdown('status', $options, $status, $additional_dd_code);
+                                    echo form_dropdown('sub_status', $options, $sub_status, $additional_dd_code);
                                     ?>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('status'); ?></div>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('sub_status'); ?></div>
                                 </div>
                             </div>
 

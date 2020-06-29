@@ -190,7 +190,7 @@ class Payment extends BaseController
         }
 
         $this->db->order_by('id');
-        $data['banks'] = $this->db->get('bank');
+        $data['banks'] = $this->_custom_query("SELECT * FROM tbl_bank ORDER BY id DESC");
         $data['update_id'] = $update_id;
         $data['flash'] = $this->session->flashdata('item');
         $this->template->views('Payment/create', $data);

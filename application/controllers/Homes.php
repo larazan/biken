@@ -25,4 +25,12 @@ class Homes extends CI_Controller {
 	public function feed() {
 		$this->load->view('pages/feed');
 	}
+
+	public function info() {
+		$this->load->view('pages/info');
+	}
+
+	public function payment() {
+		$this->load->view('pages/payment');
+	}
 }

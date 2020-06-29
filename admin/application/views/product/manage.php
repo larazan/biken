@@ -58,10 +58,10 @@ $addlink = base_url() . "product/create";
                                     $status = $row->product_status;
 
                                     if ($status == 1) {
-                                        $status_label = "m-badge--success";
+                                        $status_label = "badge-success";
                                         $status_desc = "Active";
                                     } else {
-                                        $status_label = "m-badge--danger";
+                                        $status_label = "badge-danger";
                                         $status_desc = "Inactive";
                                     }
 
@@ -73,7 +73,7 @@ $addlink = base_url() . "product/create";
                                     <tr>
                                         <td><?= $no++ ?> </td>
                                         <td>
-                                            <?= $row->name ?>
+                                            <?= $row->product_title ?>
                                         </td>
                                         <td>
                                             <?= $row->sku ?>
@@ -82,10 +82,10 @@ $addlink = base_url() . "product/create";
                                             <?php echo ($row->product_image == '') ? '' : '<img src="'.$gambar.'" class="img-responsive" width="80px">' ?>
                                         </td>
                                         <td>
-                                            <?= $row->price ?>
+                                            <?= $row->product_price ?>
                                         </td>
                                         <td>
-                                            <span style="width: 110px;"><span class="m-badge <?= $status_label ?> m-badge--wide"><?= $status_desc ?></span></span>
+                                            <span style="width: 110px;"><span class="badge <?= $status_label ?> badge--wide"><?= $status_desc ?></span></span>
                                         </td>
                                         <td><?= $tgl ?></td>
                                         <td class="text-center">
