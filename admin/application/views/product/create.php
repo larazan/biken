@@ -82,7 +82,7 @@ $backlink = base_url() . "product/manage";
                                     <?php
                                     foreach ($categories->result_array() as $row) {
                                     ?>
-                                        <option value="<?= $row['subsub_id'] ?>"><?= $row['category_name'] . ' / ' . $row['sub_name'] . ' / ' . $row['subsub_name'] ?></option>
+                                        <option value="<?= $row['subsub_id'] ?>"><?= $row['category_name'] . ' / ' . $row['sub_name'] . ' /'?> <span class="bold" style="font-weight: bold;"> <?= $row['subsub_name'] ?> </span> </option>
                                     <?php } ?>
                                 </select>
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_category'); ?></div>

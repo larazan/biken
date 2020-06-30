@@ -1,429 +1,627 @@
 <!DOCTYPE html>
 <html lang="en">
-  <?php include 'application/views/layouts/head.php' ?>
-	<body>
-		<!-- HEADER -->
-		<?php include 'application/views/layouts/header.php' ?>
-		<!-- /HEADER -->
+<?php include 'application/views/layouts/head.php' ?>
+<style>
+    /*------------------------
+Radio & Checkbox CSS
+-------------------------*/
+    .form-control {
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        width: 100%;
+        height: 70px;
+        padding: 14px 18px;
+        line-height: 1.42857143;
+        border: 1px solid #dfe2e7;
+        background-color: #dfe2e7;
+        text-transform: capitalize;
+        letter-spacing: 0px;
+        margin-bottom: 16px;
+        -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 0px 0px rgba(0, 0, 0, .075);
+        -webkit-appearance: none;
+    }
 
-		<!-- NAVIGATION -->
-		<?php include 'application/views/layouts/navbar.php' ?>
-		<!-- /NAVIGATION -->
+    input[type=radio].with-font,
+    input[type=checkbox].with-font {
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
 
-		<!-- BREADCRUMB -->
-		<div id="breadcrumb" class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-12">
-						<ul class="breadcrumb-tree">
-							<li><a href="<?= base_url()?>Homes">Home</a></li>
-							<li class="active">Shop</li>
-						</ul>
-					</div>
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /BREADCRUMB -->
+    input[type=radio].with-font~label:before,
+    input[type=checkbox].with-font~label:before {
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f1db";
+        letter-spacing: 10px;
+        font-size: 1.2em;
+        color: #dfe2e7;
+        width: 1.4em;
+    }
 
-		<!-- SECTION -->
-		<div class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<!-- ASIDE -->
-					<div id="aside" class="col-md-3">
-						<!-- aside Widget -->
-						<div class="aside">
-							<h3 class="aside-title">Kategori</h3>
-							<div class="checkbox-filter">
+    input[type=radio].with-font:checked~label:before,
+    input[type=checkbox].with-font:checked~label:before {
+        content: "\f00c";
+        font-size: 1.2em;
+        color: #0943c6;
+        letter-spacing: 5px;
+    }
 
-								<div class="input-checkbox">
-									<input type="checkbox" id="category-1">
-									<label for="category-1">
-										<span></span>
-										Laptop
-										<small>(120)</small>
-									</label>
-								</div>
+    input[type=checkbox].with-font~label:before {
+        content: "\f096";
+    }
 
-								<div class="input-checkbox">
-									<input type="checkbox" id="category-2">
-									<label for="category-2">
-										<span></span>
-										Smartphone
-										<small>(740)</small>
-									</label>
-								</div>
+    input[type=checkbox].with-font:checked~label:before {
+        content: "\f046";
+        color: #0943c6;
+    }
 
-								<div class="input-checkbox">
-									<input type="checkbox" id="category-3">
-									<label for="category-3">
-										<span></span>
-										Kamera
-										<small>(1450)</small>
-									</label>
-								</div>
+    input[type=radio].with-font:focus~label:before,
+    input[type=checkbox].with-font:focus~label:before,
+    input[type=radio].with-font:focus~label,
+    input[type=checkbox].with-font:focus~label {}
 
-								<div class="input-checkbox">
-									<input type="checkbox" id="category-4">
-									<label for="category-4">
-										<span></span>
-										Aksesoris
-										<small>(578)</small>
-									</label>
-								</div>
-							</div>
-						</div>
-						<!-- /aside Widget -->
+    .box {
+        background-color: #fff;
+        border-radius: 8px;
+        border: 2px solid #e9ebef;
+        padding: 50px;
+        margin-bottom: 40px;
+    }
 
-						<!-- aside Widget -->
-						<div class="aside">
-							<h3 class="aside-title">Harga</h3>
-							<div class="price-filter">
-								<div id="price-slider"></div>
-								<div class="input-number price-min">
-									<input id="price-min" type="number">
-									<span class="qty-up">+</span>
-									<span class="qty-down">-</span>
-								</div>
-								<span>-</span>
-								<div class="input-number price-max">
-									<input id="price-max" type="number">
-									<span class="qty-up">+</span>
-									<span class="qty-down">-</span>
-								</div>
-							</div>
-						</div>
-						<!-- /aside Widget -->
-					</div>
-					<!-- /ASIDE -->
+    .box-title {
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        font-size: 16px;
+        font-weight: 700;
+        color: #094bde;
+        letter-spacing: 2px;
+    }
 
-					<!-- STORE -->
-					<div id="store" class="col-md-9">
-						<!-- store top filter -->
-						<div class="store-filter clearfix">
-							<div class="store-sort">
-								<label>
-									Urutkan:
-									<select class="input-select">
-										<option value="0">Terbaru</option>
-										<option value="1">Termurah</option>
-									</select>
-								</label>
+    .plan-selection {
+        border-bottom: 2px solid #e9ebef;
+        padding-bottom: 25px;
+        margin-bottom: 35px;
+    }
 
-								<label>
-									Tampilkan:
-									<select class="input-select">
-										<option value="0">9</option>
-										<option value="1">18</option>
-									</select>
-								</label>
-							</div>
-						</div>
-						<!-- /store top filter -->
+    .plan-selection:last-child {
+        border-bottom: 0px;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+    }
 
-						<!-- store products -->
-						<div class="row">
-							<!-- product -->
-							<div class="col-md-4 col-xs-6">
-								<div class="product">
-									<div class="product-img">
-										<img src="<?= base_url()?>assets/theme/img/product01.png" alt="">
-										<div class="product-label">
-											<span class="sale">-30%</span>
-											<span class="new">NEW</span>
-										</div>
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-										<div class="product-btns">
-											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-										</div>
-									</div>
-									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /product -->
+    .plan-data {
+        position: relative;
+    }
 
-							<!-- product -->
-							<div class="col-md-4 col-xs-6">
-								<div class="product">
-									<div class="product-img">
-										<img src="<?= base_url()?>assets/theme/img/product02.png" alt="">
-										<div class="product-label">
-											<span class="new">NEW</span>
-										</div>
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i>
-										</div>
-										<div class="product-btns">
-											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-										</div>
-									</div>
-									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /product -->
+    .plan-data label {
+        font-size: 20px;
+        margin-bottom: 15px;
+        font-weight: 400;
+    }
 
-							<div class="clearfix visible-sm visible-xs"></div>
+    .plan-text {
+        padding-left: 35px;
+    }
 
-							<!-- product -->
-							<div class="col-md-4 col-xs-6">
-								<div class="product">
-									<div class="product-img">
-										<img src="<?= base_url()?>assets/theme/img/product03.png" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-										<div class="product-rating">
-										</div>
-										<div class="product-btns">
-											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-										</div>
-									</div>
-									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /product -->
+    .plan-price {
+        position: absolute;
+        right: 0px;
+        color: #094bde;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -1px;
+        line-height: 1.5;
+        bottom: 43px;
+    }
 
-							<div class="clearfix visible-lg visible-md"></div>
+    .term-price {
+        bottom: 18px;
+    }
 
-							<!-- product -->
-							<div class="col-md-4 col-xs-6">
-								<div class="product">
-									<div class="product-img">
-										<img src="<?= base_url()?>assets/theme/img/product04.png" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-										<div class="product-rating">
-										</div>
-										<div class="product-btns">
-											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-										</div>
-									</div>
-									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /product -->
+    .secure-price {
+        bottom: 68px;
+    }
 
-							<div class="clearfix visible-sm visible-xs"></div>
+    .summary-block {
+        border-bottom: 2px solid #d7d9de;
+    }
 
-							<!-- product -->
-							<div class="col-md-4 col-xs-6">
-								<div class="product">
-									<div class="product-img">
-										<img src="<?= base_url()?>assets/theme/img/product05.png" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-										<div class="product-rating">
-										</div>
-										<div class="product-btns">
-											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-										</div>
-									</div>
-									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /product -->
+    .summary-block:last-child {
+        border-bottom: 0px;
+    }
 
-							<!-- product -->
-							<div class="col-md-4 col-xs-6">
-								<div class="product">
-									<div class="product-img">
-										<img src="<?= base_url()?>assets/theme/img/product06.png" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i>
-										</div>
-										<div class="product-btns">
-											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-										</div>
-									</div>
-									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /product -->
+    .summary-content {
+        padding: 28px 0px;
+    }
 
-							<div class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
+    .summary-price {
+        color: #094bde;
+        font-size: 20px;
+        font-weight: 400;
+        letter-spacing: -1px;
+        margin-bottom: 0px;
+        display: inline-block;
+        float: right;
+    }
 
-							<!-- product -->
-							<div class="col-md-4 col-xs-6">
-								<div class="product">
-									<div class="product-img">
-										<img src="<?= base_url()?>assets/theme/img/product07.png" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-										<div class="product-btns">
-											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-										</div>
-									</div>
-									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /product -->
+    .summary-small-text {
+        font-weight: 700;
+        font-size: 12px;
+        color: #8f929a;
+    }
 
-							<!-- product -->
-							<div class="col-md-4 col-xs-6">
-								<div class="product">
-									<div class="product-img">
-										<img src="<?= base_url()?>assets/theme/img/product08.png" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-										<div class="product-rating">
-										</div>
-										<div class="product-btns">
-											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-										</div>
-									</div>
-									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /product -->
+    .summary-text {
+        margin-bottom: -10px;
+    }
 
-							<div class="clearfix visible-sm visible-xs"></div>
+    .summary-title {
+        font-weight: 700;
+        font-size: 14px;
+        color: #1c1e22;
+    }
 
-							<!-- product -->
-							<div class="col-md-4 col-xs-6">
-								<div class="product">
-									<div class="product-img">
-										<img src="<?= base_url()?>assets/theme/img/product09.png" alt="">
-									</div>
-									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href="#">product name goes here</a></h3>
-										<h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-										<div class="product-rating">
-										</div>
-										<div class="product-btns">
-											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-										</div>
-									</div>
-									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-									</div>
-								</div>
-							</div>
-							<!-- /product -->
-						</div>
-						<!-- /store products -->
+    .summary-head {
+        display: inline-block;
+        width: 120px;
+    }
 
-						<!-- store bottom filter -->
-						<div class="store-filter clearfix">
-							<span class="store-qty">Showing 20-100 products</span>
-							<ul class="store-pagination">
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-							</ul>
-						</div>
-						<!-- /store bottom filter -->
-					</div>
-					<!-- /STORE -->
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-		<!-- /SECTION -->
+    .widget {
+        margin-bottom: 30px;
+        background-color: #e9ebef;
+        padding: 50px;
+        border-radius: 6px;
+    }
 
-		<!-- NEWSLETTER -->
-		<?php include 'application/views/layouts/newsletter.php' ?>
-		<!-- /NEWSLETTER -->
+    .widget:last-child {
+        border-bottom: 0px;
+    }
 
-		<!-- FOOTER -->
-		<?php include 'application/views/layouts/footer.php' ?>
-		<!-- /FOOTER -->
+    .widget-title {
+        color: #094bde;
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 25px;
+        letter-spacing: 1px;
+        display: table;
+        line-height: 1;
+    }
 
-		<!-- jQuery Plugins -->
-		<?php include 'application/views/layouts/jspack.php' ?>
+    .btn {
+        font-family: 'Noto Sans', sans-serif;
+        font-size: 16px;
+        text-transform: capitalize;
+        font-weight: 700;
+        padding: 12px 36px;
+        border-radius: 4px;
+        line-height: 2;
+        letter-spacing: 0px;
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        transition: all 0.3s;
+        word-wrap: break-word;
+        white-space: normal !important;
+    }
 
-	</body>
+    .btn-default {
+        background-color: #0943c6;
+        color: #fff;
+        border: 1px solid #0943c6;
+    }
+
+    .btn-default:hover {
+        background-color: #063bb3;
+        color: #fff;
+        border: 1px solid #063bb3;
+    }
+
+    .btn-default.focus,
+    .btn-default:focus {
+        background-color: #063bb3;
+        color: #fff;
+        border: 1px solid #063bb3;
+    }
+
+    .flex-sm-row {
+        -ms-flex-direction: row !important;
+        flex-direction: row !important;
+    }
+
+    .mb-auto,
+    .my-auto {
+        margin-bottom: auto !important;
+    }
+
+    .mt-auto,
+    .my-auto {
+        margin-top: auto !important;
+    }
+
+    .media-body {
+        -ms-flex: 1;
+        flex: 1;
+    }
+
+    .col-auto {
+        position: relative;
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .media {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: start;
+        align-items: flex-start;
+    }
+
+    .boxed {
+        padding: 0px 8px 0 8px;
+        background-color: #4bb8a9;
+        color: white;
+    }
+
+    .table-summary tr {
+
+        padding: 10px;
+    }
+
+    .form-checkout {
+        height: 34px;
+        padding: 6px 12px;
+        background-color: #fff;
+        text-transform: capitalize;
+    }
+
+    .invalid-feedback {
+        display: none;
+        width: 100%;
+        margin-top: .25rem;
+        font-size: 80%;
+        color: #dc3545;
+    }
+
+    .boxed-1 {
+        padding: 0px 8px 0 8px;
+        color: black !important;
+        border: 1px solid #aaaa;
+    }
+</style>
+
+<body>
+    <!-- HEADER -->
+    <?php include 'application/views/layouts/header.php' ?>
+    <!-- /HEADER -->
+
+    <!-- NAVIGATION -->
+    <?php include 'application/views/layouts/navbar.php' ?>
+    <!-- /NAVIGATION -->
+
+    <!-- BREADCRUMB -->
+    <div id="breadcrumb" class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb-tree">
+                        <li><a href="#">Home</a></li>
+                        <li class="active">Profiles</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /BREADCRUMB -->
+
+    <!-- SECTION -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <div class="row">
+                <div class="row2">
+                    <h2 class="card-title space ">Checkout</h2>
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                    <div class="box">
+                        <h4 class="mb-3 widget-title">Billing address</h4>
+                        <form class="needs-validation" novalidate>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName">First name</label>
+                                    <input type="text" class="form-control form-checkout" id="firstName" placeholder="" value="" required>
+                                    <div class="invalid-feedback">
+                                        Valid first name is required.
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName">Last name</label>
+                                    <input type="text" class="form-control form-checkout" id="lastName" placeholder="" value="" required>
+                                    <div class="invalid-feedback">
+                                        Valid last name is required.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control form-checkout" id="username" placeholder="Username" required>
+                                <div class="invalid-feedback" style="width: 100%;">
+                                    Your username is required.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                                <input type="email" class="form-control form-checkout" id="email" placeholder="you@example.com">
+                                <div class="invalid-feedback">
+                                    Please enter a valid email address for shipping updates.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="address">Address</label>
+                                <input type="text" class="form-control form-checkout" id="address" placeholder="1234 Main St" required>
+                                <div class="invalid-feedback">
+                                    Please enter your shipping address.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+                                <input type="text" class="form-control form-checkout" id="address2" placeholder="Apartment or suite">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-5 mb-3">
+                                    <label for="country">Country</label>
+                                    <select class="custom-select form-control form-checkout" id="country" required>
+                                        <option value="">Choose...</option>
+                                        <option>United States</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select a valid country.
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="state">State</label>
+                                    <select class="custom-select form-control form-checkout" id="state" required>
+                                        <option value="">Choose...</option>
+                                        <option>California</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid state.
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="zip">Zip</label>
+                                    <input type="text" class="form-control form-checkout" id="zip" placeholder="" required>
+                                    <div class="invalid-feedback">
+                                        Zip code required.
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="mb-4">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="same-address">
+                                <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="save-info">
+                                <label class="custom-control-label" for="save-info">Save this information for next time</label>
+                            </div>
+                            <hr class="mb-4">
+
+                            <h4 class="mb-3">Payment</h4>
+
+                            <div class="d-block my-3">
+                                <div class="custom-control custom-radio">
+                                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                                    <label class="custom-control-label" for="credit">Credit card</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="debit">Debit card</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="paypal">PayPal</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="cc-name">Name on card</label>
+                                    <input type="text" class="form-control form-checkout" id="cc-name" placeholder="" required>
+                                    <small class="text-muted">Full name as displayed on card</small>
+                                    <div class="invalid-feedback">
+                                        Name on card is required
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="cc-number">Credit card number</label>
+                                    <input type="text" class="form-control form-checkout" id="cc-number" placeholder="" required>
+                                    <div class="invalid-feedback">
+                                        Credit card number is required
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <label for="cc-expiration">Expiration</label>
+                                    <input type="text" class="form-control form-checkout" id="cc-expiration" placeholder="" required>
+                                    <div class="invalid-feedback">
+                                        Expiration date required
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="cc-cvv">CVV</label>
+                                    <input type="text" class="form-control form-checkout" id="cc-cvv" placeholder="" required>
+                                    <div class="invalid-feedback">
+                                        Security code required
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="mb-4">
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+
+                    <div class="widget2">
+                        <h4 class="widget-title">Order Summary</h4>
+                        <div class="card border-0 ">
+                            <div class="card-header card-2">
+                                <p class="card-text text-muted mt-md-4 mb-2 space">YOUR ORDER </p>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row2">
+                                    <table class="table table-summary">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62">
+                                                </td>
+                                                <td width="220">
+                                                    <p class="mb-0"><b>EC-GO Bag Standard</b></p><small class="text-muted">1 Week Subscription</small>
+                                                </td>
+                                                <td>
+                                                    <p class="boxed">2</p>
+                                                </td>
+                                                <td width="140" style="text-align: right;">
+                                                    <p><b>179 SEK</b></p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62">
+                                                </td>
+                                                <td width="220">
+                                                    <p class="mb-0"><b>EC-GO Bag Standard</b></p><small class="text-muted">1 Week Subscription</small>
+                                                </td>
+                                                <td>
+                                                    <p class="boxed">2</p>
+                                                </td>
+                                                <td width="140" style="text-align: right;">
+                                                    <p><b>179 SEK</b></p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62">
+                                                </td>
+                                                <td width="220">
+                                                    <p class="mb-0"><b>EC-GO Bag Standard</b></p><small class="text-muted">1 Week Subscription</small>
+                                                </td>
+                                                <td>
+                                                    <p class="boxed">2</p>
+                                                </td>
+                                                <td width="140" style="text-align: right;">
+                                                    <p><b>179 SEK</b></p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+
+
+                            <hr class="my-2">
+                            <div class="row2 ">
+                                <table class="">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-1"><b>Subtotal</b></p>
+                                            </td>
+                                            <td width="300">
+
+                                            </td>
+
+                                            <td width="140" style="text-align: right;">
+                                                <p class="mb-1"><b>179 SEK</b></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-1"><b>Shipping</b></p>
+                                            </td>
+                                            <td width="300">
+
+                                            </td>
+
+                                            <td width="140" style="text-align: right;">
+                                                <p class="mb-1"><b>0 SEK</b></p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="mb-1"><b>TOTAL</b></p>
+                                            </td>
+                                            <td width="300">
+
+                                            </td>
+
+                                            <td width="140" style="text-align: right;">
+                                                <p class="mb-1"><b>179 SEK</b></p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <hr class="my-0">
+                            </div>
+                        </div>
+                        <div class="row mb-5 mt-4 ">
+                            <div class="col-md-7 col-lg-6 mx-auto"><button type="button" class="btn btn-block btn-outline-primary btn-lg">ADD GIFT CODE</button></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    </div>
+    </div>
+
+    <!-- /container -->
+    </div>
+    <!-- /SECTION -->
+
+    <!-- NEWSLETTER -->
+    <?php include 'application/views/layouts/newsletter.php' ?>
+    <!-- /NEWSLETTER -->
+
+    <!-- FOOTER -->
+    <?php include 'application/views/layouts/footer.php' ?>
+    <!-- /FOOTER -->
+
+    <!-- jQuery Plugins -->
+    <?php include 'application/views/layouts/jspack.php' ?>
+    <script>
+        $(document).ready(function() {
+            $('.details-slick').slick();
+        });
+    </script>
+</body>
+
 </html>

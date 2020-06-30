@@ -65,7 +65,7 @@ $addlink = base_url() . "product/create";
                                         $status_desc = "Inactive";
                                     }
 
-                                    $tgl = getNiceDate($row->created_at, 'indon');
+                                    $tgl = getNiceDate($row->created_at, 'indo');
 
                                     $gambar = $path.$row->product_image;
                                 ?>
