@@ -12,49 +12,38 @@
     <form id="payment-form" method="post" action="<?=site_url()?>/snap/finish">
       <input type="hidden" name="result_type" id="result-type" value=""></div>
       <input type="hidden" name="result_data" id="result-data" value=""></div>
-      <div>
-        <table>
-          <tr>
-            <td>
-              <label for="">Item id</label>
-              <input type="text" id="item_id" name="item_id" value="">
-            </td>
-            <td>
-              <label for="">Price</label>
-              <input type="text" id="price" name="price" value="">
-            </td>
-            <td>
-              <label for="">Quantity</label>
-              <input type="number" id="qty" name="qty" value="">
-            </td>
-            <td>
-              <label for="">Nama barang</label>
-              <input type="text" id="name" name="name" value="">
-            </td>
-            <td>
-              <label for="">Total</label>
-              <input type="text" id="total" name="total" value="">
-            </td>
-            <td>
-              <button id="pay-button">Bayar</button>
-            </td>
-          </tr>
-        </table>
-        
-      </div>
-      
-
     </form>
     
-    <button id="pay-button">Pay!</button>
+    <form>
+      item id :
+      <input type="text" id="id" name="id" value="a1">
+      price :
+      <input type="text" id="price" name="price" value="10000">
+      quantity :
+      <input type="text" id="quantity" name="quantity" value="1">
+      Nama Barang :
+      <input type="text" id="name" name="name" value="apple">
+      Total :
+      <input type="text" id="gross_amount" name="gross_amount" value="10000">
+      <button id="pay-button">Bayar</button>
+    </form>
+
     <script type="text/javascript">
-  
+
     $('#pay-button').click(function (event) {
       event.preventDefault();
       $(this).attr("disabled", "disabled");
-    
+      
+      var id            = $("#idk").val();
+      var price         = $("#price").val();
+      var quantity      = $("#quantity").val();
+      var name          = $("#name").val();
+      var gross_amount  = $("#gross_amount").val();
+
     $.ajax({
+      method : 'POST',
       url: '<?=site_url()?>/snap/token',
+      data : {id: id, price: price, quantity: quantity, name: name, gross_amount: gross_amount},
       cache: false,
 
       success: function(data) {

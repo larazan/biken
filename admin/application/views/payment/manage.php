@@ -67,6 +67,7 @@ $addlink = base_url() . "payment/create";
                                         $status_desc = "Inactive";
                                     }
 
+                                    $opened = ($row->opened != 1)? 'seal' : '';
                                     $tgl = getNiceDate($row->created_at, 'indon');
 
                                     $gambar = $path.$row->featured_image;
@@ -75,7 +76,7 @@ $addlink = base_url() . "payment/create";
                                     <tr>
                                         <td><?= $no++ ?> </td>
                                         <td>
-                                            <?= $row->name ?>
+                                            <span class="<?=$opened?>"><?= $row->name ?></span>  
                                         </td>
                                         <td>
                                             <?= $row->email ?>

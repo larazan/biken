@@ -189,6 +189,8 @@ class Payment extends BaseController
             $data['headline'] = "Update Payment";
         }
 
+        $this->_set_to_opened($update_id);
+
         $this->db->order_by('id');
         $data['banks'] = $this->_custom_query("SELECT * FROM tbl_bank ORDER BY id DESC");
         $data['update_id'] = $update_id;
@@ -240,6 +242,11 @@ class Payment extends BaseController
         $this->_update($update_id, $data);
     }
 
+    function _set_to_opened($update_id) {
+        $data['opened'] = 1;
+        $this->_update($update_id, $data);
+    }
+
 	function fetch_data_from_post()
 	{
 		$data['email'] = $this->input->post('email', true);
@@ -268,6 +275,7 @@ class Payment extends BaseController
             $data['date_payment'] = $row->date_payment;
             $data['featured_image'] = $row->featured_image;
             $data['status'] = $row->status;
+            $data['opened'] = $row->opened;
             $data['description'] = $row->description;
             $data['created_at'] = $row->created_at;
             $data['updated_at'] = $row->updated_at;
