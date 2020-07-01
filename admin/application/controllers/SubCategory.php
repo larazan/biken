@@ -115,6 +115,7 @@ class SubCategory extends BaseController
 	{
         $data['cat_id'] = $this->input->post('cat_id', true);
 		$data['sub_name'] = $this->input->post('sub_name', true);
+		$data['subcat_url'] = url_title($this->input->post('sub_name', true));
 		$data['sub_status'] = $this->input->post('sub_status', true);
 		$data['created_at'] = time();
 		return $data;
@@ -127,6 +128,7 @@ class SubCategory extends BaseController
             $data['sub_id'] = $row->sub_id;
             $data['cat_id'] = $row->cat_id;
 			$data['sub_name'] = $row->sub_name;
+			$data['subcat_url'] = $row->subcat_url;
 			$data['sub_status'] = $row->sub_status;
 			$data['created_at'] = $row->created_at;
 			$data['updated_at'] = $row->updated_at;

@@ -50,7 +50,7 @@ $addlink = base_url() . "SubSubCategory/create";
                             <tbody>
                                 <?php $no = 1;
                                 foreach ($query->result() as $row) {
-                                    $editLink = base_url() . "SubCategory/create/" . $row->subsub_id;
+                                    $editLink = base_url() . "SubSubCategory/create/" . $row->subsub_id;
                                     $deleteLink = base_url(). "modal/popup/delete/" . $row->subsub_id . "/subsubcategory";
                                     $status = $row->subsub_status;
 

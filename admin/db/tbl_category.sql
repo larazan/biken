@@ -15,6 +15,7 @@
 CREATE TABLE IF NOT EXISTS `tbl_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(100) DEFAULT NULL,
+  `cat_url` varchar(100) DEFAULT NULL,
   `category_description` text,
   `status` tinyint(4) DEFAULT NULL,
   `created_at` int(11) DEFAULT NULL,
@@ -24,11 +25,11 @@ CREATE TABLE IF NOT EXISTS `tbl_category` (
 
 -- Dumping data for table ecommerce.tbl_category: ~4 rows (approximately)
 /*!40000 ALTER TABLE `tbl_category` DISABLE KEYS */;
-INSERT INTO `tbl_category` (`id`, `category_name`, `category_description`, `status`, `created_at`, `updated_at`) VALUES
-	(4, 'Handphone & Aksesoris', NULL, 1, 1593165344, 1593165344),
-	(5, 'Pakaian Pria', NULL, 1, 1593165403, 1593165403),
-	(6, 'Pakaian Wanita', NULL, 1, 1593165393, 1593165393),
-	(7, 'Komputer & Aksesoris', NULL, 1, 1593393338, 1593393338);
+INSERT INTO `tbl_category` (`id`, `category_name`, `cat_url`, `category_description`, `status`, `created_at`, `updated_at`) VALUES
+	(4, 'Handphone & Aksesoris', 'Handphone-Aksesoris', NULL, 1, 1593566749, 1593566749),
+	(5, 'Pakaian Pria', 'Pakaian-Pria', NULL, 1, 1593566742, 1593566742),
+	(6, 'Pakaian Wanita', 'Pakaian-Wanita', NULL, 1, 1593566728, 1593566728),
+	(7, 'Komputer & Aksesoris', 'Komputer-Aksesoris', NULL, 1, 1593566703, 1593566703);
 /*!40000 ALTER TABLE `tbl_category` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

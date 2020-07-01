@@ -81,8 +81,9 @@ $backlink = base_url() . "product/manage";
                                     <option value="" selected="selected">Please Select</option>
                                     <?php
                                     foreach ($categories->result_array() as $row) {
+                                        $selected = ($row['subsub_id'] == $product_category) ? 'selected' : '';
                                     ?>
-                                        <option value="<?= $row['subsub_id'] ?>"><?= $row['category_name'] . ' / ' . $row['sub_name'] . ' /'?> <span class="bold" style="font-weight: bold;"> <?= $row['subsub_name'] ?> </span> </option>
+                                        <option value="<?= $row['subsub_id'] ?>" <?=$selected?>><?= $row['category_name'] . ' / ' . $row['sub_name'] . ' /'?> <span class="bold" style="font-weight: bold;"> <?= $row['subsub_name'] ?> </span> </option>
                                     <?php } ?>
                                 </select>
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_category'); ?></div>

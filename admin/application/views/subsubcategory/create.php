@@ -57,8 +57,10 @@ $backlink = base_url() . "SubSubCategory/manage";
                                         <option value="" selected="selected">Please Select</option>
                                     <?php 
                                     foreach ($subcategories->result_array() as $row) {
+                                        $selected = ($row['sub_id'] == $subcat_id) ? 'selected' : '';
                                     ?> 
-                                        <option value="<?=$row['sub_id']?>"><?=$row['category_name'] .' / '. $row['sub_name']?></option>
+    
+                                        <option value="<?=$row['sub_id']?>" <?=$selected?>><?=$row['category_name'] .' / '. $row['sub_name']?></option>
                                     <?php } ?>
                                     </select>
                                     <!-- <?php

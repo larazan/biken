@@ -105,6 +105,7 @@ class Category extends BaseController
 	function fetch_data_from_post()
 	{
 		$data['category_name'] = $this->input->post('category_name', true);
+		$data['cat_url'] = url_title($this->input->post('category_name', true));
 		$data['status'] = $this->input->post('status', true);
 		$data['created_at'] = time();
 		$data['updated_at'] = time();
@@ -117,6 +118,7 @@ class Category extends BaseController
 		foreach ($query->result() as $row) {
 			$data['id'] = $row->id;
 			$data['category_name'] = $row->category_name;
+			$data['cat_url'] = $row->cat_url;
 			$data['status'] = $row->status;
 			$data['created_at'] = $row->created_at;
 			$data['updated_at'] = $row->updated_at;

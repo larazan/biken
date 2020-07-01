@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
   PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ecommerce.tbl_product: ~1 rows (approximately)
+-- Dumping data for table ecommerce.tbl_product: ~9 rows (approximately)
 /*!40000 ALTER TABLE `tbl_product` DISABLE KEYS */;
 INSERT INTO `tbl_product` (`product_id`, `product_title`, `sku`, `product_description`, `product_specification`, `product_size`, `product_color`, `product_image`, `product_price`, `product_quantity`, `product_category`, `product_brand`, `product_weight`, `product_view`, `product_url`, `product_status`, `created_at`, `updated_at`) VALUES
 	(1, 'Laptop SNSV Core i3-8560', 'CS323', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:4:{i:0;a:2:{s:4:"name";s:9:"Prosessor";s:5:"value";s:18:"Intel Core i7-8650";}i:1;a:2:{s:4:"name";s:18:"Penyimpanan(Utama)";s:5:"value";s:9:"SSD 256Gb";}i:2;a:2:{s:4:"name";s:21:"Penyimpanan(Sekunder)";s:5:"value";s:9:"HDD 500Gb";}i:3;a:2:{s:4:"name";s:3:"RAM";s:5:"value";s:9:"DDR-4 8Gb";}}', 'a:0:{}', 'a:0:{}', '200626041459_product06.png', 10000000, 11, 2, 1, 5, NULL, 'Laptop-SNSV-Core-i3-8560', 1, 1593137700, 1593137700),
