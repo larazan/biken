@@ -102,7 +102,8 @@ class Order extends BaseController
 
 	function fetch_data_from_post()
 	{
-		$data['order_id'] = $this->input->post('order_id', true);
+		$data['session_id'] = $this->input->post('session_id', true);
+		$data['no_order'] = $this->input->post('no_order', true);
         $data['cus_id'] = $this->input->post('cus_id', true);
         $data['payment_id'] = $this->input->post('payment_id', true);
         $data['order_total'] = $this->input->post('order_total', true);

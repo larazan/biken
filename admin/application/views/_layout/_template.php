@@ -10,7 +10,7 @@
 
   </head>
 
-  <body class="hold-transition skin-blue sidebar-mini">
+  <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
       <!-- header -->
       <?php echo @$_header; ?> <!-- nav -->

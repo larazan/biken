@@ -57,10 +57,10 @@ $addlink = base_url() . "order/create";
                                     $status = $row->order_status;
 
                                     if ($status == 1) {
-                                        $status_label = "m-badge--success";
+                                        $status_label = "badge-success";
                                         $status_desc = "Active";
                                     } else {
-                                        $status_label = "m-badge--danger";
+                                        $status_label = "badge-danger";
                                         $status_desc = "Inactive";
                                     }
 
@@ -82,7 +82,7 @@ $addlink = base_url() . "order/create";
                                             <?= $row->order_total ?>
                                         </td>
                                         <td>
-                                            <span style="width: 110px;"><span class="m-badge <?= $status_label ?> m-badge--wide"><?= $status_desc ?></span></span>
+                                            <span style="width: 110px;"><span class="badge <?= $status_label ?> badge--wide"><?= $status_desc ?></span></span>
                                         </td>
                                         <td><?= $tgl ?></td>
                                         <td class="text-center">

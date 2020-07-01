@@ -51,6 +51,7 @@ class Category extends BaseController
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
 					redirect('Category/create/' . $update_id);
+					// redirect('Category/manage');
 				} else {
 					$this->_insert($data);
 					$update_id = $this->get_max();
@@ -58,7 +59,8 @@ class Category extends BaseController
 					$flash_msg = "The category was successfully added.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
-					redirect('Category/create/' . $update_id);
+					// redirect('Category/create/' . $update_id);
+					redirect('Category/manage');
 				}
 			}
 		}
@@ -103,6 +105,7 @@ class Category extends BaseController
 	function fetch_data_from_post()
 	{
 		$data['category_name'] = $this->input->post('category_name', true);
+		$data['cat_url'] = url_title($this->input->post('category_name', true));
 		$data['status'] = $this->input->post('status', true);
 		$data['created_at'] = time();
 		$data['updated_at'] = time();
@@ -115,6 +118,7 @@ class Category extends BaseController
 		foreach ($query->result() as $row) {
 			$data['id'] = $row->id;
 			$data['category_name'] = $row->category_name;
+			$data['cat_url'] = $row->cat_url;
 			$data['status'] = $row->status;
 			$data['created_at'] = $row->created_at;
 			$data['updated_at'] = $row->updated_at;

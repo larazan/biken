@@ -15,19 +15,21 @@
 CREATE TABLE IF NOT EXISTS `tbl_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(100) DEFAULT NULL,
+  `cat_url` varchar(100) DEFAULT NULL,
   `category_description` text,
   `status` tinyint(4) DEFAULT NULL,
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ecommerce.tbl_category: ~3 rows (approximately)
+-- Dumping data for table ecommerce.tbl_category: ~4 rows (approximately)
 /*!40000 ALTER TABLE `tbl_category` DISABLE KEYS */;
-INSERT INTO `tbl_category` (`id`, `category_name`, `category_description`, `status`, `created_at`, `updated_at`) VALUES
-	(1, 'Computer', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 1, 1592438400, 1592438400),
-	(2, 'Laptop', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 1, 1592438400, 1592438400),
-	(3, 'Phone', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 1, 1592438400, 1592438400);
+INSERT INTO `tbl_category` (`id`, `category_name`, `cat_url`, `category_description`, `status`, `created_at`, `updated_at`) VALUES
+	(4, 'Handphone & Aksesoris', 'Handphone-Aksesoris', NULL, 1, 1593566749, 1593566749),
+	(5, 'Pakaian Pria', 'Pakaian-Pria', NULL, 1, 1593566742, 1593566742),
+	(6, 'Pakaian Wanita', 'Pakaian-Wanita', NULL, 1, 1593566728, 1593566728),
+	(7, 'Komputer & Aksesoris', 'Komputer-Aksesoris', NULL, 1, 1593566703, 1593566703);
 /*!40000 ALTER TABLE `tbl_category` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
