@@ -41,4 +41,12 @@ class Homes extends CI_Controller {
 	public function checkout() {
 		$this->load->view('pages/checkout');
 	}
+
+	public function transaction() {
+		$this->load->view('pages/transaksi');
+	}
+
+	public function detail_trans() {
+		$this->load->view('pages/detail_trans');
+	}
 }
