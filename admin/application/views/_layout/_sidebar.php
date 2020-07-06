@@ -234,6 +234,17 @@
           </a>
         </li>
 
+        <li class="nav-header">MANAJEMEN TRANSAKSI</li>
+
+        <li class="nav-item">
+          <a href="<?= base_url() ?>transaction/manage" class="nav-link <?= ($this->uri->segment(1) == 'transaction') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-refresh"></i>
+            <p>
+              Transaksi
+            </p>
+          </a>
+        </li>
+
         <li class="nav-header">MANAJEMEN LAPORAN</li>
 
         <li class="nav-item">

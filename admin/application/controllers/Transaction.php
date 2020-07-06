@@ -20,6 +20,11 @@ class Transaction extends BaseController
     public function detail()
 	{
 		$this->template->views('transaction/detail');
+	}
+	
+	public function invoice()
+	{
+		$this->template->views('transaction/invoice');
     }
 
 	public function manage()

@@ -9,6 +9,11 @@ class Basket extends CI_Controller
 		parent::__construct();
     }
 
+    function tes() {
+        $sess = $this->session->session_id;
+        echo $sess;
+    }
+
     function index() {
         $this->load->view('detail');
     }
