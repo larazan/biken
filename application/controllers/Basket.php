@@ -93,7 +93,7 @@ class Basket extends CI_Controller
         $item_qty = $this->input->post('item_qty', TRUE);
         $item_size = $this->input->post('item_size', TRUE);
         $item_colour = $this->input->post('item_colour', TRUE);
-        $shopper_id = ''; //$this->site_security->_get_user_id();
+        $shopper_id = $this->session->userdata('userId'); //$this->site_security->_get_user_id();
 
         if (!is_numeric($shopper_id)) {
             $shopper_id = 0;
