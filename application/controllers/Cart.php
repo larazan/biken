@@ -57,8 +57,9 @@ class Cart extends CI_Controller
             redirect(base_url());
         }
 
-        $this->load->module('store_basket');
-        $query = $this->store_basket->get_where_custom('session_id', $session_id);
+        $mysql_query = "SELECT * FROM tbl_basket WHERE session_id = $session_id";
+        $this->db->where('session_id', $session_id);
+        $query =  $this->db->get('tbl_basket');
         $num_rows = $query->num_rows();
         
         if ($num_rows < 1) {
@@ -69,8 +70,7 @@ class Cart extends CI_Controller
     }
 
     function _create_checkout_token($session_id) {
-        $this->load->module('site_security');
-        $encrypted_string = $this->site_security->_encrypt_string($session_id);
+        $encrypted_string = $this->_encrypt_string($session_id);
         //remove dodge characters
         $checkout_token = str_replace('+', '-plus-', $encrypted_string);
         $checkout_token = str_replace('/', '-fwrd-', $checkout_token);
@@ -78,15 +78,13 @@ class Cart extends CI_Controller
         return $checkout_token;
     }
 
-    function _get_session_id_from_token($checkout_token) {
-        $this->load->module('site_security');
-       
+    function _get_session_id_from_token($checkout_token) {       
         //remove dodge characters
         $session_id = str_replace('-plus-', '+', $checkout_token);
         $session_id = str_replace('-fwrd-', '/', $session_id);
         $session_id = str_replace('-eqls-', '=', $session_id);
 
-        $session_id = $this->site_security->_decrypt_string($session_id);
+        $session_id = $this->_decrypt_string($session_id);
         return $session_id;
     }
 
@@ -128,8 +126,7 @@ class Cart extends CI_Controller
 
     function go_to_checkout() {
 
-        $this->load->module('site_security');
-        $shopper_id = $this->site_security->_get_user_id();
+        $shopper_id = $this->session->userdata('userId'); //$this->site_security->_get_user_id();
 
         if (!is_numeric($shopper_id)) {
             redirect('cart');
@@ -146,16 +143,14 @@ class Cart extends CI_Controller
             $shopper_id = 0;
         }
 
-        $table = 'store_basket';
+        $table = 'tbl_basket';
         $data['query'] = $this->_fetch_cart_contents($session_id, $shopper_id, $table);
         $data['num_rows'] = $data['query']->num_rows();
         $data['showing_statement'] = $this->_get_showing_statement($data['num_rows']);
 
         $data['checkout_token'] = $this->uri->segment(3);
         $data['flash'] = $this->session->flashdata('item');
-        $data['view_file'] = "go_to_checkout";
-        $this->load->module('templates');
-        $this->templates->market($data);
+        $this->load->view('go_to_checkout', $data);
     }
 
     function _attempt_draw_checkout_btn($query) {
@@ -209,6 +204,8 @@ class Cart extends CI_Controller
         if (!is_numeric($shopper_id)) {
             $shopper_id = 0;
         }
+
+        $data['checkout_token'] = $this->_create_checkout_token($session_id);
 
         $table = 'tbl_basket';
         $data['query'] = $this->_fetch_cart_contents($session_id, $shopper_id, $table);

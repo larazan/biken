@@ -63,4 +63,9 @@ class Homes extends CI_Controller
 		$this->load->view('pages/detail_trans');
 	}
 
+	public function register()
+	{
+		$this->load->view('pages/register');
+	}
+
 }

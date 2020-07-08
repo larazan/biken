@@ -14,6 +14,8 @@ class Basket extends CI_Controller
         echo $sess;
     }
 
+    
+
     function index() {
         $this->load->view('detail');
     }
@@ -135,8 +137,7 @@ class Basket extends CI_Controller
         }
 
         $customer_session_id = $this->session->session_id;
-        $this->load->module('site_security');
-        $customer_shopper_id = $this->site_security->_get_user_id();
+        $customer_shopper_id = $this->session->userdata('userId'); //$this->site_security->_get_user_id();
 
         if (($session_id == $customer_session_id) OR ($shopper_id == $customer_shopper_id)) {
             return TRUE;
