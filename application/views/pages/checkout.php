@@ -324,7 +324,7 @@ Radio & Checkbox CSS
         <!-- /container -->
     </div>
     <!-- /BREADCRUMB -->
-
+   
     <!-- SECTION -->
     <div class="section">
         <!-- container -->
@@ -336,7 +336,8 @@ Radio & Checkbox CSS
                 <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                     <div class="box">
                         <h4 class="mb-3 widget-title">Billing address</h4>
-                        <form class="needs-validation" novalidate>
+                        <form class="needs-validation" novalidate method="post" action="<?=base_url()?>cart/process_checkout">
+                            <input type="hidden" name="checkout_token" value="<?= $checkout_token ?>">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="firstName">Nama Depan</label>
@@ -419,7 +420,7 @@ Radio & Checkbox CSS
                                 <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
                             </div>
 
-                        </form>
+                        
 
                     </div>
 
@@ -438,48 +439,57 @@ Radio & Checkbox CSS
                                 <div class="row2">
                                     <table class="table table-summary">
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62">
-                                                </td>
-                                                <td width="220">
-                                                    <p class="mb-0"><b>EC-GO Bag Standard</b></p><small class="text-muted">1 Week Subscription</small>
-                                                </td>
-                                                <td>
-                                                    <p class="boxed">2</p>
-                                                </td>
-                                                <td width="140" style="text-align: right;">
-                                                    <p><b>179 SEK</b></p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62">
-                                                </td>
-                                                <td width="220">
-                                                    <p class="mb-0"><b>EC-GO Bag Standard</b></p><small class="text-muted">1 Week Subscription</small>
-                                                </td>
-                                                <td>
-                                                    <p class="boxed">2</p>
-                                                </td>
-                                                <td width="140" style="text-align: right;">
-                                                    <p><b>179 SEK</b></p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62">
-                                                </td>
-                                                <td width="220">
-                                                    <p class="mb-0"><b>EC-GO Bag Standard</b></p><small class="text-muted">1 Week Subscription</small>
-                                                </td>
-                                                <td>
-                                                    <p class="boxed">2</p>
-                                                </td>
-                                                <td width="140" style="text-align: right;">
-                                                    <p><b>179 SEK</b></p>
-                                                </td>
-                                            </tr>
+                                            <?php
+                                            $grand_total = 0;
+                                            $shipping = 0;
+                                            foreach ($query->result() as $row) {
+                                                $basket_id = $row->id;
+                                                $prod_id = $row->item_id;
+                                                $prod_colour = $row->item_colour;
+                                                $prod_size = $row->item_size;
+                                                $prod_title = $row->item_title;
+                                                $prod_price = $row->price;
+                                                $prod_qty = $row->item_qty;
+                                                $sub_total = $prod_price * $prod_qty;
+                                                $shopper_id = $row->shopper_id;
+
+                                                // product
+                                                $details = $this->db->get_where('tbl_product', array('product_id' => $prod_id))->row();
+                                                $brand_id = $details->product_brand;
+                                                $stok = $details->product_quantity;
+                                                $slug = $details->product_url;
+                                                $img = $details->product_image;
+
+                                                // brand
+                                                $brands = $this->db->get_where('tbl_brand', array('brand_id' => $brand_id))->row();
+                                                $brand_url = $brands->brand_url;
+                                                $brand_name = $brands->brand_name;
+
+                                                $stock = ($stok > 0) ? 'In Stock' : 'Out of Stock';
+
+                                                $sub_total = $prod_price;
+                                                $grand_total = $grand_total + $sub_total;
+                                                $tax = ($grand_total * 10) / 100;
+
+                                                
+                                            ?>
+                                                <tr>
+                                                    <td>
+                                                        <img class=" img-fluid" src="https://i.imgur.com/6oHix28.jpg" width="62" height="62" alt="<?= $img ?>">
+                                                    </td>
+                                                    <td width="220">
+                                                        <p class="mb-0"><b><?= $prod_title ?></b></p><small class="text-muted"><?= $brand_name ?></small>
+                                                    </td>
+                                                    <td>
+                                                        <p class="boxed"><?= $row->item_qty ?></p>
+                                                    </td>
+                                                    <td width="140" style="text-align: right;">
+                                                        <p><b><?= $sub_total ?></b></p>
+                                                    </td>
+                                                </tr>
+
+                                            <?php } ?>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -501,7 +511,7 @@ Radio & Checkbox CSS
                                             </td>
 
                                             <td width="140" style="text-align: right;">
-                                                <p class="mb-1"><b>179 SEK</b></p>
+                                                <p class="mb-1"><b><?= $grand_total ?></b></p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -525,7 +535,7 @@ Radio & Checkbox CSS
                                             </td>
 
                                             <td width="140" style="text-align: right;">
-                                                <p class="mb-1"><b>179 SEK</b></p>
+                                                <p class="mb-1"><b><?= ($grand_total + $shipping) ?></b></p>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -536,7 +546,9 @@ Radio & Checkbox CSS
                         </div>
                         <div class="row mb-5 mt-4 ">
                             <button class="btn btn-primary btn-lg btn-block" type="submit">Bayar</button>
+                            <a href="<?= base_url() ?>cart/index/<?= $checkout_token ?>" class="btn btn-info btn-block">kembali ke keranjang</a>
                         </div>
+                        </form>
                     </div>
                 </div>
 

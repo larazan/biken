@@ -129,7 +129,7 @@ class Cart extends CI_Controller
         $shopper_id = $this->session->userdata('userId'); //$this->site_security->_get_user_id();
 
         if (!is_numeric($shopper_id)) {
-            redirect('cart');
+            redirect('account');
         }
 
         $third_bit = $this->uri->segment(3);
@@ -150,7 +150,8 @@ class Cart extends CI_Controller
 
         $data['checkout_token'] = $this->uri->segment(3);
         $data['flash'] = $this->session->flashdata('item');
-        $this->load->view('go_to_checkout', $data);
+        redirect('checkout/'.$third_bit);
+        // $this->load->view('pages/checkout', $data);
     }
 
     function _attempt_draw_checkout_btn($query) {
@@ -198,8 +199,7 @@ class Cart extends CI_Controller
             $session_id = $this->session->session_id;    
         }
 
-        // $this->load->module('site_security');
-        $shopper_id = ''; //$this->site_security->_get_user_id();
+        $shopper_id = $this->session->userdata('userId');
 
         if (!is_numeric($shopper_id)) {
             $shopper_id = 0;
@@ -266,6 +266,74 @@ class Cart extends CI_Controller
         
         $data['item_id'] = $item_id;
         $this->load->view($view_file, $data);
+    }
+
+    function checkout($token) {
+        $shopper_id = $this->session->userdata('userId');
+        $third_bit = $this->uri->segment(3);
+        if ($third_bit != '') {
+            $session_id = $this->_check_and_get_session_id($third_bit);
+        } else {
+            $session_id = $this->session->session_id;    
+        }
+
+        if (!is_numeric($shopper_id)) {
+            $shopper_id = 0;
+        }
+
+        $table = 'tbl_basket';
+        $data['query'] = $this->_fetch_cart_contents($session_id, $shopper_id, $table);
+        $data['checkout_token'] = $token;
+        $data['shopper_id'] = $shopper_id;
+		$this->load->view('pages/checkout', $data);
+    }
+
+    function process_checkout() {
+        $shopper_id = $this->session->userdata('userId');
+        $submit = $this->input->post('submit', TRUE);
+
+        // check token
+        $token = $this->input->post('checkout_token');
+        $session_id = $this->_check_and_get_session_id($token);
+
+        if ($submit == 'Submit') {
+            $this->load->library('form_validation');
+            
+            $this->form_validation->set_rules('item_id', 'Item ID', 'required|numeric');
+            $this->form_validation->set_rules('item_colour', 'Item Colour', 'numeric');
+            $this->form_validation->set_rules('item_size', 'Item Size', 'numeric');
+            $this->form_validation->set_rules('item_qty', 'Item Qty', 'required|numeric');
+
+            if ($this->form_validation->run() == TRUE) {
+                $data = $this->_fetch_the_data();
+
+            }
+            
+        }
+        
+        // get id user
+        // input shipping address data
+        // calculate total plus ongkir
+
+        // delete data from tbl_basket
+        // store data to tbl_order
+        // store data to tbl_shoppertrack
+
+        $this->load->view('pages/invoice');
+    }
+
+    function _fetch_the_data() {
+        $data['firstname'] = $this->input->post('firstname', TRUE);
+        $data['lastname'] = $this->input->post('lastname', TRUE);
+        $data['phone'] = $this->input->post('phone', TRUE);
+        $data['email'] = $this->input->post('email', TRUE);
+        $data['province'] = $this->input->post('province', TRUE);
+        $data['city'] = $this->input->post('city', TRUE);  
+        $data['zipcode'] = $this->input->post('zipcode', TRUE);
+        $data['address'] = $this->input->post('address', TRUE); 
+        $data['created_at'] = time(); 
+        $data['shopper_id'] = $shopper_id;       
+        return $data;
     }
 
 }

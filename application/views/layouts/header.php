@@ -9,7 +9,15 @@
 					</ul>
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-money"></i> Rp</a></li>
-						<li><a href="#"><i class="fa fa-user-o"></i> Akun Anda</a></li>
+						<?php
+						if ($this->session->userdata('userId') != '') {
+						?>
+							<li><a href="<?=base_url()?>dashboard"><i class="fa fa-user-o"></i> Akun Anda</a></li>
+							<li><a href="<?=base_url()?>account/logout"> Logout</a></li>
+						<?php } else {
+						?>
+						<li><a href="<?=base_url()?>account"><i class="fa fa-user-o"></i> Login</a></li>
+						<?php } ?>
 					</ul>
 				</div>
 			</div>

@@ -100,8 +100,8 @@ class Account extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->index();
         } else {
-            $email = 'yono@email.com'; //$this->input->post('username');
-            $password = 'isbal'; //$this->input->post('pword');
+            $email = $this->input->post('username'); //'yono@email.com'; 
+            $password = $this->input->post('pword'); //'isbal'; 
 
             $result = $this->login_model->loginProcess($email, $password);
 
@@ -114,6 +114,10 @@ class Account extends CI_Controller
                     );
 
                     $this->session->set_userdata($sessionArray);
+
+                    // update session
+                    $this->db->where('customer_id', $res->customer_id);
+                    $this->db->update('tbl_customer', array('customer_sess' => $this->session->session_id));
 
                     redirect('homes');
                 }
@@ -257,7 +261,7 @@ class Account extends CI_Controller
         $id = $this->session->unset_userdata('isLoggedIn');
 
         if ($email == FALSE) {
-            redirect('/login');
+            redirect('account');
         }
     }
 
