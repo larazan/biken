@@ -1,35 +1,37 @@
-<!DOCTYPE html>
-<html lang="zxx" class="no-js">
-
 <head>
-	<!-- Mobile Specific Meta -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Favicon-->
-	<link rel="shortcut icon" href="<?= base_url();?>assets/img/fav.png">
-	<!-- Author Meta -->
-	<meta name="author" content="kusukadigital">
-	<!-- Meta Description -->
-	<meta name="description" content="">
-	<!-- Meta Keyword -->
-	<meta name="keywords" content="">
-	<!-- meta character set -->
-	<meta charset="UTF-8">
-	<!-- Site Title -->
-	<title><?= $title; ?></title>
-	<!--
-		CSS
-		============================================= -->
-	<link rel="stylesheet" href="<?= base_url();?>assets/css/linearicons.css">
-	<link rel="stylesheet" href="<?= base_url();?>assets/css/font-awesome.min.css">
-	<link rel="stylesheet" href="<?= base_url();?>assets/css/themify-icons.css">
-	<link rel="stylesheet" href="<?= base_url();?>assets/css/bootstrap.css">
-	<link rel="stylesheet" href="<?= base_url();?>assets/css/owl.carousel.css">
-	<link rel="stylesheet" href="<?= base_url();?>assets/css/nice-select.css">
-	<link rel="stylesheet" href="<?= base_url();?>assets/css/nouislider.min.css">
-	<link rel="stylesheet" href="<?= base_url();?>assets/css/ion.rangeSlider.css" />
-	<link rel="stylesheet" href="<?= base_url();?>assets/css/ion.rangeSlider.skinFlat.css" />
-	<link rel="stylesheet" href="<?= base_url();?>assets/css/magnific-popup.css">
-	<link rel="stylesheet" href="<?= base_url();?>assets/css/main.css">
-</head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-<body>
+		<title>Electro - HTML Ecommerce Template</title>
+
+		<!-- Google font -->
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+		<!-- Bootstrap -->
+		<link type="text/css" rel="stylesheet" href="<?= base_url()?>assets/theme/css/bootstrap.min.css"/>
+
+		<!-- Slick -->
+		<link type="text/css" rel="stylesheet" href="<?= base_url()?>assets/theme/css/slick.css"/>
+		<link type="text/css" rel="stylesheet" href="<?= base_url()?>assets/theme/css/slick-theme.css"/>
+
+		<!-- nouislider -->
+		<link type="text/css" rel="stylesheet" href="<?= base_url()?>assets/theme/css/nouislider.min.css"/>
+
+		<!-- Font Awesome Icon -->
+		<link rel="stylesheet" href="<?= base_url()?>assets/theme/css/font-awesome.min.css">
+
+		<!-- Custom stlylesheet -->
+		<link type="text/css" rel="stylesheet" href="<?= base_url()?>assets/theme/css/style.css"/>
+		<!--  -->
+		<link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+  </head>

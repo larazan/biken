@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <?php include 'application/views/layouts/head.php' ?>
+  <?php
+
+use function PHPSTORM_META\type;
+
+include 'application/views/layouts/head.php' ?>
 	<body>
 		<!-- HEADER -->
 		<?php include 'application/views/layouts/header.php' ?>
@@ -39,7 +43,7 @@
           <div class="col-md-6">
             <div class="details-slick">
               <div class="">
-                <img src="<?= base_url()?>assets/theme/img/product06.png" alt="" class="img-responsive">
+                <img src="<?= base_url()?>admin/assets/product/<?= $itemData->product_image;?>" alt="" class="img-responsive">
               </div>
               <div class="">
                 <img src="<?= base_url()?>assets/theme/img/product05.png" alt="" class="img-responsive">
@@ -50,7 +54,7 @@
             </div>
           </div>
           <div class="col-md-6 product-detail-title">
-            <h3>Laptop SNSV Core i3-8560</h3>
+            <h3><?= strtoupper($itemData->product_title);?></h3>
             <div style="display: flex;">
               <div class="product-rating">
                 <i class="fa fa-star"></i>
@@ -62,10 +66,21 @@
               <span class="reviews">10 reviews</span>
             </div>
             <div style="display: flex;">
-              <h3 class="price">Rp10juta <del class="price-del">Rp13juta</del><span class="stock-status">in stock</span></h3>
+              <h3 class="price">
+                Rp<?= number_format($itemData->product_price); ?>
+                <!-- <del class="price-del">Rp13juta</del> -->
+                <span class="stock-status"><?= ($itemData->product_quantity > 0)?'IN STOCK':'OUT OF STOCK'; ?></span>
+              </h3>
             </div>
             <div class="short-description">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</p>
+              <?php
+                if (strlen($itemData->product_description) >= 100) {
+                  echo substr($itemData->product_description, 0, 100). " ... " . substr($itemData->product_description, -5);
+                }
+                else {
+                  echo $itemData->product_description;
+                }
+              ?>
             </div>
             <div class="add-to-cart">
               <label for="">Qty</label>
@@ -96,7 +111,7 @@
           <div class="tab-content">
             <div class="tab-pane fade in active" id="home" role="tabpanel" aria-labelledby="home-tab">
               <div class="col-md-12">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto rerum iste repellendus quae. Tempora culpa cupiditate laborum non alias, impedit ut maiores rerum amet ipsam esse, itaque aperiam necessitatibus vel!</p>
+                <?= $itemData->product_description; ?>
               </div>
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="home-tab">
@@ -104,22 +119,12 @@
               <div class="col-md-8 col-md-offset-2">
                 <table class="table">
                   <tbody>
-                    <tr>
-                      <td>Prosessor</td>
-                      <td>Intel Core i7-8650</td>
-                    </tr>
-                    <tr>
-                      <td>Penyimpanan(Utama)</td>
-                      <td>SSD 256Gb</td>
-                    </tr>
-                    <tr>
-                      <td>Penyimpanan(Sekunder)</td>
-                      <td>HDD 500Gb</td>
-                    </tr>
-                    <tr>
-                      <td>RAM</td>
-                      <td>DDR-4 8Gb</td>
-                    </tr>
+                    <?php
+                      $dat = unserialize($itemData->product_specification);
+                      foreach ($dat as $dt) {
+                    ?>
+                      <tr><td><?= $dt["name"]; ?></td><td><?= $dt["value"]; ?></td></tr>
+                    <?php  } ?>
                   </tbody>
                 </table>
               </div>
