@@ -324,7 +324,7 @@ Radio & Checkbox CSS
         <!-- /container -->
     </div>
     <!-- /BREADCRUMB -->
-   
+
     <!-- SECTION -->
     <div class="section">
         <!-- container -->
@@ -336,8 +336,10 @@ Radio & Checkbox CSS
                 <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
                     <div class="box">
                         <h4 class="mb-3 widget-title">Billing address</h4>
-                        <form class="needs-validation" novalidate method="post" action="<?=base_url()?>cart/process_checkout">
+                        <form class="needs-validation" novalidate method="post" action="<?= base_url() ?>cart/process_checkout">
                             <input type="hidden" name="checkout_token" value="<?= $checkout_token ?>">
+                            <input type="hidden" name="sel1" id="sel1" value="<?=$kota?>">
+                            <input type="hidden" id="berat" value="2">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="firstName">Nama Depan</label>
@@ -374,9 +376,8 @@ Radio & Checkbox CSS
 
                             <div class="mb-3">
                                 <label for="username">Provinsi</label>
-                                <select class="custom-select form-control form-checkout" id="country" required>
+                                <select class="custom-select form-control form-checkout" name="provinsi" id="sel11" required>
                                     <option value="">Choose...</option>
-                                    <option>United States</option>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please select a valid country.
@@ -387,9 +388,8 @@ Radio & Checkbox CSS
 
                                 <div class="col-md-6 mb-3">
                                     <label for="state">Kota</label>
-                                    <select class="custom-select form-control form-checkout" id="state" required>
+                                    <select class="custom-select form-control form-checkout" name="kabupaten" id="sel22" required>
                                         <option value="">Choose...</option>
-                                        <option>California</option>
                                     </select>
                                     <div class="invalid-feedback">
                                         Please provide a valid state.
@@ -404,7 +404,33 @@ Radio & Checkbox CSS
                                 </div>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="username">Kurir</label>
+                                <select class="custom-select form-control form-checkout" name="kurir" id="kurir" required>
+                                    <option value="">Choose...</option>
+                                    <option value=""> Pilih Kurir</option>
+                                        <?php
+                                        foreach ($carrier->result() as $row) {
+                                        ?>
+                                            <?php
+                                            if ($carrierList != '') {
+                                                if (in_array($row->value, $carrierList)) { ?>
+                                                    <option value="<?= $row->value ?>"><?= $row->name ?></option>
+                                            <?php    
+                                                }
+                                            } 
+                                            ?>
+                                            
+                                        <?php } ?>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid kurir.
+                                </div>
+                            </div>
 
+                            <div class="mb-3">
+                                <div id="hasil"></div>
+                            </div>
 
                             <div class="mb-3">
                                 <label for="address">Alamat Lengkap</label>
@@ -420,7 +446,7 @@ Radio & Checkbox CSS
                                 <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
                             </div>
 
-                        
+
 
                     </div>
 
@@ -471,7 +497,7 @@ Radio & Checkbox CSS
                                                 $grand_total = $grand_total + $sub_total;
                                                 $tax = ($grand_total * 10) / 100;
 
-                                                
+
                                             ?>
                                                 <tr>
                                                     <td>
@@ -579,6 +605,106 @@ Radio & Checkbox CSS
             $('.details-slick').slick();
         });
     </script>
+
+    <script type="text/javascript">
+        function getLokasi() {
+            var $op1 = $("#sel11");
+
+            $.getJSON("<?=base_url()?>rajaongkir/provinsi", function(data) {
+                $.each(data, function(i, field) {
+                    $op1.append('<option value="' + field.province_id + '">' + field.province + '</option>');
+                });
+            });
+        }
+
+        getLokasi();
+
+        $("#sel11").on("change", function(e) {
+            e.preventDefault();
+            var option = $('option:selected', this).val();
+            $('#sel22 option:gt(0)').remove();
+            $('#kurir').val('');
+
+            if (option === '') {
+                alert('null');
+                $("#sel22").prop("disabled", true);
+                $("#kurir").prop("disabled", true);
+            } else {
+                $("#sel22").prop("disabled", false);
+                getKota1(option);
+            }
+        });
+
+        $("#sel22").on("change", function(e) {
+            e.preventDefault();
+            var option = $('option:selected', this).val();
+            $('#kurir').val('');
+
+            if (option === '') {
+                alert('null');
+                $("#kurir").prop("disabled", true);
+            } else {
+                $("#kurir").prop("disabled", false);
+            }
+        });
+
+        $("#kurir").on("change", function(e) {
+            e.preventDefault();
+            var option = $('option:selected', this).val();
+            var origin = $("#sel2").val();
+            var des = $("#sel22").val();
+            var qty = $("#berat").val();
+
+            if (qty === '0' || qty === '') {
+                alert('null');
+            } else if (option === '') {
+                alert('null');
+            } else {
+                getOrigin(origin, des, qty, option);
+            }
+        });
+
+
+        function getOrigin(origin, des, qty, cour) {
+            var $op = $("#hasil");
+            var i, j, x = "";
+
+            $.getJSON("<?=base_url()?>rajaongkir/tarif/" + origin + "/" + des + "/" + qty + "/" + cour, function(data) {
+                $.each(data, function(i, field) {
+
+                    for (i in field.costs) {
+                        x += "<p class='mb-0'><b>" + field.costs[i].service + "</b> : " + field.costs[i].description + "</p>";
+
+                        for (j in field.costs[i].cost) {
+                            x += field.costs[i].cost[j].value + "<br>" + field.costs[i].cost[j].etd + "<br>" + field.costs[i].cost[j].note;
+                        }
+                    }
+                    $op.html(x);
+
+                });
+            });
+
+        }
+
+        function getKota1(idpro) {
+            var $op = $("#sel22");
+            $.getJSON("<?=base_url()?>rajaongkir/kota/" + idpro, function(data) {
+                $.each(data, function(i, field) {
+                    $op.append('<option value="' + field.city_id + '">' + field.type + ' ' + field.city_name + '</option>');
+                });
+            });
+        }
+
+        function getKota(idpro) {
+            var $op = $("#sel2");
+            $.getJSON("<?=base_url()?>rajaongkir/kota/" + idpro, function(data) {
+                $.each(data, function(i, field) {
+                    $op.append('<option value="' + field.city_id + '">' + field.type + ' ' + field.city_name + '</option>');
+                });
+            });
+        }
+    </script>
+
 </body>
 
 </html>

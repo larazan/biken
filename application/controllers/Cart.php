@@ -268,6 +268,13 @@ class Cart extends CI_Controller
         $this->load->view($view_file, $data);
     }
 
+    public function getCarrier() {
+		$this->db->where('status', 1);
+    	$this->db->order_by('kurir_id');
+		$query=$this->db->get('tbl_kurir');
+		return $query;
+	}
+
     function checkout($token) {
         $shopper_id = $this->session->userdata('userId');
         $third_bit = $this->uri->segment(3);
@@ -281,21 +288,34 @@ class Cart extends CI_Controller
             $shopper_id = 0;
         }
 
+        $kurirList = $this->db->get_where('tbl_settings', array('type' => 'kurir'))->row()->description;
+		if($kurirList != '') {
+			$carriers = unserialize($kurirList);
+		} else {
+			$carriers = [];
+		}
+		$data['carrierList'] = $carriers;
+        $data['carrier'] = $this->getCarrier();
+        
         $table = 'tbl_basket';
         $data['query'] = $this->_fetch_cart_contents($session_id, $shopper_id, $table);
         $data['checkout_token'] = $token;
+        $data['kota'] = $this->db->get_where('tbl_location', array('id_location' => 1))->row()->kabupaten;
         $data['shopper_id'] = $shopper_id;
 		$this->load->view('pages/checkout', $data);
     }
 
     function process_checkout() {
+        // get id user
         $shopper_id = $this->session->userdata('userId');
         $submit = $this->input->post('submit', TRUE);
 
         // check token
         $token = $this->input->post('checkout_token');
         $session_id = $this->_check_and_get_session_id($token);
+        $customer_sess = $this->db->get_where('tbl_customer' , array('customer_id'=>$shopper_id))->row()->customer_sess;
 
+        // input shipping address data
         if ($submit == 'Submit') {
             $this->load->library('form_validation');
             
@@ -306,18 +326,26 @@ class Cart extends CI_Controller
 
             if ($this->form_validation->run() == TRUE) {
                 $data = $this->_fetch_the_data();
+                $data['shopper_id'] = $shopper_id;
 
+                if ($session_id == $customer_sess) {
+                    $this->db->insert('tbl_shipping', $data);
+                }
+                
             }
             
         }
         
-        // get id user
-        // input shipping address data
         // calculate total plus ongkir
-
+        
         // delete data from tbl_basket
+        
         // store data to tbl_order
+        
         // store data to tbl_shoppertrack
+        
+        // send email to customer
+
 
         $this->load->view('pages/invoice');
     }

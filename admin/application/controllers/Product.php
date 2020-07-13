@@ -313,6 +313,14 @@ class Product extends BaseController
 		$this->template->views('product/create', $data);
 	}
 
+	function cek() {
+		$obj = 'a:4:{i:0;a:2:{s:4:"name";s:9:"Prosessor";s:5:"value";s:18:"Intel Core i7-8650";}i:1;a:2:{s:4:"name";s:18:"Penyimpanan(Utama)";s:5:"value";s:9:"SSD 256Gb";}i:2;a:2:{s:4:"name";s:21:"Penyimpanan(Sekunder)";s:5:"value";s:9:"HDD 500Gb";}i:3;a:2:{s:4:"name";s:3:"RAM";s:5:"value";s:9:"DDR-4 8Gb";}}';
+		$obj_res = unserialize($obj);
+
+		echo '<pre>';
+		echo var_dump($obj_res);
+	}
+
 	function delete()
 	{
 		$this->load->library('session');
