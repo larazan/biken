@@ -163,8 +163,13 @@
                                     <a href="<?= base_url() ?>" class="btn btn-default"><i class="fa fa-shopping-cart"></i> Continue Shopping</a>
                                 </td>
                                 <td>
-
+                                    <?php
+                                    if ($this->session->userdata('userId') != '') { 
+                                    ?>
+                                    <a href="<?php echo base_url() . 'cart/go_to_checkout/' . $checkout_token; ?>" class="btn btn-danger"> Checkout </a>    
+                                    <?php } else { ?>
                                     <a href="<?php echo base_url() . 'cart/go_to_checkout/' . $checkout_token; ?>" class="btn btn-success"> Checkout </a>
+                                    <?php } ?>
                                 </td>
                             </tr>
                         </tfoot>

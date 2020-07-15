@@ -106,8 +106,11 @@ class RajaOngkir extends CI_Controller
 		}
 	}
 
-	public function tarif($origin, $des, $qty, $cour)
+	public function tarif($origin = '', $des = '', $qty = '', $cour = '')
 	{
+		$id_location = 1;
+		$origin = $this->db->where('id_location', $id_location)->get('tbl_location')->row()->kabupaten;
+		
 		$berat = $qty * 1000;
 		$tarif = $this->_api_ongkir_post($origin, $des, $berat, $cour);
 		$data = json_decode($tarif, true);

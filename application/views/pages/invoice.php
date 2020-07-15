@@ -1,3 +1,12 @@
+<?php
+$shop_name = $this->db->get_where('settings', array('type' => 'shop_name'))->row()->description;
+$shop_address = $this->db->get_where('settings', array('type' => 'address'))->row()->description;
+$shop_phone = $this->db->get_where('settings', array('type' => 'phone'))->row()->description;
+$shop_email = $this->db->get_where('settings', array('type' => 'email'))->row()->description;
+$arr_courier = explode(", ",$courrier);
+$shipping = $arr_courier[2];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'application/views/layouts/head.php' ?>
@@ -64,19 +73,17 @@
                         <div class="col-xs-6">
                             <address>
                                 <strong>Billed To:</strong><br>
-                                John Smith<br>
-                                1234 Main<br>
-                                Apt. 4B<br>
-                                Springfield, ST 54321
+                                <?= $shop_name ?><br>
+                                <?= $shop_address ?><br>
+                                <?= $shop_phone ?>
                             </address>
                         </div>
                         <div class="col-xs-6 text-right">
                             <address>
                                 <strong>Shipped To:</strong><br>
-                                Jane Smith<br>
-                                1234 Main<br>
-                                Apt. 4B<br>
-                                Springfield, ST 54321
+                                <?= $firstname ?> <?= $lastname ?><br>
+                                <?= $address ?><br>
+                                <?= $zipcode ?>
                             </address>
                         </div>
                     </div>
@@ -90,8 +97,8 @@
                         </div>
                         <div class="col-xs-6 text-right">
                             <address>
-                                <strong>Order Date:</strong><br>
-                                March 7, 2014<br><br>
+                                <strong>Tanggal Order:</strong><br>
+                                date("d-m-Y")<br><br>
                             </address>
                         </div>
                     </div>
@@ -117,13 +124,50 @@
                                     </thead>
                                     <tbody>
                                         <!-- foreach ($order->lineItems as $line) or some such thing here -->
-                                        <tr>
-                                            <td>BS-200</td>
-                                            <td class="text-center">$10.99</td>
-                                            <td class="text-center">1</td>
-                                            <td class="text-right">$10.99</td>
-                                        </tr>
-                                        <tr>
+                                        <?php
+                                            $grand_total = 0;
+                                            $shipping = 0;
+                                            foreach ($query->result() as $row) {
+                                                $basket_id = $row->id;
+                                                $prod_id = $row->item_id;
+                                                $prod_colour = $row->item_colour;
+                                                $prod_size = $row->item_size;
+                                                $prod_title = $row->item_title;
+                                                $prod_price = $row->price;
+                                                $prod_qty = $row->item_qty;
+                                                $sub_total = $prod_price * $prod_qty;
+                                                $shopper_id = $row->shopper_id;
+
+                                                // product
+                                                $details = $this->db->get_where('tbl_product', array('product_id' => $prod_id))->row();
+                                                $brand_id = $details->product_brand;
+                                                $stok = $details->product_quantity;
+                                                $slug = $details->product_url;
+                                                $img = $details->product_image;
+
+                                                // brand
+                                                $brands = $this->db->get_where('tbl_brand', array('brand_id' => $brand_id))->row();
+                                                $brand_url = $brands->brand_url;
+                                                $brand_name = $brands->brand_name;
+
+                                                $stock = ($stok > 0) ? 'In Stock' : 'Out of Stock';
+
+                                                $sub_total = $prod_price;
+                                                $grand_total = $grand_total + $sub_total;
+                                                $tax = ($grand_total * 10) / 100;
+
+
+                                            ?>
+                                            <tr>
+                                                <td><?= $prod_title ?></td>
+                                                <td class="text-center">Rp. <?= $prod_price ?></td>
+                                                <td class="text-center"><?= $row->item_qty ?></td>
+                                                <td class="text-right">Rp. <?= $sub_total ?></td>
+                                            </tr>
+
+                                        <?php } ?>
+
+                                        <!-- <tr>
                                             <td>BS-400</td>
                                             <td class="text-center">$20.00</td>
                                             <td class="text-center">3</td>
@@ -135,24 +179,25 @@
                                             <td class="text-center">1</td>
                                             <td class="text-right">$600.00</td>
                                         </tr>
+                                        -->
                                         <tr>
                                             <td class="thick-line"></td>
                                             <td class="thick-line"></td>
                                             <td class="thick-line text-center"><strong>Subtotal</strong></td>
-                                            <td class="thick-line text-right">$670.99</td>
+                                            <td class="thick-line text-right">Rp. <?= $grand_total ?></td>
                                         </tr>
                                         <tr>
                                             <td class="no-line"></td>
                                             <td class="no-line"></td>
                                             <td class="no-line text-center"><strong>Shipping</strong></td>
-                                            <td class="no-line text-right">$15</td>
+                                            <td class="no-line text-right">Rp. <?=$shipping?></td>
                                         </tr>
                                         <tr>
                                             <td class="no-line"></td>
                                             <td class="no-line"></td>
                                             <td class="no-line text-center"><strong>Total</strong></td>
-                                            <td class="no-line text-right">$685.99</td>
-                                        </tr>
+                                            <td class="no-line text-right">Rp. <?= ($grand_total + $shipping) ?></td>
+                                        </tr> 
                                     </tbody>
                                 </table>
                             </div>

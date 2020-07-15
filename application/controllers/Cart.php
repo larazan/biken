@@ -327,7 +327,9 @@ class Cart extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 $data = $this->_fetch_the_data();
                 $data['shopper_id'] = $shopper_id;
+                $data['courrier'] = $this->input->post('layanan', TRUE);
 
+                // store shipping data to tbl_shipping
                 if ($session_id == $customer_sess) {
                     $this->db->insert('tbl_shipping', $data);
                 }
@@ -338,16 +340,38 @@ class Cart extends CI_Controller
         
         // calculate total plus ongkir
         
-        // delete data from tbl_basket
-        
+              
         // store data to tbl_order
+
         
         // store data to tbl_shoppertrack
+        $mysql_query = "SELECT * FROM tbl_basket WHERE session_id = $session_id";
+        $query = $this->db->query($mysql_query);
+        foreach ($query->result() as $row) {
+            $data['session_id'] = $row->session_id;
+            $data['item_title'] = $row->item_title;
+            $data['price'] = $row->price;
+            $data['tax'] = $row->tax;
+            $data['item_id'] = $row->item_id;
+            $data['item_size'] = $row->item_size;
+            $data['item_qty'] = $row->item_qty;
+            $data['item_colour'] = $row->item_colour;
+            $data['date_added'] = $row->date_added;
+            $data['shopper_id'] = $row->shopper_id;
+            $data['ip_address'] = $row->ip_address;
+
+            $this->db->insert('tbl_shoppertrack', $data);
+        }
+          // delete data from tbl_basket
+        $mysql_query = "delete from store_basket where session_id='$session_id'";
+        $query = $this->db->query($mysql_query);
+
         
         // send email to customer
 
-
-        $this->load->view('pages/invoice');
+        $table = 'tbl_shoppertrack';
+        $data['query'] = $this->_fetch_cart_contents($session_id, $shopper_id, $table);
+        $this->load->view('pages/invoice', $data);
     }
 
     function _fetch_the_data() {

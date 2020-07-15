@@ -338,7 +338,7 @@ Radio & Checkbox CSS
                         <h4 class="mb-3 widget-title">Billing address</h4>
                         <form class="needs-validation" novalidate method="post" action="<?= base_url() ?>cart/process_checkout">
                             <input type="hidden" name="checkout_token" value="<?= $checkout_token ?>">
-                            <input type="hidden" name="sel1" id="sel1" value="<?=$kota?>">
+                            <input type="hidden" name="sel1" id="sel1" value="<?= $kota ?>">
                             <input type="hidden" id="berat" value="2">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
@@ -409,19 +409,19 @@ Radio & Checkbox CSS
                                 <select class="custom-select form-control form-checkout" name="kurir" id="kurir" required>
                                     <option value="">Choose...</option>
                                     <option value=""> Pilih Kurir</option>
+                                    <?php
+                                    foreach ($carrier->result() as $row) {
+                                    ?>
                                         <?php
-                                        foreach ($carrier->result() as $row) {
+                                        if ($carrierList != '') {
+                                            if (in_array($row->value, $carrierList)) { ?>
+                                                <option value="<?= $row->value ?>"><?= $row->name ?></option>
+                                        <?php
+                                            }
+                                        }
                                         ?>
-                                            <?php
-                                            if ($carrierList != '') {
-                                                if (in_array($row->value, $carrierList)) { ?>
-                                                    <option value="<?= $row->value ?>"><?= $row->name ?></option>
-                                            <?php    
-                                                }
-                                            } 
-                                            ?>
-                                            
-                                        <?php } ?>
+
+                                    <?php } ?>
                                 </select>
                                 <div class="invalid-feedback">
                                     Please select a valid kurir.
@@ -430,6 +430,17 @@ Radio & Checkbox CSS
 
                             <div class="mb-3">
                                 <div id="hasil"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="username"></label>
+                                <select class="custom-select form-control form-checkout" name="layanan" id="hasil2" required>
+                                    <option value=""> Pilih Layanan</option>
+                                    
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select a valid kurir.
+                                </div>
                             </div>
 
                             <div class="mb-3">
@@ -549,7 +560,7 @@ Radio & Checkbox CSS
                                             </td>
 
                                             <td width="140" style="text-align: right;">
-                                                <p class="mb-1"><b>0 SEK</b></p>
+                                                <p class="mb-1"><b id="ongkosKirim">0 </b></p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -610,7 +621,7 @@ Radio & Checkbox CSS
         function getLokasi() {
             var $op1 = $("#sel11");
 
-            $.getJSON("<?=base_url()?>rajaongkir/provinsi", function(data) {
+            $.getJSON("<?= base_url() ?>rajaongkir/provinsi", function(data) {
                 $.each(data, function(i, field) {
                     $op1.append('<option value="' + field.province_id + '">' + field.province + '</option>');
                 });
@@ -648,6 +659,20 @@ Radio & Checkbox CSS
             }
         });
 
+        $("#hasil2").on("change", function(e) {
+            e.preventDefault();
+            var option = $('option:selected', this).val();
+
+            // console.log(option);
+            // console.log(typeof option);
+
+            var arr = option.split(","); 
+            if (option !== '') {
+                $("#ongkosKirim").html(arr[2]);
+            }
+            // console.log(arr[2]);
+        })
+
         $("#kurir").on("change", function(e) {
             e.preventDefault();
             var option = $('option:selected', this).val();
@@ -660,7 +685,8 @@ Radio & Checkbox CSS
             } else if (option === '') {
                 alert('null');
             } else {
-                getOrigin(origin, des, qty, option);
+                // getOrigin(origin, des, qty, option);
+                getPrice(origin, des, qty, option);
             }
         });
 
@@ -669,7 +695,7 @@ Radio & Checkbox CSS
             var $op = $("#hasil");
             var i, j, x = "";
 
-            $.getJSON("<?=base_url()?>rajaongkir/tarif/" + origin + "/" + des + "/" + qty + "/" + cour, function(data) {
+            $.getJSON("<?= base_url() ?>rajaongkir/tarif/" + origin + "/" + des + "/" + qty + "/" + cour, function(data) {
                 $.each(data, function(i, field) {
 
                     for (i in field.costs) {
@@ -686,9 +712,28 @@ Radio & Checkbox CSS
 
         }
 
+        function getPrice(origin, des, qty, cour) {
+            var $op = $("#hasil2");
+            var i, j, x = "";
+
+            $.getJSON("<?= base_url() ?>rajaongkir/tarif/" + origin + "/" + des + "/" + qty + "/" + cour, function(data) {
+                $.each(data, function(i, field) {
+                    for (i in field.costs) {
+                        for (j in field.costs[i].cost) {
+                            x += "<option value='" + field.code + ", " + field.costs[i].service + ", " + field.costs[i].cost[j].value +"'><span class='mb-0'><b>" + field.costs[i].service + "</b> (" + field.costs[i].description + ")</span>, Rp. " + field.costs[i].cost[j].value + ", est. " + field.costs[i].cost[j].etd + " hari, " + field.costs[i].cost[j].note + "</option>";
+                        }
+                    }
+
+                    $op.append(x);
+
+                });
+            });
+
+        }
+
         function getKota1(idpro) {
             var $op = $("#sel22");
-            $.getJSON("<?=base_url()?>rajaongkir/kota/" + idpro, function(data) {
+            $.getJSON("<?= base_url() ?>rajaongkir/kota/" + idpro, function(data) {
                 $.each(data, function(i, field) {
                     $op.append('<option value="' + field.city_id + '">' + field.type + ' ' + field.city_name + '</option>');
                 });
@@ -697,7 +742,7 @@ Radio & Checkbox CSS
 
         function getKota(idpro) {
             var $op = $("#sel2");
-            $.getJSON("<?=base_url()?>rajaongkir/kota/" + idpro, function(data) {
+            $.getJSON("<?= base_url() ?>rajaongkir/kota/" + idpro, function(data) {
                 $.each(data, function(i, field) {
                     $op.append('<option value="' + field.city_id + '">' + field.type + ' ' + field.city_name + '</option>');
                 });
