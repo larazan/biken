@@ -189,6 +189,18 @@ class Product extends BaseController
 							// 	array_push($arr_spec, array('name' => $this->input->post('type'), 'value' => $this->input->post('val')));
 							// }
 
+							if (empty($base = $this->input->post('base')))
+								die("missing string base64");
+							$arr = [];
+							foreach ($base as $index => $base64) {
+
+								if (!empty($base64)) {
+									// die("Upload error on index : {$index}");
+									$res = $this->base64ToJpeg($base64);
+									array_push($arr, $res);
+								}
+							}
+
 							$data = array(
 								'product_title' => $this->input->post('product_title', true),
 								'sku' => $this->input->post('sku', true),
@@ -204,6 +216,7 @@ class Product extends BaseController
 								'product_brand' => $this->input->post('product_brand', true),
 								'product_view' => $this->input->post('product_view', true),
 								'product_image' => $nmfile,
+								'filename' => serialize($arr),
 								'product_status' =>  $this->input->post('product_status', true),
 								'created_at' => time(),
 								'updated_at' => time()
@@ -241,7 +254,7 @@ class Product extends BaseController
 						}
 					}
 				} else {
-					
+
 					$data = array(
 						'product_title' => $this->input->post('product_title', true),
 						'sku' => $this->input->post('sku', true),
@@ -287,11 +300,13 @@ class Product extends BaseController
 			$size = $data['product_size'];
 			$data['sizeList'] = unserialize($size);
 			$color = $data['product_color'];
+			$data['filename'] = json_encode($this->jpegToBase64($update_id));
 			$data['colorList'] = unserialize($color);
 		} else {
 			$data = $this->fetch_data_from_post();
 			$data['sizeList'] = [];
 			$data['colorList'] = [];
+			$data['filename'] = [];
 		}
 
 		if (!is_numeric($update_id)) {
@@ -301,10 +316,11 @@ class Product extends BaseController
 		}
 
 		$mysql_query = "SELECT tbl_subsubcategory.*, tbl_subcategory.*, tbl_category.*, tbl_subcategory.created_at AS sub_date, tbl_subsubcategory.created_at AS subsub_date  FROM tbl_subsubcategory LEFT JOIN tbl_subcategory ON tbl_subsubcategory.subcat_id = tbl_subcategory.sub_id LEFT JOIN tbl_category ON tbl_subcategory.cat_id = tbl_category.id ORDER BY subsub_id DESC";
-        $categories = $this->_custom_query($mysql_query);
+		$categories = $this->_custom_query($mysql_query);
 		$data['categories'] = $categories; //$this->_custom_query("SELECT * FROM tbl_category ORDER BY id DESC");
 		$data['brands'] = $this->_custom_query("SELECT * FROM tbl_brand ORDER BY brand_id DESC");
 
+		
 		$data['sizes'] = $this->getSizes();
 		$data['colors'] = $this->getColors();
 
@@ -313,7 +329,53 @@ class Product extends BaseController
 		$this->template->views('product/create', $data);
 	}
 
-	function cek() {
+	function base64ToJpeg($base64_string)
+	{
+		$data = explode(';', $base64_string);
+		$dataa = explode(',', $base64_string);
+		$part = explode("/", $data[0]);
+		if (!empty($part)) {
+			$file = md5(uniqid(rand(), true)) . ".{$part[1]}";
+
+			$ifp = fopen(APPPATH . "../assets/uploads/{$file}", 'wb');
+			fwrite($ifp, base64_decode($dataa[1]));
+			fclose($ifp);
+		}
+		return $file;
+		// var_dump($file);
+	}
+
+	function jpegToBase64($id = '')
+	{
+		$id = 14;
+		$data = $this->db->get_where('upload', array('id' => $id))->row()->filename;
+		$uns = unserialize($data);
+		// var_dump($data);
+		// var_dump(unserialize($data));
+		// die();
+
+		$res = [];
+		foreach ($uns as $path) {
+			$type = pathinfo($path, PATHINFO_EXTENSION);
+			$data = file_get_contents(APPPATH . "../assets/uploads/" . $path);
+			$base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+			// array_push($res, $base64);
+			array_push($res, array($base64));
+		}
+
+		// foreach ($res as $base) {
+		//     echo "<div>";
+		//     echo "<img src='". $base ."' alt='' />";
+		//     echo "</div>";
+		// }
+
+		//  var_dump($res);
+
+		return $res;
+	}
+
+	function cek()
+	{
 		$obj = 'a:4:{i:0;a:2:{s:4:"name";s:9:"Prosessor";s:5:"value";s:18:"Intel Core i7-8650";}i:1;a:2:{s:4:"name";s:18:"Penyimpanan(Utama)";s:5:"value";s:9:"SSD 256Gb";}i:2;a:2:{s:4:"name";s:21:"Penyimpanan(Sekunder)";s:5:"value";s:9:"HDD 500Gb";}i:3;a:2:{s:4:"name";s:3:"RAM";s:5:"value";s:9:"DDR-4 8Gb";}}';
 		$obj_res = unserialize($obj);
 
@@ -375,6 +437,7 @@ class Product extends BaseController
 		$data['product_description'] = $this->input->post('product_description', true);
 		$data['product_image'] = $this->input->post('product_image', true);
 		$data['product_price'] = $this->input->post('product_price', true);
+		$data['product_discount'] = $this->input->post('product_discount', true);
 		$data['product_weight'] = $this->input->post('product_weight', true);
 		$data['product_quantity'] = $this->input->post('product_quantity', true);
 		$data['product_category'] = $this->input->post('product_category', true);
@@ -395,6 +458,7 @@ class Product extends BaseController
 			$data['product_description'] = $row->product_description;
 			$data['product_image'] = $row->product_image;
 			$data['product_price'] = $row->product_price;
+			$data['product_discount'] = $row->product_discount;
 			$data['product_weight'] = $row->product_weight;
 			$data['product_quantity'] = $row->product_quantity;
 			$data['product_category'] = $row->product_category;

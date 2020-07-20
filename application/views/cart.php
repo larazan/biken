@@ -166,9 +166,10 @@
                                     <?php
                                     if ($this->session->userdata('userId') != '') { 
                                     ?>
-                                    <a href="<?php echo base_url() . 'cart/go_to_checkout/' . $checkout_token; ?>" class="btn btn-danger"> Checkout </a>    
+                                        <a href="<?php echo base_url() . 'cart/go_to_checkout/' . $checkout_token; ?>" class="btn btn-success"> Checkout </a>
+                                       
                                     <?php } else { ?>
-                                    <a href="<?php echo base_url() . 'cart/go_to_checkout/' . $checkout_token; ?>" class="btn btn-success"> Checkout </a>
+                                        <a href="<?php echo base_url() . 'cart/go_to_option'; ?>" class="btn btn-danger"> Checkout </a> 
                                     <?php } ?>
                                 </td>
                             </tr>

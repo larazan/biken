@@ -1,8 +1,8 @@
 <?php
-$shop_name = $this->db->get_where('settings', array('type' => 'shop_name'))->row()->description;
-$shop_address = $this->db->get_where('settings', array('type' => 'address'))->row()->description;
-$shop_phone = $this->db->get_where('settings', array('type' => 'phone'))->row()->description;
-$shop_email = $this->db->get_where('settings', array('type' => 'email'))->row()->description;
+$shop_name = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
+$shop_address = $this->db->get_where('tbl_settings', array('type' => 'address'))->row()->description;
+$shop_phone = $this->db->get_where('tbl_settings', array('type' => 'phone'))->row()->description;
+$shop_email = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
 $arr_courier = explode(", ",$courrier);
 $shipping = $arr_courier[2];
 ?>

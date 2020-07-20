@@ -1,4 +1,3 @@
-<?php $inv = Invoice::view_by_id($id); ?>
 
 <?php
 $shop_name = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
@@ -21,7 +20,8 @@ $meta_description = $this->db->get_where('tbl_settings', array('type' => 'descri
 <head>
     <title>listing2</title>
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>marketplace/css/bootstrap.css">
-
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
         body {
             font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -312,15 +312,7 @@ $meta_description = $this->db->get_where('tbl_settings', array('type' => 'descri
                             <td style="font-weight: bold; color: #5cb85c; text-transform: uppercase;">Tanggal Cetak</td>
                             <td style="text-align: right;"><?= date('d-m-Y') ?></td>
                         </tr>
-                        <tr>
-                            <td style="font-weight: bold; color: #5cb85c; text-transform: uppercase;">Jatuh Tempo</td>
-                            <?php
-                            $originalDate = explode('-', $inv->due_date);
-                            $newDate = $originalDate[1] . '-' . $originalDate[0] . '-' . $originalDate[2];
-                            ?>
-                            <td style="text-align: right;"><?= $newDate ?></td>
-                        </tr>
-
+                       
                     </table>
                 </td>
             </tr>
@@ -466,24 +458,15 @@ $meta_description = $this->db->get_where('tbl_settings', array('type' => 'descri
                 </tr>
                 <tr style="padding: 20px;">
                     <td colspan="3" style="padding: 5px; border-bottom: none; border-top: none;">
-                        Terbilang : <span style="font-weight: bold; font-style: italic;"><?= ucwords(terbilang(Invoice::get_invoice_due_amount($inv->inv_id))) ?> Rupiah</span>
+                       
                     </td>
                     <td class="text-right no-border" style="padding: 5px; background-color: #f5f5f5; border-left: 1px solid #e3e3e3; border-bottom: 1px solid #e3e3e3; border-top: 1px solid #e3e3e3;"><strong>Sub Total</strong></td>
                     <td class="text-right" style="padding: 5px; background-color: #f5f5f5; border-bottom: 1px solid #e3e3e3; border-top: 1px solid #e3e3e3;"><span class="rupiah">Rp</span></td>
                     <td class="text-right" style="padding: 5px; background-color: #f5f5f5; border-right: 1px solid #e3e3e3; border-bottom: 1px solid #e3e3e3; border-top: 1px solid #e3e3e3;">
-                        <?= Invoice::get_invoice_subtotal($inv->inv_id) ?> </td>
+                        subtotal </td>
                 </tr>
-                <tr style="padding: 20px;">
-                    <td colspan="3" style="padding: 5px; border-bottom: none; border-top: none;"></td>
-                    <td class="text-right no-border" style="padding: 5px; background-color: #f5f5f5; border-left: 1px solid #e3e3e3; border-bottom: 1px solid #e3e3e3;">
-                        <strong>PPN (10.00%)</strong>
-                    </td>
-                    <td class="text-right" style="padding: 5px; background-color: #f5f5f5; border-bottom: 1px solid #e3e3e3;"><span class="rupiah">Rp</span></td>
-                    <td class="text-right" style="padding: 5px; background-color: #f5f5f5; border-right: 1px solid #e3e3e3; border-bottom: 1px solid #e3e3e3;">
-                        <?= Invoice::get_invoice_tax($inv->inv_id, 'tax') ?>
-                    </td>
-                </tr>
-
+               
+<!-- 
                 <?php if ($inv->discount > 0) { ?>
                     <tr style="padding: 20px;">
                         <td colspan="3" style="padding: 5px; border-bottom: none; border-top: none;"></td>
@@ -495,7 +478,7 @@ $meta_description = $this->db->get_where('tbl_settings', array('type' => 'descri
                             <?= Invoice::get_invoice_discount($inv->inv_id) ?>
                         </td>
                     </tr>
-                <?php } ?>
+                <?php } ?> -->
 
                
                 <tr style="padding: 20px;">
@@ -505,7 +488,7 @@ $meta_description = $this->db->get_where('tbl_settings', array('type' => 'descri
                     </td>
                     <td class="text-right" style="padding: 5px; color: #fff;background-color: #5cb85c; border-color: #4cae4c; border-bottom: 1px solid #e3e3e3;"><span class="rupiah">Rp</span></td>
                     <td class="text-right" style="padding: 5px; color: #fff;background-color: #5cb85c; border-color: #4cae4c; border-right: 1px solid #e3e3e3; border-bottom: 1px solid #e3e3e3; font-weight: bold;">
-                        <?= Invoice::get_invoice_due_amount($inv->inv_id) ?>
+                        Total
                     </td>
                 </tr>
             </tbody>

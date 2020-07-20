@@ -8,6 +8,14 @@ class Cart extends CI_Controller
         parent::__construct();
     }
 
+    function tes_mail()
+    {
+        $session_id = '6l0h8lg5r1o027ed32odjfoa6smcnb98';
+        $this->db->where('session_id', $session_id);
+        $data['query'] =  $this->db->get('tbl_basket');
+        $this->load->view('mail/mail_temp', $data);
+    }
+
     function send_mail($recipient, $subject, $body, $data = '')
     {
         // $recipient1 = 'kaishasatrio@match-advertising.com';
@@ -37,7 +45,7 @@ class Cart extends CI_Controller
     {
         //////////////////////////////////////////////////////////////////////////////
         $user_id = 2;
-        $data_transaksi = $this->store_orders->fetch_data_from_db(32);;
+        $data_transaksi = $this->store_orders->fetch_data_from_db(32);
         $type = 'CHECKOUT';
         //////////////////////////////////////////////////////////////////////////////
 
@@ -69,7 +77,8 @@ class Cart extends CI_Controller
         }
     }
 
-    function generate_transaksi_number() {
+    function generate_transaksi_number()
+    {
         $length = 3;
         $characters = '1234567890';
         $firstRandomString = '';
@@ -84,18 +93,18 @@ class Cart extends CI_Controller
         for ($i = 0; $i < $length; $i++) {
             $firstRandomString .= $characters[rand(0, strlen($characters) - 1)];
         }
-         // create fourth character
+        // create fourth character
         for ($i = 0; $i < $length; $i++) {
             $secondRandomString .= $characters[rand(0, strlen($characters) - 1)];
         }
-        $randomString = $yy.$firstRandomString.$mm.$secondRandomString.$dd;
+        $randomString = $yy . $firstRandomString . $mm . $secondRandomString . $dd;
         return $randomString;
     }
 
     function get_name($user_id)
     {
         if (is_numeric($user_id)) {
-            $name = $this->db->get_where('tbl_customer',array('customer_id'=>$user_id))->row()->customer_name;
+            $name = $this->db->get_where('tbl_customer', array('customer_id' => $user_id))->row()->customer_name;
         } else {
             $name = 'john doe';
         }
@@ -279,6 +288,11 @@ class Cart extends CI_Controller
         }
     }
 
+    function go_to_option()
+    {
+        $this->load->view('pages/option');
+    }
+
     function go_to_checkout()
     {
 
@@ -306,7 +320,7 @@ class Cart extends CI_Controller
 
         $data['checkout_token'] = $this->uri->segment(3);
         $data['flash'] = $this->session->flashdata('item');
-        redirect('checkout/' . $third_bit);
+        redirect('cart/checkout/' . $third_bit);
         // $this->load->view('pages/checkout', $data);
     }
 
@@ -376,6 +390,7 @@ class Cart extends CI_Controller
 
     function get_amount_product()
     {
+        
     }
 
     function _get_showing_statement($num_items)
@@ -462,12 +477,19 @@ class Cart extends CI_Controller
         $data['carrierList'] = $carriers;
         $data['carrier'] = $this->getCarrier();
 
+        // get total weight from tbl_basket
+        $weight = $this->getWeight($session_id);
+
         $table = 'tbl_basket';
         $data['query'] = $this->_fetch_cart_contents($session_id, $shopper_id, $table);
         $data['checkout_token'] = $token;
         $data['kota'] = $this->db->get_where('tbl_location', array('id_location' => 1))->row()->kabupaten;
         $data['shopper_id'] = $shopper_id;
         $this->load->view('pages/checkout', $data);
+    }
+
+    function getWeight($session_id) {
+        $query = $this->_fetch_cart_contents();
     }
 
     function process_checkout()
@@ -498,52 +520,52 @@ class Cart extends CI_Controller
                 // store shipping data to tbl_shipping
                 if ($session_id == $customer_sess) {
                     $this->db->insert('tbl_shipping', $data);
+
+                    // calculate total plus ongkir
+
+                    $mysql_query = "SELECT * FROM tbl_basket WHERE session_id = '$session_id'";
+                    $query = $this->db->query($mysql_query);
+                    foreach ($query->result() as $row) {
+                        $session_id = $row->session_id;
+                        $item_title = $row->item_title;
+                        $price = $row->price;
+                        $tax = $row->tax;
+                        $item_id = $row->item_id;
+                        $item_size = $row->item_size;
+                        $item_qty = $row->item_qty;
+                        $item_colour = $row->item_colour;
+                        $date_added = $row->date_added;
+                        $shopper_id = $row->shopper_id;
+                        $ip_address = $row->ip_address;
+                    }
+
+                    // store data to tbl_order
+                    $this->_store_data_order($session_id);
+
+                    // store data to tbl_shoppertrack
+                    $data['session_id'] = $session_id;
+                    $data['item_title'] = $item_title;
+                    $data['price'] = $price;
+                    $data['tax'] = $tax;
+                    $data['item_id'] = $item_id;
+                    $data['item_size'] = $item_size;
+                    $data['item_qty'] = $item_qty;
+                    $data['item_colour'] = $item_colour;
+                    $data['date_added'] = $date_added;
+                    $data['shopper_id'] = $shopper_id;
+                    $data['ip_address'] = $ip_address;
+
+                    $this->db->insert('tbl_shoppertrack', $data);
+
+                    // delete data from tbl_basket
+                    $mysql_query = "delete from store_basket where session_id='$session_id'";
+                    $query = $this->db->query($mysql_query);
+
+                    // send email to customer
+                    $this->send_mail_confirmation($shopper_id, $data, 'CHECKOUT');
                 }
             }
         }
-
-        // calculate total plus ongkir
-        
-        $mysql_query = "SELECT * FROM tbl_basket WHERE session_id = $session_id";
-        $query = $this->db->query($mysql_query);
-        foreach ($query->result() as $row) {
-            $session_id = $row->session_id;
-            $item_title = $row->item_title;
-            $price = $row->price;
-            $tax = $row->tax;
-            $item_id = $row->item_id;
-            $item_size = $row->item_size;
-            $item_qty = $row->item_qty;
-            $item_colour = $row->item_colour;
-            $date_added = $row->date_added;
-            $shopper_id = $row->shopper_id;
-            $ip_address = $row->ip_address;
-        }
-
-        // store data to tbl_order
-        $this->_store_data_order($session_id);
-
-        // store data to tbl_shoppertrack
-        $data['session_id'] = $session_id;
-        $data['item_title'] = $item_title;
-        $data['price'] = $price;
-        $data['tax'] = $tax;
-        $data['item_id'] = $item_id;
-        $data['item_size'] = $item_size;
-        $data['item_qty'] = $item_qty;
-        $data['item_colour'] = $item_colour;
-        $data['date_added'] = $date_added;
-        $data['shopper_id'] = $shopper_id;
-        $data['ip_address'] = $ip_address;
-
-        $this->db->insert('tbl_shoppertrack', $data);
-        
-        // delete data from tbl_basket
-        $mysql_query = "delete from store_basket where session_id='$session_id'";
-        $query = $this->db->query($mysql_query);
-
-        // send email to customer
-        $this->send_mail_confirmation($shopper_id, $data, 'CHECKOUT');
 
         $table = 'tbl_shoppertrack';
         $data['query'] = $this->_fetch_cart_contents($session_id, $shopper_id, $table);
@@ -565,9 +587,9 @@ class Cart extends CI_Controller
         return $data;
     }
 
-    function _store_data_order()
+    function _store_data_order($session_id)
     {
-        $mysql_query = "SELECT * FROM tbl_basket WHERE session_id = $session_id";
+        $mysql_query = "SELECT * FROM tbl_basket WHERE session_id = '$session_id'";
         $query = $this->db->query($mysql_query);
         foreach ($query->result() as $row) {
             $session_id = $row->session_id;
@@ -580,7 +602,7 @@ class Cart extends CI_Controller
         }
 
         $data['session_id'] = $session_id;
-        $data['no_order'] = 'ORD'.$this->generate_order_number();
+        $data['no_order'] = 'ORD' . $this->generate_order_number();
         // $data['no_transaksi'] = $this->generate_transaksi_number();
         $data['cus_id'] = $shopper_id;
         $data['product_id'] = $item_id;
@@ -588,7 +610,7 @@ class Cart extends CI_Controller
         $data['order_qty'] = $item_qty;
         $data['order_size'] = $item_size;
         $data['order_colour'] = $item_colour;
-        $data['order_total'] = $price*$item_qty;
+        $data['order_total'] = $price * $item_qty;
         $data['order_status'] = 'Unpaid';
         $data['tag_id'] = $this->generate_random_string(29);
         $data['order_date'] = date('d-m-Y');
@@ -597,7 +619,8 @@ class Cart extends CI_Controller
         $this->db->insert('tbl_order', $data);
     }
 
-    function generate_random_string($length) {
+    function generate_random_string($length)
+    {
         $characters = '23456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';
         for ($i = 0; $i < $length; $i++) {
@@ -606,7 +629,8 @@ class Cart extends CI_Controller
         return $randomString;
     }
 
-    function generate_order_number() {
+    function generate_order_number()
+    {
         $query = $this->db->query('SELECT no_order, order_id FROM tbl_order WHERE order_id = (SELECT MAX(order_id))');
 
         if ($query->num_rows() > 0) {
@@ -624,8 +648,9 @@ class Cart extends CI_Controller
         }
     }
 
-    function tes_no_order() {
-        $no_order = 'ORD'.$this->generate_order_number();
+    function tes_no_order()
+    {
+        $no_order = 'ORD' . $this->generate_order_number();
         echo $no_order;
-    } 
+    }
 }
