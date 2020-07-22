@@ -82,6 +82,7 @@ class Homes extends CI_Controller {
 			$data["order"] = $order;
 			$data["ctg"] = $getCtg;
 			$data["inCtg"] = $inCtg;
+			$data["allcount"] = $allcount;
 			$config['base_url'] = base_url().'shop';
 			$config['total_rows'] = $allcount;
 			$config['reuse_query_string'] = true;
@@ -112,7 +113,6 @@ class Homes extends CI_Controller {
 			$this->getList($orderQue, $ctgQue, $srch);
 			$data['listdata'] = $this->db->limit($config["per_page"], $page)->get('tbl_product')->result();
 			$data['pagination'] = $this->pagination->create_links();
-			$data['totalrow'] = $allcount;
 			$this->load->view('pages/store-standard', $data);
 	}
 

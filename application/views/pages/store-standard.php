@@ -18,7 +18,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="breadcrumb-tree">
-							<li><a href="<?= base_url()?>home-standard">Home</a></li>
+							<li><a href="<?= base_url()?>homes-standard">Home</a></li>
 							<li class="active">Shop</li>
 						</ul>
 					</div>
@@ -144,7 +144,7 @@
 
 						<!-- store bottom filter -->
 						<div class="store-filter clearfix">
-							<span class="store-qty">Showing 20-100 products</span>
+							<span class="store-qty">Showing <?= $allcount; ?> products</span>
               <?= $pagination; ?>
 						</div>
 						<!-- /store bottom filter -->

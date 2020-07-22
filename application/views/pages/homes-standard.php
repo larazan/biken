@@ -22,7 +22,7 @@
 							</div>
 							<div class="shop-body">
 								<h3>Koleksi<br>Laptop</h3>
-								<a href="#" class="cta-btn">Beli sekarang <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="<?= base_url()?>shop/1?order=baru&ctg=24" class="cta-btn">Beli sekarang <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>
@@ -36,7 +36,7 @@
 							</div>
 							<div class="shop-body">
 								<h3>Koleksi<br>Aksesoris</h3>
-								<a href="#" class="cta-btn">Beli sekarang <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="<?= base_url()?>shop/1?order=baru&ctg=26" class="cta-btn">Beli sekarang <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>
@@ -50,7 +50,7 @@
 							</div>
 							<div class="shop-body">
 								<h3>Koleksi<br>Kamera</h3>
-								<a href="#" class="cta-btn">Beli sekarang <i class="fa fa-arrow-circle-right"></i></a>
+								<a href="<?= base_url()?>shop/1?order=baru&ctg=27" class="cta-btn">Beli sekarang <i class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 					</div>

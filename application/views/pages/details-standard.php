@@ -40,12 +40,6 @@
               <div class="">
                 <img src="<?= base_url()?>admin/assets/product/<?= $itemData->product_image;?>" alt="" class="img-responsive">
               </div>
-              <div class="">
-                <img src="<?= base_url()?>assets/theme/img/product05.png" alt="" class="img-responsive">
-              </div>
-              <div class="">
-                <img src="<?= base_url()?>assets/theme/img/product04.png" alt="" class="img-responsive">
-              </div>
             </div>
           </div>
           <div class="col-md-6 product-detail-title">

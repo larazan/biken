@@ -5,7 +5,8 @@
 		<link rel="shortcut icon" href="<?= base_url()?>assets/theme/img/logos.png" type="image/x-icon">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>Electro - HTML Ecommerce Template</title>
+		<!-- <title>Electro - HTML Ecommerce Template</title> -->
+		<?php include('application/views/pages/metatags.php'); ?>
 
 		<!-- Google font -->
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
