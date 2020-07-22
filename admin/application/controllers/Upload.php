@@ -72,8 +72,15 @@ class Upload extends BaseController
             $type = pathinfo($path, PATHINFO_EXTENSION);
             $data = file_get_contents(APPPATH."../assets/uploads/".$path);
             $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-            array_push($res, $base64);
+            // array_push($res, $base64);
+            array_push($res, array($base64));
         }
+
+        // foreach ($res as $base) {
+        //     echo "<div>";
+        //     echo "<img src='". $base ."' alt='' />";
+        //     echo "</div>";
+        // }
 
         var_dump($res);
         

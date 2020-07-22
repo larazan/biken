@@ -2,6 +2,10 @@
 $backlink = base_url() . "product/manage";
 ?>
 
+<link href="<?= base_url() ?>assets/multipleUpload/dist/css/style.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script src="<?= base_url() ?>assets/multipleUpload/dist/js/uploadHBR.min.js"></script>
+
 <style type="text/css">
     .checkbox-inline {
         -webkit-columns: 6;
@@ -16,6 +20,10 @@ $backlink = base_url() . "product/manage";
     .checkbox-inline label {
         display: block;
         white-space: nowrap;
+    }
+
+    .hidden {
+        display: none !important;
     }
 </style>
 
@@ -83,7 +91,7 @@ $backlink = base_url() . "product/manage";
                                     foreach ($categories->result_array() as $row) {
                                         $selected = ($row['subsub_id'] == $product_category) ? 'selected' : '';
                                     ?>
-                                        <option value="<?= $row['subsub_id'] ?>" <?=$selected?>><?= $row['category_name'] . ' / ' . $row['sub_name'] . ' /'?> <span class="bold" style="font-weight: bold;"> <?= $row['subsub_name'] ?> </span> </option>
+                                        <option value="<?= $row['subsub_id'] ?>" <?= $selected ?>><?= $row['category_name'] . ' / ' . $row['sub_name'] . ' /' ?> <span class="bold" style="font-weight: bold;"> <?= $row['subsub_name'] ?> </span> </option>
                                     <?php } ?>
                                 </select>
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_category'); ?></div>
@@ -115,12 +123,29 @@ $backlink = base_url() . "product/manage";
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_image'); ?></div>
                             </div>
                         </div>
-                        
+
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Image</label>
+                            <div class="col-sm-10">
+
+                                <div id="uploads"></div>
+
+                                <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_image'); ?></div>
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Price</label>
                             <div class="col-sm-6">
                                 <input type="text" class="form-control" placeholder=" Price" id="product_price" name="product_price" value="<?= $product_price ?>" required>
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_price'); ?></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Discount</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder=" Discount" id="product_discount" name="product_discount" value="<?= $product_discount ?>" required>
+                                <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_discount'); ?></div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -299,6 +324,7 @@ $backlink = base_url() . "product/manage";
 
                 <?php } ?>
 
+                <div id="result-img"></div>
             </div>
             <!--/.col (left) -->
 
@@ -380,4 +406,37 @@ $backlink = base_url() . "product/manage";
             }
         });
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        uploadHBR.init({
+            "target": "#uploads",
+            "textNew": "",
+            "textTitle": "Click here or drag to upload an image",
+            "textTitleRemove": "Click here remove the image"
+        });
+        $('#reset').click(function() {
+            uploadHBR.reset('#uploads');
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        var arr = <?=$filename?>;
+        var res = document.getElementById('result-img');
+        console.log(arr);
+        console.log(arr.length);
+
+
+        for(var i=0; i < arr.length; i++){
+            console.log(arr[i]);
+            $('#base64_'+ i).val(arr[i]);
+            $('#result-img').append("<img src='"+arr[i]+"' alt='' />");
+            $("#prev_" + i).find("img").attr("src", arr[i]);
+            $("#prev_" + i).removeClass("hidden");
+            $("#new_" + i).addClass("hidden");
+        }
+    });
 </script>

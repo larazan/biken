@@ -61,3 +61,5 @@ $route['checkout/product-a'] = 'Homes/checkout';
 $route['homes-standard'] = 'Homes/standard';
 $route['electro/(:any)'] = 'Homes/detailsStandard/$1';
 $route['shop/(:any)'] = 'Homes/storeStandard/$1';
+
+$route['checkout/(:any)'] = "cart/checkout/$1";

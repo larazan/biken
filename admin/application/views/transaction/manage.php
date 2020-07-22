@@ -1,5 +1,5 @@
 <?php
-$addlink = base_url() . "payment/create";
+$addlink = base_url() . "Transaction/create";
 ?>
 
 <!-- Content Header (Page header) -->
@@ -7,7 +7,7 @@ $addlink = base_url() . "payment/create";
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h3 class="m-0 text-dark">Payment <small>/ Manage</small></h3>
+                <h3 class="m-0 text-dark">Transaction <small>/ Manage</small></h3>
 
             </div><!-- /.col -->
 
@@ -32,7 +32,7 @@ $addlink = base_url() . "payment/create";
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">DataTable with default features</h3>
-                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah Payment</a>
+                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah Transaction</a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -40,13 +40,9 @@ $addlink = base_url() . "payment/create";
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Image</th>
-                                    <th>Rekening</th>
-                                    <th>Bank</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
+                                    <th>Order ID</th>
+                                    <th>No Resi</th>
+                                    <th>Status Pembayaran</th>
                                     <th>Date</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
@@ -55,8 +51,8 @@ $addlink = base_url() . "payment/create";
                                 <?php $no = 1;
                                 $path = base_url().'assets/payment/';
                                 foreach ($query->result() as $row) {
-                                    $editLink = base_url() . "payment/create/" . $row->id;
-                                    $deleteLink = base_url(). "modal/popup/delete/" . $row->id . "/payment";
+                                    $editLink = base_url() . "transaction/create/" . $row->id;
+                                    $deleteLink = base_url(). "modal/popup/delete/" . $row->id . "/transaction";
                                     $status = $row->status;
 
                                     if ($status == 1) {
@@ -68,7 +64,7 @@ $addlink = base_url() . "payment/create";
                                     }
 
                                     $opened = ($row->opened != 1)? 'seal' : '';
-                                    $tgl = getNiceDate($row->created_at, 'indon');
+                                    $tgl = getNiceDate($row->created_at, 'indo');
 
                                     $gambar = $path.$row->featured_image;
                                 ?>

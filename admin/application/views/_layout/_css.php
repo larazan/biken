@@ -24,3 +24,10 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/ekko-lightbox/ekko-lightbox.css">
 <!-- jQuery -->
 <script src="<?php echo base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
+
+<style type="text/css">
+.seal {
+	font-weight: bold;
+	color: #ff6000;
+}
+</style>

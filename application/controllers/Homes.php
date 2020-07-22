@@ -1,8 +1,10 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Homes extends CI_Controller {
-	public function index() {
+class Homes extends CI_Controller
+{
+	public function index()
+	{
 		$this->load->view('pages/homes');
 	}
 
@@ -140,33 +142,64 @@ class Homes extends CI_Controller {
 		$exp = explode('.', $ids);		
 		$data['itemData'] = $this->db->get_where('tbl_product', array('product_id'=>$exp[1]))->row();
 		$this->load->view('pages/details-standard', $data);
+	public function store()
+	{
+		$this->load->view('pages/store');
 	}
 
-	public function profiles() {
+	public function details()
+	{
+		$this->load->view('pages/details');
+	}
+
+	public function profiles()
+	{
 		$this->load->view('pages/profiles');
 	}
 
-	public function tracking() {
+	public function tracking()
+	{
 		$this->load->view('pages/tracking');
 	}
 
-	public function feed() {
+	public function feed()
+	{
 		$this->load->view('pages/feed');
 	}
 
-	public function info() {
+	public function info()
+	{
 		$this->load->view('pages/info');
 	}
 
-	public function payment() {
+	public function payment()
+	{
 		$this->load->view('pages/payment');
 	}
 
-	public function cart() {
+	public function cart()
+	{
 		$this->load->view('pages/cart');
 	}
 
-	public function checkout() {
+	public function checkout()
+	{
 		$this->load->view('pages/checkout');
 	}
+
+	public function transaction()
+	{
+		$this->load->view('pages/transaksi');
+	}
+
+	public function detail_trans()
+	{
+		$this->load->view('pages/detail_trans');
+	}
+
+	public function register()
+	{
+		$this->load->view('pages/register');
+	}
+
 }
