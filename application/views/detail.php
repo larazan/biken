@@ -69,7 +69,7 @@
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</p>
                     </div>
                     <form action="<?= base_url() ?>Basket/add_to_basket" method="post">
-                        <input type="hidden" name="item_id" value="3">
+                        <input type="hidden" name="item_url" value="Asus-Tuf-Gaming-FX505DY-R5698T-Amd-Ryzen-5-3550H-8GB-1TB-RADEON-RX560X">
                         <input type="hidden" name="item_colour" value="1">
                         <input type="hidden" name="item_size" value="1">
                         <div class="add-to-cart">

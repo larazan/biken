@@ -102,6 +102,7 @@ class Account extends CI_Controller
         } else {
             $email = $this->input->post('username'); //'yono@email.com'; 
             $password = $this->input->post('pword'); //'isbal'; 
+            
 
             $result = $this->login_model->loginProcess($email, $password);
 

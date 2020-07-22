@@ -228,7 +228,9 @@ class Banner extends BaseController
 
 	function fetch_data_from_post()
 	{
-		$data['banner_name'] = $this->input->post('banner_name', true);
+        $data['banner_name'] = $this->input->post('banner_name', true);
+        $data['banner_caption'] = $this->input->post('banner_caption', true);
+        $data['banner_link'] = $this->input->post('banner_link', true);
         $data['banner_status'] =  $this->input->post('banner_status', true);
         $data['created_at'] = time();
         $data['updated_at'] = time();
@@ -242,6 +244,8 @@ class Banner extends BaseController
 			$data['banner_id'] = $row->banner_id;
             $data['banner_name'] = $row->banner_name;
             $data['banner_img'] = $row->banner_img;
+            $data['banner_caption'] = $row->banner_caption;
+            $data['banner_link'] = $row->banner_link;
             $data['banner_status'] = $row->banner_status;
             $data['created_at'] = $row->created_at;
             $data['updated_at'] = $row->updated_at;

@@ -339,7 +339,7 @@ Radio & Checkbox CSS
                         <form class="needs-validation" novalidate method="post" action="<?= base_url() ?>cart/process_checkout">
                             <input type="hidden" name="checkout_token" value="<?= $checkout_token ?>">
                             <input type="hidden" name="sel1" id="sel1" value="<?= $kota ?>">
-                            <input type="hidden" id="berat" value="2">
+                            <input type="hidden" id="berat" value="<?= $total_weight ?>">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="firstName">Nama Depan</label>
@@ -388,7 +388,7 @@ Radio & Checkbox CSS
 
                                 <div class="col-md-6 mb-3">
                                     <label for="state">Kota</label>
-                                    <select class="custom-select form-control form-checkout" name="kabupaten" id="sel22" required>
+                                    <select class="custom-select form-control form-checkout" name="kabupaten" id="sel22" required disabled>
                                         <option value="">Choose...</option>
                                     </select>
                                     <div class="invalid-feedback">
@@ -406,7 +406,7 @@ Radio & Checkbox CSS
 
                             <div class="mb-3">
                                 <label for="username">Kurir</label>
-                                <select class="custom-select form-control form-checkout" name="kurir" id="kurir" required>
+                                <select class="custom-select form-control form-checkout" name="kurir" id="kurir" required disabled>
                                     <option value="">Choose...</option>
                                     <option value=""> Pilih Kurir</option>
                                     <?php
@@ -434,7 +434,7 @@ Radio & Checkbox CSS
 
                             <div class="mb-3">
                                 <label for="username"></label>
-                                <select class="custom-select form-control form-checkout" name="layanan" id="hasil2" required>
+                                <select class="custom-select form-control form-checkout" name="layanan" id="hasil2" required disabled>
                                     <option value=""> Pilih Layanan</option>
                                     
                                 </select>
@@ -445,7 +445,15 @@ Radio & Checkbox CSS
 
                             <div class="mb-3">
                                 <label for="address">Alamat Lengkap</label>
-                                <textarea class="form-control form-checkout" rows="5" id="address" placeholder="1234 Main St" required></textarea>
+                                <textarea class="form-control form-checkout" rows="3" id="address" name="address" placeholder="1234 Main St" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please enter your shipping address.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="note">Note</label>
+                                <textarea class="form-control form-checkout" rows="5" id="note" name="note" placeholder="your note" required></textarea>
                                 <div class="invalid-feedback">
                                     Please enter your shipping address.
                                 </div>
@@ -521,7 +529,7 @@ Radio & Checkbox CSS
                                                         <p class="boxed"><?= $row->item_qty ?></p>
                                                     </td>
                                                     <td width="140" style="text-align: right;">
-                                                        <p><b><?= $sub_total ?></b></p>
+                                                        <p><b><?= rupiah($sub_total) ?></b></p>
                                                     </td>
                                                 </tr>
 
@@ -548,7 +556,7 @@ Radio & Checkbox CSS
                                             </td>
 
                                             <td width="140" style="text-align: right;">
-                                                <p class="mb-1"><b><?= $grand_total ?></b></p>
+                                                <p class="mb-1"><b><?= rupiah($grand_total) ?></b></p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -572,7 +580,7 @@ Radio & Checkbox CSS
                                             </td>
 
                                             <td width="140" style="text-align: right;">
-                                                <p class="mb-1"><b><?= ($grand_total + $shipping) ?></b></p>
+                                                <p class="mb-1"><b><?= rupiah($grand_total + $shipping) ?></b></p>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -687,6 +695,13 @@ Radio & Checkbox CSS
             } else {
                 // getOrigin(origin, des, qty, option);
                 getPrice(origin, des, qty, option);
+            }
+
+            if (option === '') {
+                alert('null');
+                $("#hasil2").prop("disabled", true);
+            } else {
+                $("#hasil2").prop("disabled", false);
             }
         });
 

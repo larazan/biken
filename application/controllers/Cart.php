@@ -477,19 +477,44 @@ class Cart extends CI_Controller
         $data['carrierList'] = $carriers;
         $data['carrier'] = $this->getCarrier();
 
-        // get total weight from tbl_basket
-        $weight = $this->getWeight($session_id);
+        
 
         $table = 'tbl_basket';
         $data['query'] = $this->_fetch_cart_contents($session_id, $shopper_id, $table);
+        // get total weight from tbl_basket
+        $data['total_weight'] = $this->getWeight($session_id, $shopper_id, $table);
         $data['checkout_token'] = $token;
         $data['kota'] = $this->db->get_where('tbl_location', array('id_location' => 1))->row()->kabupaten;
         $data['shopper_id'] = $shopper_id;
         $this->load->view('pages/checkout', $data);
     }
 
-    function getWeight($session_id) {
-        $query = $this->_fetch_cart_contents();
+    function getWeight($session_id, $shopper_id, $table) {
+        $weight = 0;
+        $query = $this->_fetch_cart_contents($session_id, $shopper_id, $table);
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $weight += $row->product_weight;
+            }
+        }
+
+        return $weight;
+    }
+
+    function tesWeight() {
+        $session_id = 'qb5lsh9k7c82vrnl4rf5ccj8l57b9eqt';
+        $shopper_id = 2;
+        $table = 'tbl_basket';
+        $query = $this->_fetch_cart_contents($session_id, $shopper_id, $table);
+        $weight = 0;
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $weight += $row->product_weight;
+            }
+        }
+
+        // echo $weight;
+        return $weight;
     }
 
     function process_checkout()
@@ -582,6 +607,7 @@ class Cart extends CI_Controller
         $data['city'] = $this->input->post('city', TRUE);
         $data['zipcode'] = $this->input->post('zipcode', TRUE);
         $data['address'] = $this->input->post('address', TRUE);
+        $data['note'] = $this->input->post('note', TRUE);
         $data['created_at'] = time();
         $data['shopper_id'] = $shopper_id;
         return $data;

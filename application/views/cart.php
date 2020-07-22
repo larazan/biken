@@ -84,7 +84,7 @@
                             <?php
                             $grand_total = 0;
                             foreach ($query->result() as $row) {
-                                $basket_id = $row->id;
+                                $basket_id = $row->basket_tag;
                                 $prod_id = $row->item_id;
                                 $prod_colour = $row->item_colour;
                                 $prod_size = $row->item_size;
@@ -127,8 +127,8 @@
                                     <td class="col-sm-1 col-md-1" style="text-align: center">
                                         <input type="number" class="form-control" id="exampleInputEmail1" value="<?= $row->item_qty ?>">
                                     </td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong>Rp. <?= $prod_price ?></strong></td>
-                                    <td class="col-sm-1 col-md-1 text-center"><strong><?= $sub_total ?></strong></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong><?= rupiah($prod_price) ?></strong></td>
+                                    <td class="col-sm-1 col-md-1 text-center"><strong><?= rupiah($sub_total) ?></strong></td>
                                     <td class="col-sm-1 col-md-1">
                                         <!-- <button type="button" class="btn btn-danger">
                                             <span class="glyphicon glyphicon-remove"></span> Remove
@@ -151,16 +151,18 @@
                                     <h3>Total</h3>
                                 </td>
                                 <td class="text-right">
-                                    <h5><strong><?= $grand_total ?></strong></h5>
-                                    <h3><?= $grand_total ?></h3>
+                                    <h5><strong><?= rupiah($grand_total) ?></strong></h5>
+                                    <h3><?= rupiah($grand_total) ?></h3>
                                 </td>
                             </tr>
                             <tr>
                                 <td> <span class="nfo" style="font-size: 12px; color: red; ">* harga belum termasuk ongkos kirim</span> </td>
-                                <td>   </td>
-                                <td>   </td>
+                                <td></td>
                                 <td>
-                                    <a href="<?= base_url() ?>" class="btn btn-default"><i class="fa fa-shopping-cart"></i> Continue Shopping</a>
+                                    <a href="<?= base_url() ?>homes" class="btn btn-default"><i class="fa fa-shopping-cart"></i> Continue Shopping</a>
+                                </td>
+                                <td>
+                                    <a href="<?= base_url() ?>" class="btn btn-info" class=""> Update Cart</a>
                                 </td>
                                 <td>
                                     <?php

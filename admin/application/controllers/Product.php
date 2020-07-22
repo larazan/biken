@@ -204,7 +204,7 @@ class Product extends BaseController
 							$data = array(
 								'product_title' => $this->input->post('product_title', true),
 								'sku' => $this->input->post('sku', true),
-								'product_url' => url_title($this->input->post('product_title', true)),
+								'product_url' => strtolower(url_title($this->input->post('product_title', true))),
 								'product_description' => $this->input->post('product_description', true),
 								'product_specification' => $this->serializeSpec($this->input->post('type'), $this->input->post('val')),
 								'product_size' => $this->serializeData($this->input->post('size', true)),
@@ -258,7 +258,7 @@ class Product extends BaseController
 					$data = array(
 						'product_title' => $this->input->post('product_title', true),
 						'sku' => $this->input->post('sku', true),
-						'product_url' => url_title($this->input->post('product_title', true)),
+						'product_url' => strtolower(url_title($this->input->post('product_title', true))),
 						'product_description' => $this->input->post('product_description', true),
 						'product_specification' => $this->serializeSpec($this->input->post('type'), $this->input->post('val')),
 						'product_size' => $this->serializeData($this->input->post('size', true)),
