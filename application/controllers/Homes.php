@@ -142,14 +142,6 @@ class Homes extends CI_Controller
 		$exp = explode('.', $ids);		
 		$data['itemData'] = $this->db->get_where('tbl_product', array('product_id'=>$exp[1]))->row();
 		$this->load->view('pages/details-standard', $data);
-	public function store()
-	{
-		$this->load->view('pages/store');
-	}
-
-	public function details()
-	{
-		$this->load->view('pages/details');
 	}
 
 	public function profiles()
