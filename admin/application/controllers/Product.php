@@ -345,10 +345,9 @@ class Product extends BaseController
 		// var_dump($file);
 	}
 
-	function jpegToBase64($id = '')
+	function jpegToBase64($id)
 	{
-		$id = 14;
-		$data = $this->db->get_where('upload', array('id' => $id))->row()->filename;
+		$data = $this->db->get_where('tbl_product', array('product_id' => $id))->row()->filename;
 		$uns = unserialize($data);
 		// var_dump($data);
 		// var_dump(unserialize($data));

@@ -18,8 +18,7 @@ class Login_model extends CI_Model
         
         $user = $query->result();
         if(!empty($user)){
-            var_dump($password);
-            die();
+           
             if(verifyHashedPassword($password, $user[0]->customer_password)){
                 return $user;
             } else {
