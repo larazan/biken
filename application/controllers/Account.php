@@ -34,7 +34,7 @@ class Account extends CI_Controller
         $isLoggedIn = $this->session->userdata('isLoggedIn');
 
         if (!isset($isLoggedIn) || $isLoggedIn != TRUE) {
-            $this->load->view('pages/login');
+            $this->load->view('pages/login-new');
         } else {
             redirect('homes/details');
         }
@@ -98,13 +98,16 @@ class Account extends CI_Controller
         $this->form_validation->set_rules('pword', 'Password', 'required|max_length[32]');
 
         if ($this->form_validation->run() == FALSE) {
+            $flash_msg = validation_errors();
+            $value = '<div class="col-lg-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
+            $this->session->set_flashdata('item', $value);
             $this->index();
         } else {
             $email = $this->input->post('username'); //'yono@email.com'; 
-            $password = $this->input->post('pword'); //'isbal'; 
+            $password = $this->input->post('pword'); //'isbal';
 
             $result = $this->login_model->loginProcess($email, $password);
-
+            
             if (count($result) > 0) {
                 foreach ($result as $res) {
                     $sessionArray = array(
@@ -118,12 +121,12 @@ class Account extends CI_Controller
                     // update session
                     $this->db->where('customer_id', $res->customer_id);
                     $this->db->update('tbl_customer', array('customer_sess' => $this->session->session_id));
-
-                    redirect('homes');
+                    redirect('homes-medium');
                 }
             } else {
-                $this->session->set_flashdata('error', 'Email or password mismatch');
-
+                $flash_msg = 'Email or Password is incorrect, try again';
+                $value = '<div class="col-lg-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
+                $this->session->set_flashdata('item', $value);
                 redirect('/account');
             }
         }
@@ -268,7 +271,7 @@ class Account extends CI_Controller
     public function register()
     {
         $data['flash'] = $this->session->flashdata('item');
-        $this->load->view('pages/register', $data);
+        $this->load->view('pages/register-new', $data);
     }
 
     public function signup_process()
@@ -280,15 +283,16 @@ class Account extends CI_Controller
             $this->load->library('form_validation');
             $this->form_validation->set_rules('username', 'Username', 'trim|required');
             $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-            $this->form_validation->set_rules('password', 'Password', 'required|max_length[20]');
-            $this->form_validation->set_rules('cpassword', 'Confirm Password', 'trim|required|matches[password]|max_length[20]');
-            $this->form_validation->set_rules('mobile', 'Telpon', 'trim|required|numeric|min_length[5]|max_length[13]');
+            $this->form_validation->set_rules('password', 'Password', 'required|min_length[5]|max_length[20]');
+            $this->form_validation->set_rules('cpassword', 'Confirm Password', 'trim|required|matches[password]|min_length[5]|max_length[20]');
+            $this->form_validation->set_rules('mobile', 'Phone', 'trim|required|numeric|min_length[5]|max_length[13]');
 
             if ($this->form_validation->run() == TRUE) {
                 $data = $this->customer_data_post();
                 $url = base_url().'account';
 
                 if ($this->input->post('agree') == 'Agree') {
+                    $this->db->insert('tbl_customer', $data);
                     // create subscribe account
                     $data_sub['email'] = $data['customer_email'];
                     $data_sub['status'] = 1;
@@ -297,17 +301,23 @@ class Account extends CI_Controller
                     $this->db->insert('tbl_subscribe', $data_sub);
 
                     $flash_msg = "The user account were successfully added. Please <a href='".$url."'>Login</a> to continue";
-                    $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
+                    $value = '<div class="col-lg-12"><div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
                     $this->session->set_flashdata('item', $value);
                     redirect('account/register');
                 } else {
                     $this->db->insert('tbl_customer', $data);
 
                     $flash_msg = "The user account were successfully added. Please <a href='".$url."'>Login</a> to continue";
-                    $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
+                    $value = '<div class="col-lg-12"><div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
                     $this->session->set_flashdata('item', $value);
                     redirect('account/register');
                 }
+            }
+            else {
+                $flash_msg = validation_errors();
+                $value = '<div class="col-lg-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
+                $this->session->set_flashdata('item', $value);
+                redirect('account/register');
             }
         }
     }
@@ -318,7 +328,6 @@ class Account extends CI_Controller
         $data['customer_email'] = $this->input->post('email', true);
         $data['customer_phone'] = $this->input->post('mobile', true);
         $data['created_at'] = time();
-
         return $data;
     }
 }

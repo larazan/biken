@@ -5,8 +5,8 @@
 				<div id="responsive-nav">
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
-						<li <?php if($this->uri->segment(2) == ''){ echo 'class="active"'; }?>><a href="<?= base_url()?>homes-standard">Home</a></li>
-						<li <?php if($this->uri->segment(2) == 'shop'){ echo 'class="active"'; }?>><a href="<?= base_url()?>shop/1">Shop</a></li>
+						<li <?php if($this->uri->segment(1) == 'homes-medium'){ echo 'class="active"'; }?>><a href="<?= base_url()?>homes-medium">Home</a></li>
+						<li <?php if($this->uri->segment(1) == 'shoplist'){ echo 'class="active"'; }?>><a href="<?= base_url()?>shoplist/1">Shop</a></li>
 					</ul>
 					<!-- /NAV -->
 				</div>
