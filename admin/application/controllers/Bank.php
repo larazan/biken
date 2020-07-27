@@ -92,7 +92,7 @@ class Bank extends BaseController
                             $data = array(
                                 'title' => $this->input->post('title', true),
                                 'rekening' => $this->input->post('rekening', true),
-                                'anam' => $this->input->post('anam', true),
+                                'nama' => $this->input->post('nama', true),
                                 'featured_image' => $nmfile,
                                 'status' =>  $this->input->post('status', true),
                                 'created_at' => time(),
@@ -136,7 +136,7 @@ class Bank extends BaseController
                     $data = array(
                         'title' => $this->input->post('title', true),
                         'rekening' => $this->input->post('rekening', true),
-                        'anam' => $this->input->post('anam', true),
+                        'nama' => $this->input->post('nama', true),
                         'status' =>  $this->input->post('status', true),
                         'created_at' => time(),
                         'updated_at' => time()
@@ -229,7 +229,7 @@ class Bank extends BaseController
 	{
 		$data['title'] = $this->input->post('title', true);
         $data['rekening'] = $this->input->post('rekening', true);
-        $data['anam'] = $this->input->post('anam', true);
+        $data['nama'] = $this->input->post('nama', true);
         $data['status'] =  $this->input->post('status', true);
         $data['created_at'] = time();
         $data['updated_at'] = time();
@@ -243,7 +243,7 @@ class Bank extends BaseController
 			$data['id'] = $row->id;
             $data['title'] = $row->title;
             $data['rekening'] = $row->rekening;
-            $data['anam'] = $row->anam;
+            $data['nama'] = $row->nama;
             $data['featured_image'] = $row->featured_image;
             $data['status'] = $row->status;
             $data['created_at'] = $row->created_at;

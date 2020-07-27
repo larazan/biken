@@ -6,7 +6,7 @@ class Homes extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-    $this->load->model(array('Model_Basket'));
+    $this->load->model(array('Model_Basket', 'Model_Checkout'));
 	}
 	public function index()
 	{
@@ -271,12 +271,32 @@ class Homes extends CI_Controller
 		$data["subCartList"] = $this->Model_Basket->getSubTotalCartList($shopperId);
 		$data["cartMainList"] = $this->Model_Basket->getCartList($shopperId);
 		$data["subMainList"] = $this->Model_Basket->getSubTotalMainCartList($shopperId);
+		$data["token"] = $this->Model_Basket->checkoutToken();
 		$this->load->view('pages/cart-medium', $data);
 	}
 
 	public function checkout()
 	{
 		$this->load->view('pages/checkout');
+	}
+
+	public function checkoutMedium() {
+		$shopperId = $this->session->userId;
+		if($shopperId == '') {
+			redirect('account');
+		}
+		$getProv = $this->rajaongkir->province();
+		$data['provinces'] = json_decode($getProv, true);
+		$data["billing"] = $this->Model_Checkout->getBillingInfo($shopperId);
+		$data["bankList"] = $this->Model_Checkout->getBankList();
+		$data["checkoutItems"] = $this->Model_Checkout->getCheckoutItems($shopperId);
+		$data["checkoutSum"] = 'Rp'.number_format($this->Model_Checkout->getSumCheckout($shopperId));
+		$data["cart"] = $this->Model_Basket->cartItemsCount($shopperId);
+		$data["cartList"] = $this->Model_Basket->getCartDropList($shopperId);
+		$data["subCartList"] = $this->Model_Basket->getSubTotalCartList($shopperId);
+		$data["cartMainList"] = $this->Model_Basket->getCartList($shopperId);
+		$data["subMainList"] = $this->Model_Basket->getSubTotalMainCartList($shopperId);
+		$this->load->view('pages/checkout-medium', $data);
 	}
 
 	public function transaction()

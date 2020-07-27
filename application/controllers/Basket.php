@@ -54,7 +54,7 @@ class Basket extends CI_Controller
         if ($submit == "Submit") {
             $this->load->library('form_validation');
             
-            $this->form_validation->set_rules('item_id', 'Item ID', 'required|numeric');
+            $this->form_validation->set_rules('item_url', 'Item url', 'required');
             $this->form_validation->set_rules('item_colour', 'Item Colour', 'numeric');
             $this->form_validation->set_rules('item_size', 'Item Size', 'numeric');
             $this->form_validation->set_rules('item_qty', 'Item Qty', 'required|numeric');
@@ -88,7 +88,10 @@ class Basket extends CI_Controller
 
     function _fetch_the_data() {
         $this->load->library('session');
-        $item_id = $this->input->post('item_id', TRUE);
+        // get id from slug
+        $item_url = $this->input->post('item_url', TRUE);
+        $item_id = $this->db->get_where('tbl_product', array('product_url' => $item_url))->row()->product_id;
+       
         
         $item_data = $this->fetch_data_from_db($item_id);
         $item_price = ($this->input->post('price', TRUE)) ? ($this->input->post('price', TRUE)) : $item_data['product_price'];
@@ -110,18 +113,21 @@ class Basket extends CI_Controller
         $data['item_colour'] = $this->_get_value('colour', $item_colour);
         $data['date_added'] = time(); 
         $data['shopper_id'] = $shopper_id;       
+        $data['basket_tag'] = $this->generate_random_string(29);
         $data['ip_address'] = $this->input->ip_address();
         return $data;
     }
 
     function remove() {
         $update_id = $this->uri->segment(3);
-        $allowed = $this->_make_sure_remove_allowed($update_id);
+        // get id from basket tag
+        $id = $this->db->get_where('tbl_basket', array('basket_tag' => $update_id))->row()->id;
+        $allowed = $this->_make_sure_remove_allowed($id);
         if ($allowed == FALSE) {
             redirect('cart');
         }
 
-        $this->_delete($update_id);
+        $this->_delete($id);
         redirect('cart');
     }
 
@@ -198,6 +204,16 @@ class Basket extends CI_Controller
             $value = $item_colour;
         }
         return $value;
+    }
+
+    function generate_random_string($length)
+    {
+        $characters = '23456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+        return $randomString;
     }
 	
 	function get($order_by)

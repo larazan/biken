@@ -54,7 +54,7 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['shop'] = 'Homes/shopList';
 $route['product-details/product-a'] = 'Homes/productDetails';
-$route['cart'] = 'Homes/cartList';
+// $route['cart'] = 'Homes/cartList';
 $route['checkout/product-a'] = 'Homes/checkout';
 
 //standard
@@ -67,5 +67,6 @@ $route['homes-medium'] = 'Homes/medium';
 $route['shoplist/(:any)'] = 'Homes/storeMedium/$1';
 $route['electros/(:any)'] = 'Homes/detailsMedium/$1';
 $route['mycart'] = 'Homes/cartMedium';
+$route['ordercheckout/(:any)'] = 'Homes/checkoutMedium';
 
 $route['checkout/(:any)'] = "cart/checkout/$1";

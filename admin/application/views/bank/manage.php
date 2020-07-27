@@ -82,7 +82,7 @@ $addlink = base_url() . "bank/create";
                                             <?php echo ($row->featured_image == '') ? '' : '<img src="'.$gambar.'" class="img-responsive" width="80px">' ?>
                                         </td>
                                         <td>
-                                            <?= $row->anam ?>
+                                            <?= $row->nama ?>
                                         </td>
                                         <td>
                                             <span style="width: 110px;"><span class="badge <?= $status_label ?> badge--wide"><?= $status_desc ?></span></span>

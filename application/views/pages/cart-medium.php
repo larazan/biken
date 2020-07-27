@@ -60,7 +60,7 @@
                   <a href="<?= base_url()?>shoplist/1" class="btn btn-default">Continue Shopping</a>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-success">Checkout</button>
+                  <a href="<?= base_url()?>ordercheckout/<?= $token; ?>" type="button" class="btn btn-success">Checkout</a>
                 </td>
               </tr>
             </tfoot>

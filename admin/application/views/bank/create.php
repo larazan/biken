@@ -61,8 +61,8 @@ $backlink = base_url() . "bank/manage";
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Atasnama</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Atasnama" id="anam" name="anam" value="<?= $anam ?>" required>
-                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('anam'); ?></div>
+                                    <input type="text" class="form-control" placeholder="Atasnama" id="nama" name="nama" value="<?= $nama ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('nama'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">

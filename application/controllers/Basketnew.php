@@ -19,7 +19,7 @@ class Basketnew extends CI_Controller {
         'shopper_id'=>$shopperId,
         'item_qty'=>$qty,
         'ip_address'=>$ip,
-        'date_added'=>strtotime(time())
+        'date_added'=>time()
       );
       $ins = $this->Model_Basket->insertBasket($dt);
       $cartCount = $this->Model_Basket->cartItemsCount($shopperId);
@@ -39,6 +39,17 @@ class Basketnew extends CI_Controller {
     $cartList = $this->Model_Basket->getCartDropList($shopperId);
     $subCartList = $this->Model_Basket->getSubTotalCartList($shopperId);
     echo json_encode(array('success'=>TRUE, 'carts'=>$cartCount, 'cartList'=>$cartList, 'subCartList'=>$subCartList));
+  }
+
+  public function deleteMainBasketItem($itemId) {
+    $shopperId = $this->session->userId;
+    $this->Model_Basket->deleteBasket($itemId);
+    $cartCount = $this->Model_Basket->cartItemsCount($shopperId);
+    $cartList = $this->Model_Basket->getCartDropList($shopperId);
+    $subCartList = $this->Model_Basket->getSubTotalCartList($shopperId);
+    $cartMainList = $this->Model_Basket->getCartList($shopperId);
+    $subMainList = $this->Model_Basket->getSubTotalMainCartList($shopperId);
+    echo json_encode(array('success'=>TRUE, 'carts'=>$cartCount, 'cartList'=>$cartList, 'subCartList'=>$subCartList, 'cartMainList'=>$cartMainList, 'subMainList'=>$subMainList));
   }
 
   public function updateBasketQty($itemId) {

@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
   KEY `timestamp` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table ecommerce.ci_sessions: ~25 rows (approximately)
+-- Dumping data for table ecommerce.ci_sessions: ~68 rows (approximately)
 /*!40000 ALTER TABLE `ci_sessions` DISABLE KEYS */;
 INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 	('dmdugcgr63of2qgmkk3klerr8t9ok7ut', '::1', 1593566677, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539333536363637373B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
@@ -47,7 +47,50 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 	('1gkafo3tl6csg8k5vghj1p3ca070ahq5', '::1', 1593670215, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539333637303231303B),
 	('vah2o8bl8d3g17d5iku4ihc4aso3kdld', '192.168.1.89', 1593740251, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539333734303235313B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
 	('fpipv435mhaf20neifs6tda9ghflbono', '192.168.1.89', 1593740264, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539333734303235313B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
-	('p5rjeab4qh2cmtdgsqfmhn7t1n249pic', '::1', 1593762450, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539333736323430383B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B6974656D7C733A3139383A223C64697620636C6173733D22616C65727420616C6572742D7375636365737320616C6572742D6469736D69737369626C6520666164652073686F772220726F6C653D22616C657274223E3C627574746F6E20747970653D22627574746F6E2220636C6173733D22636C6F73652220646174612D6469736D6973733D22616C6572742220617269612D6C6162656C3D22436C6F7365223E3C2F627574746F6E3E54686520636F6C6F7220776173207375636365737366756C6C792061646465642E3C2F6469763E223B5F5F63695F766172737C613A313A7B733A343A226974656D223B733A333A226F6C64223B7D);
+	('p5rjeab4qh2cmtdgsqfmhn7t1n249pic', '::1', 1593762450, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539333736323430383B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B6974656D7C733A3139383A223C64697620636C6173733D22616C65727420616C6572742D7375636365737320616C6572742D6469736D69737369626C6520666164652073686F772220726F6C653D22616C657274223E3C627574746F6E20747970653D22627574746F6E2220636C6173733D22636C6F73652220646174612D6469736D6973733D22616C6572742220617269612D6C6162656C3D22436C6F7365223E3C2F627574746F6E3E54686520636F6C6F7220776173207375636365737366756C6C792061646465642E3C2F6469763E223B5F5F63695F766172737C613A313A7B733A343A226974656D223B733A333A226F6C64223B7D),
+	('g97p0573ubbhig6t63rqimmlnjvc3ogo', '::1', 1593999766, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539333939393736363B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('n48jvcs164biul0mlgvepuvbjsh34heh', '::1', 1594000084, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343030303038343B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('be4dd4mr562d23dq4icgrecfsois081p', '::1', 1594000475, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343030303437353B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('c1m1ivp745l1gusfvvibbag4tt1344ab', '::1', 1594000804, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343030303830343B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('eu72mh1imjelggbs9ev1rc6q19siplde', '::1', 1594002250, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343030323235303B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('msa0hvng6i4ieq0fou9v4t78upmr8bms', '::1', 1594002602, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343030323630323B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('fv0dqlg7r14oo59ec6as2794mlv3chjo', '::1', 1594002903, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343030323930333B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('kr4dnba8d1tbhuk4s4bp6g1j8ptdb6mm', '::1', 1594003006, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343030323930333B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('a4bvl4rrqj6mmng007a0f6kthtm39m93', '::1', 1594006686, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343030363638353B),
+	('7g8i0aa3cs60i7fhfn9pkndstcvm37kp', '::1', 1594024749, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343032343535313B),
+	('b18k91e9o3d0k7b6aute0jpdt6q0kq0l', '::1', 1594171792, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343137313739323B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('v5e8u5r29suv2oodqpqr0lg4bk4kribk', '::1', 1594175339, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343137353333393B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('i0sied4h33ifu0vnbcfpb8rdaidp0t7m', '::1', 1594175339, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343137353333393B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('fncamrq1cnsg9mmo8hb9mjrge9citd0c', '::1', 1594374788, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343337343736363B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('lt2cil91hoh603g7jubbfigqgvgvbscq', '::1', 1594602587, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343630323538363B),
+	('8unvt98jcfe9a06q9aoineiv8pkh785u', '::1', 1594605419, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343630353431313B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('8hab2fvofs4i19k11mqsrkmd5tln98p2', '::1', 1594607848, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343630373635343B),
+	('2bn0mtc33cr6lfkc1ddflt3etrogrv60', '::1', 1594609439, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343630393433393B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('7kqasd05b66nljmpsgodsvshqbja4ouc', '::1', 1594609446, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343630393433393B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('iq4qnj34jvcdlrl40pmvqrv9n284t877', '::1', 1594611869, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343631313835313B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('r9lt9pk439i1lu5obsgt69s5k6504480', '::1', 1594775680, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539343737353637393B),
+	('4hq2c2gm9pg6bmap9ladkaifdfddv9a9', '::1', 1595208446, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353230383434363B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('f3nlrj1lb0fjl2mdcrvk9q0dorh58r4p', '::1', 1595209745, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353230393734353B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('gk95tc698u185t748rebn15rqgon690f', '::1', 1595210394, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353231303339343B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('9k2me2dbsfebn67kcmutp6bb5faejob5', '::1', 1595210860, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353231303836303B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('pdm32g16o2c7dlpfum4lldsevnp4n8oo', '::1', 1595212288, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353231323238383B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('okk34d06rra0np8nsrp65vvgr74i4j06', '::1', 1595213315, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353231333331353B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('ujh6o2hkk6np5coc3njf3nsc1frekdbh', '::1', 1595213744, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353231333734343B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('a8hhr2me29it5ihrv71v2sva9enmdki5', '::1', 1595215181, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353231353138313B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('h471s6hcq53nl1dad83c0l351gltf22e', '::1', 1595215521, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353231353532313B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('eo9sf6ccj2csbkcld77pld9gccavt8ah', '::1', 1595216043, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353231363034333B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('q1akf91buu56tgah89e3qm4ndq2553mj', '::1', 1595216386, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353231363338363B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('k5bubrjaraf5vsmak3gkd2jb78i9t94s', '::1', 1595216744, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353231363734343B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('hrf7a9im0h7ijqne0af9gia6crt5trtc', '::1', 1595217474, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353231373437343B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('ko0grn7qr89mlona2tpabg7bjo1gevgf', '::1', 1595217779, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353231373737393B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('kvsagbdq9911fg7idn3fq7tqt0pdncj2', '::1', 1595218102, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353231383130323B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('dgqa3hc8hp715spe5fbfr407q7dtbv67', '::1', 1595220624, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353232303632343B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('j19vm1bab88cushu22edophgtngn8ibf', '::1', 1595220807, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353232303632343B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('n984edbm3tlj2io2td232dtoi806811i', '::1', 1595226235, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353232363233353B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('1kjrcbtv2eolt58taue4bndh4kgfs21n', '::1', 1595226236, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353232363233353B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('d8ctid2utlehb5iqvqle7bbc650tdp7n', '::1', 1595379904, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353337393837323B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('nvcljhsna0jgn941503qk8g54r1bmfig', '::1', 1595389391, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353338393337393B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B),
+	('pskdsvjqmprtshqnk78dc036j17s6rju', '::1', 1595393364, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539353339333236343B7573657249647C733A313A2234223B6E616D657C733A353A2261646D696E223B69734C6F67676564496E7C623A313B);
 /*!40000 ALTER TABLE `ci_sessions` ENABLE KEYS */;
 
 -- Dumping structure for table ecommerce.contoh
@@ -107,6 +150,19 @@ INSERT INTO `products` (`prodId`, `prodCtgId`, `prodName`, `prodSKU`, `prodUrl`,
 	('9', 2, 'Samsung Galaxy S10 Plus - Ram 8/128Gb', 'SA9809', 'Samsung-Galaxy-S10-Plus-Ram-8128Gb', NULL, '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', NULL, '200630092908_product07.png', 1, 9999000, 9, 2, NULL, NULL, '2020-06-30 16:35:23', NULL, '1');
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 
+-- Dumping structure for table ecommerce.site_cookies
+CREATE TABLE IF NOT EXISTS `site_cookies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cookie_code` varchar(150) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `expiry_date` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table ecommerce.site_cookies: ~0 rows (approximately)
+/*!40000 ALTER TABLE `site_cookies` DISABLE KEYS */;
+/*!40000 ALTER TABLE `site_cookies` ENABLE KEYS */;
+
 -- Dumping structure for table ecommerce.tbl_article
 CREATE TABLE IF NOT EXISTS `tbl_article` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -123,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `tbl_article` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ecommerce.tbl_article: ~0 rows (approximately)
+-- Dumping data for table ecommerce.tbl_article: ~1 rows (approximately)
 /*!40000 ALTER TABLE `tbl_article` DISABLE KEYS */;
 INSERT INTO `tbl_article` (`id`, `title`, `slug`, `author`, `body`, `featured_image`, `status`, `viewed`, `published_at`, `created_at`, `updated_at`) VALUES
 	(14, 'lipsum', 'lipsum', '0', '<p><span xss=removed>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</span><br></p>', NULL, 1, 0, NULL, 1591604768, 1591604768);
@@ -151,6 +207,8 @@ CREATE TABLE IF NOT EXISTS `tbl_banner` (
   `banner_id` int(11) NOT NULL AUTO_INCREMENT,
   `banner_name` varchar(255) DEFAULT NULL,
   `banner_img` varchar(255) DEFAULT NULL,
+  `banner_caption` varchar(255) DEFAULT NULL,
+  `banner_link` varchar(255) DEFAULT NULL,
   `banner_status` tinyint(4) DEFAULT NULL,
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
@@ -165,6 +223,7 @@ CREATE TABLE IF NOT EXISTS `tbl_banner` (
 CREATE TABLE IF NOT EXISTS `tbl_basket` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `session_id` varchar(64) DEFAULT NULL,
+  `basket_tag` varchar(64) DEFAULT NULL,
   `item_title` varchar(255) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `tax` decimal(10,2) DEFAULT NULL,
@@ -176,21 +235,20 @@ CREATE TABLE IF NOT EXISTS `tbl_basket` (
   `shopper_id` int(11) DEFAULT NULL,
   `ip_address` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ecommerce.tbl_basket: ~4 rows (approximately)
+-- Dumping data for table ecommerce.tbl_basket: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tbl_basket` DISABLE KEYS */;
-INSERT INTO `tbl_basket` (`id`, `session_id`, `item_title`, `price`, `tax`, `item_id`, `item_qty`, `item_colour`, `item_size`, `date_added`, `shopper_id`, `ip_address`) VALUES
-	(1, 'qqvqtmbhp42seutoct4kk2c0vgbu4lnr', 'Macbook Pro 2019 TouchBar MUHN2 13" 8GB 128GB 1.4GHz Quadcore i5 Grey - Inter', 41200000.00, NULL, 3, 2, 'Merah', 'L', 1593763283, 0, 0),
-	(2, 'qqvqtmbhp42seutoct4kk2c0vgbu4lnr', 'Macbook Pro 2019 TouchBar MUHN2 13" 8GB 128GB 1.4GHz Quadcore i5 Grey - Inter', 41200000.00, NULL, 3, 2, 'Merah', 'L', 1593763342, 0, 0),
-	(3, 'u5003hqoj5umncf205mc9dehtmbtr94r', 'Macbook Pro 2019 TouchBar MUHN2 13" 8GB 128GB 1.4GHz Quadcore i5 Grey - Inter', 41200000.00, NULL, 3, 2, 'Merah', 'L', 1593763758, 0, 0),
-	(4, 'u5003hqoj5umncf205mc9dehtmbtr94r', 'Macbook Pro 2019 TouchBar MUHN2 13" 8GB 128GB 1.4GHz Quadcore i5 Grey - Inter', 41200000.00, NULL, 3, 2, 'Merah', 'L', 1593763771, 0, 0);
+INSERT INTO `tbl_basket` (`id`, `session_id`, `basket_tag`, `item_title`, `price`, `tax`, `item_id`, `item_qty`, `item_colour`, `item_size`, `date_added`, `shopper_id`, `ip_address`) VALUES
+	(16, '1r5oa3lce63jt7h3f4cc4htvsfpemtbj', 'UWclm4YJQYxEQNJyqjkyQnhh7XJn2', 'Macbook Pro 2019 TouchBar MUHN2 13" 8GB 128GB 1.4GHz Quadcore i5 Grey - Inter', 20600000.00, NULL, 3, 1, 'Merah', 'L', 1595388541, 2, 0),
+	(17, 'n509o80tijtvjvde54m40cjscc4v9crj', '8UIfkIBbVAefVdskEZcKJpIadGR87', 'Asus Tuf Gaming FX505DY-R5698T-Amd Ryzen 5 3550H-8GB-1TB-RADEON RX560X', 8684990.00, NULL, 4, 1, 'Merah', 'L', 1595390788, 2, 0);
 /*!40000 ALTER TABLE `tbl_basket` ENABLE KEYS */;
 
 -- Dumping structure for table ecommerce.tbl_brand
 CREATE TABLE IF NOT EXISTS `tbl_brand` (
   `brand_id` int(11) NOT NULL AUTO_INCREMENT,
   `brand_name` varchar(255) DEFAULT NULL,
+  `brand_url` varchar(255) DEFAULT NULL,
   `brand_description` text,
   `status` tinyint(4) DEFAULT NULL,
   `created_at` int(11) DEFAULT NULL,
@@ -200,14 +258,14 @@ CREATE TABLE IF NOT EXISTS `tbl_brand` (
 
 -- Dumping data for table ecommerce.tbl_brand: ~7 rows (approximately)
 /*!40000 ALTER TABLE `tbl_brand` DISABLE KEYS */;
-INSERT INTO `tbl_brand` (`brand_id`, `brand_name`, `brand_description`, `status`, `created_at`, `updated_at`) VALUES
-	(1, 'Samsung', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 1, 1592438400, 1592438400),
-	(2, 'iPhone', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 1, 1592438400, 1592438400),
-	(3, 'Samase', NULL, 1, 1591602024, 1591602024),
-	(4, 'Apple', NULL, 1, 1593499386, 1593499386),
-	(5, 'Asus', NULL, 1, 1593500785, 1593500785),
-	(6, 'Bose', NULL, 1, 1593500828, 1593500828),
-	(7, 'Sennheiser', NULL, 1, 1593500880, 1593500880);
+INSERT INTO `tbl_brand` (`brand_id`, `brand_name`, `brand_url`, `brand_description`, `status`, `created_at`, `updated_at`) VALUES
+	(1, 'Samsung', NULL, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 1, 1592438400, 1592438400),
+	(2, 'iPhone', NULL, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 1, 1592438400, 1592438400),
+	(3, 'Samase', NULL, NULL, 1, 1591602024, 1591602024),
+	(4, 'Apple', NULL, NULL, 1, 1593499386, 1593499386),
+	(5, 'Asus', NULL, NULL, 1, 1593500785, 1593500785),
+	(6, 'Bose', NULL, NULL, 1, 1593500828, 1593500828),
+	(7, 'Sennheiser', NULL, NULL, 1, 1593500880, 1593500880);
 /*!40000 ALTER TABLE `tbl_brand` ENABLE KEYS */;
 
 -- Dumping structure for table ecommerce.tbl_category
@@ -265,22 +323,24 @@ CREATE TABLE IF NOT EXISTS `tbl_contact` (
 -- Dumping structure for table ecommerce.tbl_customer
 CREATE TABLE IF NOT EXISTS `tbl_customer` (
   `customer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_sess` varchar(255) NOT NULL DEFAULT '0',
   `customer_name` varchar(50) DEFAULT NULL,
   `customer_email` varchar(50) DEFAULT NULL,
-  `customer_password` varchar(50) DEFAULT NULL,
+  `customer_password` varchar(225) DEFAULT NULL,
   `customer_address` text,
   `customer_city` varchar(50) DEFAULT NULL,
   `customer_phone` varchar(50) DEFAULT NULL,
   `customer_status` tinyint(4) DEFAULT NULL,
   `created_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ecommerce.tbl_customer: ~2 rows (approximately)
+-- Dumping data for table ecommerce.tbl_customer: ~3 rows (approximately)
 /*!40000 ALTER TABLE `tbl_customer` DISABLE KEYS */;
-INSERT INTO `tbl_customer` (`customer_id`, `customer_name`, `customer_email`, `customer_password`, `customer_address`, `customer_city`, `customer_phone`, `customer_status`, `created_at`) VALUES
-	(1, 'Nadia', 'nadia@email.com', NULL, 'Jl. Maulana Hasanudin, RT.001/RW.002, Cipondoh Makmur, Kec. Cipondoh, Kota Tangerang, Banten 15122', 'surabaya', '089999999999', 1, 1593129600),
-	(2, 'Yono', 'yono@email.com', NULL, 'Ruko Mangga Dua Square Blok E No.24, Jl. Gn. Sahari No.1, RT.12/RW.6, Ancol, Pademangan, North Jakarta City, Jakarta 14430', 'surabaya', '089555555555', 1, 1593129600);
+INSERT INTO `tbl_customer` (`customer_id`, `customer_sess`, `customer_name`, `customer_email`, `customer_password`, `customer_address`, `customer_city`, `customer_phone`, `customer_status`, `created_at`) VALUES
+	(1, '0', 'Nadia', 'nadia@email.com', '$2y$10$SiHtOc5ahTFlSH7iZT2rxOY3hsz/eHr/zjiEFelYR5S', 'Jl. Maulana Hasanudin, RT.001/RW.002, Cipondoh Makmur, Kec. Cipondoh, Kota Tangerang, Banten 15122', 'surabaya', '089999999999', 1, 1593129600),
+	(2, 'nvcljhsna0jgn941503qk8g54r1bmfig', 'Yono', 'yono@email.com', '$2y$10$Rozib6Ee57pdhIWOKU72peCa8lFPGUrSYFeP3e17TLbdzpqaGds2K', 'Ruko Mangga Dua Square Blok E No.24, Jl. Gn. Sahari No.1, RT.12/RW.6, Ancol, Pademangan, North Jakarta City, Jakarta 14430', 'surabaya', '089555555555', 1, 1593129600),
+	(3, 'l3f0ed8q8au71u58do105pmm4osgrc8l', 'test', 'tes@mail.com', '$2y$10$yz7GrjkRPFh.YXadAQzCO.zaLi6ZpgwPOPDXI7ygrsXN0Z8wzVRMm', NULL, NULL, '08888888888', NULL, 1595398725);
 /*!40000 ALTER TABLE `tbl_customer` ENABLE KEYS */;
 
 -- Dumping structure for table ecommerce.tbl_information
@@ -392,7 +452,9 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
   `product_size` text,
   `product_color` text,
   `product_image` varchar(255) DEFAULT NULL,
+  `filename` text,
   `product_price` int(11) DEFAULT NULL,
+  `product_discount` int(11) DEFAULT NULL,
   `product_quantity` int(11) DEFAULT NULL,
   `product_category` int(11) DEFAULT NULL,
   `product_brand` int(11) DEFAULT NULL,
@@ -405,18 +467,18 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
   PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ecommerce.tbl_product: ~8 rows (approximately)
+-- Dumping data for table ecommerce.tbl_product: ~9 rows (approximately)
 /*!40000 ALTER TABLE `tbl_product` DISABLE KEYS */;
-INSERT INTO `tbl_product` (`product_id`, `product_title`, `sku`, `product_description`, `product_specification`, `product_size`, `product_color`, `product_image`, `product_price`, `product_quantity`, `product_category`, `product_brand`, `product_weight`, `product_view`, `product_url`, `product_status`, `created_at`, `updated_at`) VALUES
-	(1, 'Laptop SNSV Core i3-8560', 'CS323', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:4:{i:0;a:2:{s:4:"name";s:9:"Prosessor";s:5:"value";s:18:"Intel Core i7-8650";}i:1;a:2:{s:4:"name";s:18:"Penyimpanan(Utama)";s:5:"value";s:9:"SSD 256Gb";}i:2;a:2:{s:4:"name";s:21:"Penyimpanan(Sekunder)";s:5:"value";s:9:"HDD 500Gb";}i:3;a:2:{s:4:"name";s:3:"RAM";s:5:"value";s:9:"DDR-4 8Gb";}}', 'a:0:{}', 'a:0:{}', '200626041459_product06.png', 10000000, 11, 2, 1, 5, NULL, 'Laptop-SNSV-Core-i3-8560', 1, 1593137700, 1593137700),
-	(2, 'Macbook Pro 2019 MVVL2ID/A / MVVJ2ID/A TouchBar 16"inch i7 16Gb 512GB - SILVER', 'MC2345', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:4:{i:0;a:2:{s:4:"name";s:9:"Prosessor";s:5:"value";s:18:"Intel Core i7-8650";}i:1;a:2:{s:4:"name";s:18:"Penyimpanan(Utama)";s:5:"value";s:9:"SSD 256Gb";}i:2;a:2:{s:4:"name";s:21:"Penyimpanan(Sekunder)";s:5:"value";s:9:"HDD 500Gb";}i:3;a:2:{s:4:"name";s:3:"RAM";s:5:"value";s:9:"DDR-4 8Gb";}}', 'a:0:{}', 'a:0:{}', '200630085536_product01.png', 35990000, 3, 24, 4, 4, NULL, 'Macbook-Pro-2019-MVVL2IDA-MVVJ2IDA-TouchBar-16inch-i7-16Gb-512GB-SILVER', 1, 1593500136, 1593500136),
-	(3, 'Macbook Pro 2019 TouchBar MUHN2 13" 8GB 128GB 1.4GHz Quadcore i5 Grey - Inter', 'MC5678', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:4:{i:0;a:2:{s:4:"name";s:9:"Prosessor";s:5:"value";s:18:"Intel Core i7-8650";}i:1;a:2:{s:4:"name";s:18:"Penyimpanan(Utama)";s:5:"value";s:9:"SSD 256Gb";}i:2;a:2:{s:4:"name";s:21:"Penyimpanan(Sekunder)";s:5:"value";s:9:"HDD 500Gb";}i:3;a:2:{s:4:"name";s:3:"RAM";s:5:"value";s:9:"DDR-4 8Gb";}}', 'a:0:{}', 'a:0:{}', '200630090230_product03.png', 20600000, 4, 24, 4, 4, NULL, 'Macbook-Pro-2019-TouchBar-MUHN2-13-8GB-128GB-14GHz-Quadcore-i5-Grey-Inter', 1, 1593500550, 1593500550),
-	(4, 'Asus Tuf Gaming FX505DY-R5698T-Amd Ryzen 5 3550H-8GB-1TB-RADEON RX560X', 'AS2345', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:4:{i:0;a:2:{s:4:"name";s:9:"Prosessor";s:5:"value";s:18:"Intel Core i7-8650";}i:1;a:2:{s:4:"name";s:18:"Penyimpanan(Utama)";s:5:"value";s:9:"SSD 256Gb";}i:2;a:2:{s:4:"name";s:21:"Penyimpanan(Sekunder)";s:5:"value";s:9:"HDD 500Gb";}i:3;a:2:{s:4:"name";s:3:"RAM";s:5:"value";s:9:"DDR-4 8Gb";}}', 'a:0:{}', 'a:0:{}', '200630091024_product08.png', 8684990, 5, 25, 5, 4, NULL, 'Asus-Tuf-Gaming-FX505DY-R5698T-Amd-Ryzen-5-3550H-8GB-1TB-RADEON-RX560X', 1, 1593501024, 1593501024),
-	(5, 'Samsung Galaxy Tab A 8.0 2019 2/32 Gb T295 TabA A8', 'SA9876', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:2:{i:0;a:2:{s:4:"name";s:15:"Memory Internal";s:5:"value";s:21:"32 GB, 2 GB RAM (LTE)";}i:1;a:2:{s:4:"name";s:7:"Battery";s:5:"value";s:37:"Non-removable Li-Ion 4200 mAh battery";}}', 'a:0:{}', 'a:0:{}', '200630091522_product04.png', 1945000, 7, 2, 1, 2, NULL, 'Samsung-Galaxy-Tab-A-80-2019-232-Gb-T295-TabA-A8', 1, 1593501322, 1593501322),
-	(6, 'Bose QuietComfort 35 ii / QC35ii wireless headphones Black / Silver', 'BS7685', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:1:{i:0;a:2:{s:4:"name";s:0:"";s:5:"value";s:0:"";}}', 'a:0:{}', 'a:0:{}', '200630091924_product02.png', 6289300, 6, 26, 6, 2, NULL, 'Bose-QuietComfort-35-ii-QC35ii-wireless-headphones-Black-Silver', 1, 1593501564, 1593501564),
-	(7, 'BOSE QC35 Wireless Headphone Silver / Hitam', 'BS4321', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:1:{i:0;a:2:{s:4:"name";s:0:"";s:5:"value";s:0:"";}}', 'a:0:{}', 'a:0:{}', '200630092311_product05.png', 5980000, 3, 26, 6, 2, NULL, 'BOSE-QC35-Wireless-Headphone-Silver-Hitam', 1, 1593501791, 1593501791),
-	(8, 'Sennheiser HD 4.50 BTNC Wireless Bluetooth Noise Cancelling Headphones', 'SN6664', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:1:{i:0;a:2:{s:4:"name";s:0:"";s:5:"value";s:0:"";}}', 'a:0:{}', 'a:0:{}', '200630092644_shop03.png', 2499000, 7, 26, 7, 2, NULL, 'Sennheiser-HD-450-BTNC-Wireless-Bluetooth-Noise-Cancelling-Headphones', 1, 1593502004, 1593502004),
-	(9, 'Samsung Galaxy S10 Plus - Ram 8/128Gb', 'SA9809', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:1:{i:0;a:2:{s:4:"name";s:0:"";s:5:"value";s:0:"";}}', 'a:0:{}', 'a:0:{}', '200630092908_product07.png', 9999000, 5, 2, 1, 2, NULL, 'Samsung-Galaxy-S10-Plus-Ram-8128Gb', 1, 1593502148, 1593502148);
+INSERT INTO `tbl_product` (`product_id`, `product_title`, `sku`, `product_description`, `product_specification`, `product_size`, `product_color`, `product_image`, `filename`, `product_price`, `product_discount`, `product_quantity`, `product_category`, `product_brand`, `product_weight`, `product_view`, `product_url`, `product_status`, `created_at`, `updated_at`) VALUES
+	(1, 'Laptop SNSV Core i3-8560', 'CS323', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:4:{i:0;a:2:{s:4:"name";s:9:"Prosessor";s:5:"value";s:18:"Intel Core i7-8650";}i:1;a:2:{s:4:"name";s:18:"Penyimpanan(Utama)";s:5:"value";s:9:"SSD 256Gb";}i:2;a:2:{s:4:"name";s:21:"Penyimpanan(Sekunder)";s:5:"value";s:9:"HDD 500Gb";}i:3;a:2:{s:4:"name";s:3:"RAM";s:5:"value";s:9:"DDR-4 8Gb";}}', 'a:0:{}', 'a:0:{}', '200626041459_product06.png', NULL, 10000000, NULL, 11, 2, 1, 5, NULL, 'Laptop-SNSV-Core-i3-8560', 1, 1593137700, 1593137700),
+	(2, 'Macbook Pro 2019 MVVL2ID/A / MVVJ2ID/A TouchBar 16"inch i7 16Gb 512GB - SILVER', 'MC2345', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:4:{i:0;a:2:{s:4:"name";s:9:"Prosessor";s:5:"value";s:18:"Intel Core i7-8650";}i:1;a:2:{s:4:"name";s:18:"Penyimpanan(Utama)";s:5:"value";s:9:"SSD 256Gb";}i:2;a:2:{s:4:"name";s:21:"Penyimpanan(Sekunder)";s:5:"value";s:9:"HDD 500Gb";}i:3;a:2:{s:4:"name";s:3:"RAM";s:5:"value";s:9:"DDR-4 8Gb";}}', 'a:0:{}', 'a:0:{}', '200630085536_product01.png', NULL, 35990000, NULL, 3, 24, 4, 4, NULL, 'Macbook-Pro-2019-MVVL2IDA-MVVJ2IDA-TouchBar-16inch-i7-16Gb-512GB-SILVER', 1, 1593500136, 1593500136),
+	(3, 'Macbook Pro 2019 TouchBar MUHN2 13" 8GB 128GB 1.4GHz Quadcore i5 Grey - Inter', 'MC5678', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:4:{i:0;a:2:{s:4:"name";s:9:"Prosessor";s:5:"value";s:18:"Intel Core i7-8650";}i:1;a:2:{s:4:"name";s:18:"Penyimpanan(Utama)";s:5:"value";s:9:"SSD 256Gb";}i:2;a:2:{s:4:"name";s:21:"Penyimpanan(Sekunder)";s:5:"value";s:9:"HDD 500Gb";}i:3;a:2:{s:4:"name";s:3:"RAM";s:5:"value";s:9:"DDR-4 8Gb";}}', 'a:0:{}', 'a:0:{}', '200630090230_product03.png', NULL, 20600000, NULL, 4, 24, 4, 4, NULL, 'Macbook-Pro-2019-TouchBar-MUHN2-13-8GB-128GB-14GHz-Quadcore-i5-Grey-Inter', 1, 1593500550, 1593500550),
+	(4, 'Asus Tuf Gaming FX505DY-R5698T-Amd Ryzen 5 3550H-8GB-1TB-RADEON RX560X', 'AS2345', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:4:{i:0;a:2:{s:4:"name";s:9:"Prosessor";s:5:"value";s:18:"Intel Core i7-8650";}i:1;a:2:{s:4:"name";s:18:"Penyimpanan(Utama)";s:5:"value";s:9:"SSD 256Gb";}i:2;a:2:{s:4:"name";s:21:"Penyimpanan(Sekunder)";s:5:"value";s:9:"HDD 500Gb";}i:3;a:2:{s:4:"name";s:3:"RAM";s:5:"value";s:9:"DDR-4 8Gb";}}', 'a:0:{}', 'a:0:{}', '200630091024_product08.png', NULL, 8684990, NULL, 5, 25, 5, 4, NULL, 'Asus-Tuf-Gaming-FX505DY-R5698T-Amd-Ryzen-5-3550H-8GB-1TB-RADEON-RX560X', 1, 1593501024, 1593501024),
+	(5, 'Samsung Galaxy Tab A 8.0 2019 2/32 Gb T295 TabA A8', 'SA9876', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:2:{i:0;a:2:{s:4:"name";s:15:"Memory Internal";s:5:"value";s:21:"32 GB, 2 GB RAM (LTE)";}i:1;a:2:{s:4:"name";s:7:"Battery";s:5:"value";s:37:"Non-removable Li-Ion 4200 mAh battery";}}', 'a:0:{}', 'a:0:{}', '200630091522_product04.png', NULL, 1945000, NULL, 7, 2, 1, 2, NULL, 'Samsung-Galaxy-Tab-A-80-2019-232-Gb-T295-TabA-A8', 1, 1593501322, 1593501322),
+	(6, 'Bose QuietComfort 35 ii / QC35ii wireless headphones Black / Silver', 'BS7685', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:1:{i:0;a:2:{s:4:"name";s:0:"";s:5:"value";s:0:"";}}', 'a:0:{}', 'a:0:{}', '200630091924_product02.png', NULL, 6289300, NULL, 6, 26, 6, 2, NULL, 'Bose-QuietComfort-35-ii-QC35ii-wireless-headphones-Black-Silver', 1, 1593501564, 1593501564),
+	(7, 'BOSE QC35 Wireless Headphone Silver / Hitam', 'BS4321', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:1:{i:0;a:2:{s:4:"name";s:0:"";s:5:"value";s:0:"";}}', 'a:0:{}', 'a:0:{}', '200630092311_product05.png', NULL, 5980000, NULL, 3, 26, 6, 2, NULL, 'BOSE-QC35-Wireless-Headphone-Silver-Hitam', 1, 1593501791, 1593501791),
+	(8, 'Sennheiser HD 4.50 BTNC Wireless Bluetooth Noise Cancelling Headphones', 'SN6664', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:1:{i:0;a:2:{s:4:"name";s:0:"";s:5:"value";s:0:"";}}', 'a:0:{}', 'a:0:{}', '200630092644_shop03.png', NULL, 2499000, NULL, 7, 26, 7, 2, NULL, 'Sennheiser-HD-450-BTNC-Wireless-Bluetooth-Noise-Cancelling-Headphones', 1, 1593502004, 1593502004),
+	(9, 'Samsung Galaxy S10 Plus - Ram 8/128Gb', 'SA9809', '<p><span xss=removed>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos inventore nihil illum, ad iusto deleniti minima officiis. Iste, culpa ut ea reiciendis quos non dicta alias adipisci, illo, at delectus!</span><br></p>', 'a:1:{i:0;a:2:{s:4:"name";s:0:"";s:5:"value";s:0:"";}}', 'a:0:{}', 'a:0:{}', '200630092908_product07.png', NULL, 9999000, NULL, 5, 2, 1, 2, NULL, 'Samsung-Galaxy-S10-Plus-Ram-8128Gb', 1, 1593502148, 1593502148);
 /*!40000 ALTER TABLE `tbl_product` ENABLE KEYS */;
 
 -- Dumping structure for table ecommerce.tbl_product_color
@@ -510,15 +572,15 @@ CREATE TABLE IF NOT EXISTS `tbl_settings` (
   `type` longtext,
   `description` longtext,
   PRIMARY KEY (`settings_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ecommerce.tbl_settings: ~16 rows (approximately)
+-- Dumping data for table ecommerce.tbl_settings: ~20 rows (approximately)
 /*!40000 ALTER TABLE `tbl_settings` DISABLE KEYS */;
 INSERT INTO `tbl_settings` (`settings_id`, `type`, `description`) VALUES
 	(1, 'shop_name', 'Wiklan | Situs Belanja Online Media Iklan Indoor dan Outdoor'),
 	(2, 'address', 'Jl. Adityawarman No. 2 Surabaya 60242 Jawa Timur - Indonesia'),
 	(3, 'phone', '(031) 512 01088'),
-	(4, 'email', 'cs@wiklan.com'),
+	(4, 'email', 'forheron@gmail.com'),
 	(5, 'author', 'PT. Wijaya Iklan Indonesia (Wiklan)'),
 	(6, 'logo', 'logo_wiklan.png'),
 	(7, 'homepage_background', 'homepage_background.jpg'),
@@ -533,8 +595,52 @@ INSERT INTO `tbl_settings` (`settings_id`, `type`, `description`) VALUES
 	(16, 'rajaongkir_key', '18c1ae365c10fea954e08449b1c2e185'),
 	(17, 'midtrans_key', NULL),
 	(18, 'kurir', 'a:3:{i:0;s:3:"jne";i:1;s:4:"tiki";i:2;s:3:"pos";}'),
-	(19, 'password', NULL);
+	(19, 'password', NULL),
+	(20, 'kodepos', NULL);
 /*!40000 ALTER TABLE `tbl_settings` ENABLE KEYS */;
+
+-- Dumping structure for table ecommerce.tbl_shipping
+CREATE TABLE IF NOT EXISTS `tbl_shipping` (
+  `shipping_id` int(11) NOT NULL AUTO_INCREMENT,
+  `shopper_id` int(11) DEFAULT NULL,
+  `firstname` varchar(50) DEFAULT NULL,
+  `lastname` varchar(50) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `province` varchar(50) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `zipcode` varchar(50) DEFAULT NULL,
+  `address` text,
+  `courrier` varchar(255) DEFAULT NULL,
+  `note` text,
+  `created_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`shipping_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table ecommerce.tbl_shipping: ~0 rows (approximately)
+/*!40000 ALTER TABLE `tbl_shipping` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_shipping` ENABLE KEYS */;
+
+-- Dumping structure for table ecommerce.tbl_shoppertrack
+CREATE TABLE IF NOT EXISTS `tbl_shoppertrack` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_id` varchar(64) DEFAULT NULL,
+  `item_title` varchar(255) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `tax` decimal(10,2) DEFAULT NULL,
+  `item_id` int(11) DEFAULT NULL,
+  `item_size` varchar(70) DEFAULT NULL,
+  `item_qty` int(11) DEFAULT NULL,
+  `item_colour` varchar(70) DEFAULT NULL,
+  `date_added` int(11) DEFAULT NULL,
+  `shopper_id` int(11) DEFAULT NULL,
+  `ip_address` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table ecommerce.tbl_shoppertrack: ~0 rows (approximately)
+/*!40000 ALTER TABLE `tbl_shoppertrack` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_shoppertrack` ENABLE KEYS */;
 
 -- Dumping structure for table ecommerce.tbl_size
 CREATE TABLE IF NOT EXISTS `tbl_size` (
@@ -544,7 +650,7 @@ CREATE TABLE IF NOT EXISTS `tbl_size` (
   PRIMARY KEY (`size_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ecommerce.tbl_size: ~0 rows (approximately)
+-- Dumping data for table ecommerce.tbl_size: ~1 rows (approximately)
 /*!40000 ALTER TABLE `tbl_size` DISABLE KEYS */;
 INSERT INTO `tbl_size` (`size_id`, `name`, `size_status`) VALUES
 	(1, 'L', 1);
@@ -590,7 +696,7 @@ CREATE TABLE IF NOT EXISTS `tbl_subscribe` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ecommerce.tbl_subscribe: ~0 rows (approximately)
+-- Dumping data for table ecommerce.tbl_subscribe: ~1 rows (approximately)
 /*!40000 ALTER TABLE `tbl_subscribe` DISABLE KEYS */;
 INSERT INTO `tbl_subscribe` (`id`, `email`, `status`, `created_at`, `updated_at`) VALUES
 	(1, 'jhon@doe.com', 1, 1593043200, NULL);

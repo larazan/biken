@@ -2,6 +2,7 @@
   class Model_Basket extends CI_Model {
     function __construct() {
       parent::__construct();
+      $this->load->library(array('encryption'));
     }
 
     function insertBasket($data) {
@@ -83,7 +84,7 @@
           $cartList .= '</td>';
           $cartList .= '<td class="col-md-2 text-center"><strong>Rp'.number_format($dt->product_price).'</strong></td>';
           $cartList .= '<td class="col-md-2 text-center"><strong>Rp'.number_format($dt->item_qty*$dt->product_price).'</strong></td>';
-          $cartList .= '<td class="col-md-1"><button type="button" class="btn btn-danger"><i class="fa fa-close"></i> Remove</button></td>';
+          $cartList .= '<td class="col-md-1"><button type="button" class="btn btn-danger delete-cart-list-btn" data-itemid="'.$dt->id.'"><i class="fa fa-close"></i> Remove</button></td>';
           $cartList .= '</tr>';
         }
       }
@@ -128,5 +129,14 @@
         $hasil = trim($this->penyebut($nilai));
       }     		
       return $hasil;
+    }
+
+    function checkoutToken() {
+      $encrypted_string = $this->encryption->encrypt($this->session->session_id);
+      //remove dodge characters
+      $checkout_token = str_replace('+', '-plus-', $encrypted_string);
+      $checkout_token = str_replace('/', '-fwrd-', $checkout_token);
+      $checkout_token = str_replace('=', '-eqls-', $checkout_token);
+      return $checkout_token;
     }
   }

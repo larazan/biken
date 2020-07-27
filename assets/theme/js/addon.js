@@ -26,6 +26,10 @@
     var ids = $(this).data('basketid')
     updateMainCartQty(ids, qty)
   })
+
+  $('#maincartlist').on('click', '.delete-cart-list-btn', function(){
+    deleteMainCartItem($(this).data('itemid'))
+  })
   //Add to Cart
   function addToCart(ids) {
     var qty = $('#add-to-cart-qty').val()
@@ -99,6 +103,32 @@
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert("Update basket quantity error")
+      }
+    })
+  }
+
+  function deleteMainCartItem(ids) {
+    $.ajax({
+      url: base+'/Basketnew/deleteMainBasketItem/'+ids,
+      type: "GET",
+      dataType: "JSON",
+      success: function(data) {
+        if(data.success){
+          alert("Product successfully Removed from cart")
+          $('.cartqty').text(data.carts)
+          $('#cartdropdownlist').empty()
+          $('#cartdropdownlist').append(data.cartList)
+          $('[name="subcartlist"]').text(data.subCartList)
+          $('#maincartlist').empty()
+          $('#maincartlist').append(data.cartMainList)
+          $('[name="subMainList"]').text(data.subMainList)
+        }
+        else {
+          alert("Failed to remove product")
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert("delete item error")
       }
     })
   }

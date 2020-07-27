@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class RajaOngkir extends CI_Controller
+class RajaOngkirCtrl extends CI_Controller
 {
 	 
 	function __construct()

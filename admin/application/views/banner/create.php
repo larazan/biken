@@ -63,6 +63,23 @@ $backlink = base_url() . "banner/manage";
                                     <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('banner_img'); ?></div>
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Caption</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" placeholder="Caption" id="banner_caption" name="banner_caption" value="<?= $banner_caption ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('banner_caption'); ?></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Link</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" placeholder="Link" id="banner_link" name="banner_link" value="<?= $banner_link ?>" required>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('banner_link'); ?></div>
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Status</label>
                                 <div class="col-sm-6">
