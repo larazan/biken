@@ -14,15 +14,31 @@ class Homes extends CI_Controller
 	}
 
 	public function test() {
-		$this->load->view('testing2');
+		$shopperId = $this->session->userId;
+		$str = $this->db->select('id')->get_where('tbl_basket', array('basket_status'=>1, 'picked_status'=>1, 'shopper_id'=>$shopperId))->result_array();
+		// $imp = implode(",", $str["id"]);
+		$imp = implode(', ', array_map(function ($entry) {
+			return $entry['id'];
+		}, $str));
+		$token = $this->Model_Checkout->checkoutToken($imp);
+		$dec = $this->Model_Checkout->decryptToken($token);
+		var_dump($str);
+		var_dump($imp);
+		var_dump($token);
+		var_dump($dec);
 	}
 
 	public function testcost() {
-		$get = json_decode($this->rajaongkir->cost(501, 114, 1000, "jne"), true);
-		// var_dump($get['rajaongkir']['results'][0]['code']);
-		// var_dump($get['rajaongkir']['results'][0]['name']);
-		// var_dump($get['rajaongkir']['results'][0]['costs']);
-		var_dump($get['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value']);
+		$get = json_decode($this->rajaongkir->costpro('501', 'city', '444', 'city', '1000', 'jne:tiki'), true);
+		$arr = [];
+		// for ($i=0; $i < $get['rajaongkir']['results']; $i++) { 
+		// 	array_push($arr, array(
+		// 		'code'=>$get['rajaongkir']['results'][0]['code'],
+		// 		'name'=>$get['rajaongkir']['results'][0]['name'],
+		// 	));
+		// }
+		// var_dump(print_r($get));
+		echo '<pre>'; print_r(json_encode($get["rajaongkir"]["results"])); echo '</pre>';
 	}
 
 	public function getCities($ids) {
@@ -47,11 +63,13 @@ class Homes extends CI_Controller
 		$origin = 444;//$this->input->post('origin');
 		$destination = $this->input->post('destination');
 		$weight = $this->input->post('weight');
-		$courier = $this->input->post('courier');
-		$get = json_decode($this->rajaongkir->cost($origin, $destination, $weight, $courier), true);
+		$courier = 'jne:jnt:sicepat';//$this->input->post('courier');
+		$get = json_decode($this->rajaongkir->costpro($origin, 'city', $destination, 'city', $weight, $courier), true);
+		$data['get'] = $get;
 		$data['code'] = $get['rajaongkir']['results'][0]['code'];
 		$data['name'] = $get['rajaongkir']['results'][0]['name'];
-		$data['costList'] = $get['rajaongkir']['results'][0]['costs'];
+		// $data['costList'] = $get['rajaongkir']['results'][0]['costs'];
+		$data['costList'] = $get['rajaongkir']['results'];
 		echo json_encode($data);
 	}
 
@@ -271,7 +289,6 @@ class Homes extends CI_Controller
 		$data["subCartList"] = $this->Model_Basket->getSubTotalCartList($shopperId);
 		$data["cartMainList"] = $this->Model_Basket->getCartList($shopperId);
 		$data["subMainList"] = $this->Model_Basket->getSubTotalMainCartList($shopperId);
-		$data["token"] = $this->Model_Basket->checkoutToken();
 		$this->load->view('pages/cart-medium', $data);
 	}
 
@@ -282,6 +299,10 @@ class Homes extends CI_Controller
 
 	public function checkoutMedium() {
 		$shopperId = $this->session->userId;
+		$str = $this->db->select('id')->get_where('tbl_basket', array('basket_status'=>1, 'picked_status'=>1, 'shopper_id'=>$shopperId))->result_array();
+		$imp = implode(',', array_map(function ($entry) {
+			return $entry['id'];
+		}, $str));
 		if($shopperId == '') {
 			redirect('account');
 		}
@@ -290,6 +311,8 @@ class Homes extends CI_Controller
 		$data["billing"] = $this->Model_Checkout->getBillingInfo($shopperId);
 		$data["bankList"] = $this->Model_Checkout->getBankList();
 		$data["checkoutItems"] = $this->Model_Checkout->getCheckoutItems($shopperId);
+		$data["weightItems"] = $this->Model_Checkout->getSumWeight($shopperId);
+		$data["items"] = $imp;
 		$data["checkoutSum"] = 'Rp'.number_format($this->Model_Checkout->getSumCheckout($shopperId));
 		$data["cart"] = $this->Model_Basket->cartItemsCount($shopperId);
 		$data["cartList"] = $this->Model_Basket->getCartDropList($shopperId);

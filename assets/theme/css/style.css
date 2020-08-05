@@ -2230,7 +2230,12 @@ textarea.input {
 .card-counter.info{
   background-color: #26c6da;
   color: #FFF;
-}  
+} 
+
+.card-counter.wishlist{
+  background-color: #eb8dde;
+  color: #FFF;
+} 
 
 .card-counter i{
   font-size: 5em;

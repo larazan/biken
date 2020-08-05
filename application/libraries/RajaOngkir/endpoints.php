@@ -77,6 +77,19 @@ class Endpoints {
         return $rest_client->post($params);
     }
 
+    function costpro($origin, $originType, $destination, $destinationType,$weight, $courier) {
+        $params = array(
+            'origin' => $origin,
+            'originType' => $originType,
+            'destination' => $destination,
+            'destinationType' => $destinationType,
+            'weight' => $weight,
+            'courier' => $courier
+        );
+        $rest_client = new RESTClient($this->api_key, 'cost', $this->account_type);
+        return $rest_client->post($params);
+    }
+
     /**
      * Fungsi untuk mendapatkan daftar/nama kota yang mendukung pengiriman Internasional
      * 

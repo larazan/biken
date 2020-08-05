@@ -16,6 +16,7 @@ class Account extends CI_Controller
     {
         parent::__construct();
         $this->load->model('login_model');
+        $this->load->model(array('Model_Basket', 'Model_Checkout'));
     }
 
     /**
@@ -32,9 +33,13 @@ class Account extends CI_Controller
     function isLoggedIn()
     {
         $isLoggedIn = $this->session->userdata('isLoggedIn');
+        $shopperId = $this->session->userId;
+		$data["cart"] = $this->Model_Basket->cartItemsCount($shopperId);
+		$data["cartList"] = $this->Model_Basket->getCartDropList($shopperId);
+		$data["subCartList"] = $this->Model_Basket->getSubTotalCartList($shopperId);
 
         if (!isset($isLoggedIn) || $isLoggedIn != TRUE) {
-            $this->load->view('pages/login-new');
+            $this->load->view('pages/login-new', $data);
         } else {
             redirect('homes/details');
         }
@@ -304,21 +309,21 @@ class Account extends CI_Controller
                     $flash_msg = "The user account were successfully added. Please <a href='".$url."'>Login</a> to continue";
                     $value = '<div class="col-lg-12"><div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
                     $this->session->set_flashdata('item', $value);
-                    redirect('account/register');
+                    redirect('register');
                 } else {
                     $this->db->insert('tbl_customer', $data);
 
                     $flash_msg = "The user account were successfully added. Please <a href='".$url."'>Login</a> to continue";
                     $value = '<div class="col-lg-12"><div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
                     $this->session->set_flashdata('item', $value);
-                    redirect('account/register');
+                    redirect('register');
                 }
             }
             else {
                 $flash_msg = validation_errors();
                 $value = '<div class="col-lg-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
                 $this->session->set_flashdata('item', $value);
-                redirect('account/register');
+                redirect('register');
             }
         }
     }

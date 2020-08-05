@@ -27,6 +27,12 @@
     updateMainCartQty(ids, qty)
   })
 
+  $('#maincartlist').on('click', '.picked-change', function(){
+    var ids = $(this).data('basketid')
+    var status = $(this).data('status')
+    updateMainCartPick(ids, status)
+  })
+
   $('#maincartlist').on('click', '.delete-cart-list-btn', function(){
     deleteMainCartItem($(this).data('itemid'))
   })
@@ -103,6 +109,33 @@
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert("Update basket quantity error")
+      }
+    })
+  }
+
+  function updateMainCartPick(ids, status) {
+    $.ajax({
+      url: base+'/Basketnew/updateBasketPick/'+ids,
+      type: "POST",
+      dataType: "JSON",
+      data: {status: status},
+      success: function(data) {
+        if(data.success){
+          alert("Picked updated")
+          $('.cartqty').text(data.carts)
+          $('#cartdropdownlist').empty()
+          $('#cartdropdownlist').append(data.cartList)
+          $('[name="subcartlist"]').text(data.subCartList)
+          $('#maincartlist').empty()
+          $('#maincartlist').append(data.cartMainList)
+          $('[name="subMainList"]').text(data.subMainList)
+        }
+        else {
+          alert("Failed to change pick")
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert("Update basket pick error")
       }
     })
   }

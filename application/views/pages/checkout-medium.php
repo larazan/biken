@@ -57,9 +57,9 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-12">
+									<div class="col-md-6">
 										<div class="form-group">
-											<input class="input" type="text" name="address" value="<?= $billing->customer_address;?>">
+											<input class="input" type="tel" name="tel" value="<?= $billing->customer_phone;?>">
 										</div>
 									</div>
 								</div>
@@ -75,40 +75,29 @@
 										</div>
 									</div>
 									<div class="col-md-6">
-										<select name="city" id="" class="form-control kota-change">
-                      <option value="">Pilih Kota</option>
-                    </select>
+										<div class="form-group">
+											<select name="city" id="" class="form-control kota-change">
+												<option value="">Pilih Kota</option>
+											</select>
+										</div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-12">
 										<div class="form-group">
-											<select name="courier" id="" class="form-control kurir-change">
-                      	<option value="">Pilih Kurir</option>
-                        <option value="jne">JNE</option>
-                        <option value="pos">POS</option>
-                        <option value="tiki">TIKI</option>
-                      </select>
+											<input class="input" type="text" name="address" value="<?= $billing->customer_address;?>">
 										</div>
-									</div>
-									<div class="col-md-6">
-										<select name="package" id="" class="form-control package-change">
-                      <option value="">Pilih Layanan</option>
-                    </select>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-12">
 										<div class="form-group">
-											<input class="input" type="tel" name="tel" value="<?= $billing->customer_phone;?>">
+											<select name="bank" id="" class="form-control">
+												<?php foreach ($bankList as $bank) { ?>
+													<option value="<?= $bank->id; ?>"><?= $bank->title; ?> Rek. <?= $bank->rekening; ?> an. <?= $bank->nama; ?></option>
+												<?php }?>
+											</select>
 										</div>
-									</div>
-									<div class="col-md-6">
-										<select name="bank" id="" class="form-control">
-											<?php foreach ($bankList as $bank) { ?>
-												<option value="<?= $bank->id; ?>"><?= $bank->title; ?> Rek. <?= $bank->rekening; ?> an. <?= $bank->nama; ?></option>
-											<?php }?>
-										</select>
 									</div>
 								</div>
 								<div class="row">
@@ -118,6 +107,11 @@
 										</div>
 									</div>
 								</div>
+								<input type="hidden" name="weight" value="<?= $weightItems; ?>">
+								<input type="hidden" name="items" value="<?= $items; ?>">
+								<input type="hidden" name="shipping">
+								<input type="hidden" name="shipping-cost">
+								<input type="hidden" name="sum-cost" value="<?= $checkoutSum;?>">
 							</form>
 						</div>
 						<!-- /Billing Details -->
@@ -136,13 +130,22 @@
 							<div class="order-products">
 								<?php foreach ($checkoutItems as $items) { ?>
 									<div class="order-col">
-										<div><?= $items->item_qty;?>x <?= $items->product_title;?></div>
+										<div>
+											<div class="order-img">
+												<img src="<?= base_url()?>admin/assets/product/<?= $items->product_image;?>" alt="" class="img-responsive">
+											</div>
+											<?= $items->item_qty;?>x <?= $items->product_title;?>
+										</div>
 										<div>Rp<?= number_format($items->item_qty*$items->product_price);?></div>
 									</div>
 								<?php }?>
 							</div>
 							<div class="order-col">
-								<div>Shiping</div>
+								<div>
+									Shiping (<?= (float)($weightItems/1000); ?> Kg)
+									<div class="payment-method" id="shipping-list">
+									</div>
+								</div>
 								<div>Rp<span class="shipping-cost">0</span></div>
 							</div>
 							<div class="order-col">
@@ -186,11 +189,10 @@
 				$('.kota-change').change(function(){
           getCost();
         });
-				$('.kurir-change').change(function(){
-          getCost();
-        });
-				$('.package-change').change(function(){
-					calculate()
+				$('#shipping-list').on('change', '.payment-change', function(){
+					calculate($(this).val())
+					$('[name="shipping"]').val($(this).data('vendor'))
+					$('[name="shipping-cost"]').val($(this).val())
 				})
 				$('.checkout-proceed').click(function(){
 					proceed()
@@ -219,9 +221,10 @@
         });
       }
 			function getCost() {
-        $('.package-change').empty();
+        // $('.package-change').empty();
+				$('.payment-method').empty();
         var destination = $('.kota-change').val();
-        var weight = 1000//$('.berat-change').val();
+        var weight = $('[name="weight"]').val();
         var courier = $('.kurir-change').val();
         $.ajax({
           type:"POST",
@@ -230,20 +233,32 @@
           dataType: "JSON",
           success:function(data){
             if(data.costList.length > 0) {
-							var options = '<option value="">Pilih Layanan</option>';
-							$.each(data.costList, function(i, item){
-                options += '<option value="'+data.costList[i].cost[0].value+'" data-etd="'+data.costList[i].cost[0].etd+'"><strong>'+data.costList[i].service+'</strong> '+data.costList[i].description+'</option>'
-              });
-              $('.package-change').append(options);
+							// var options = '<option value="">Pilih Layanan</option>';
+							var pay = '';
+							var k = 1;
+							$.each(data.costList, function(i, field) {
+								$.each(data.costList[i].costs, function(j, item){
+									// options += '<option value="'+data.costList[i].costs[j].cost[0].value+'">'+(data.costList[i].code).toUpperCase()+' : '+data.costList[i].costs[j].service+' '+(data.costList[i].costs[j].cost[0].etd).replace('HARI', '')+' hari'+'</option>'
+
+									pay += '<div class="input-radio"><input type="radio" name="payment" id="payment-'+k+'" data-vendor="'+data.costList[i].code+'-'+data.costList[i].costs[j].service+'" value="'+data.costList[i].costs[j].cost[0].value+'" class="payment-change"><label for="payment-'+k+'"><span></span>'+(data.costList[i].code).toUpperCase()+' '+data.costList[i].costs[j].service+'('+data.costList[i].costs[j].description+')</label><div class="caption"><p>Estimasi '+(data.costList[i].costs[j].cost[0].etd).replace('HARI', '')+' hari, tarif: Rp'+data.costList[i].costs[j].cost[0].value+'</p></div></div>'
+									k++
+								})
+    					});
+							// $('.package-change').append(options);
+							$('.payment-method').append(pay);
             }
             else {
               alert('Data tidak ditemukan !!!')
             }
-          }
+					},
+					error: function() {
+						// var options = '<option value="">Pilih Layanan</option>';
+						// $('.package-change').append(options);
+					}
         });
       }
-			function calculate() {
-				var shipping = $('.package-change').val()
+			function calculate(shipping) {
+				// var shipping = $('[name="payment"]').val()
 				$.ajax({
           type:"POST",
           url:"<?= base_url()?>Checkoutnew/getCheckoutCost",
@@ -267,7 +282,7 @@
           data: $('#checkoutForm').serialize(),
           dataType: "JSON",
           success:function(data){
-            alert('aaaa')
+						window.location.href ='<?= base_url()?>myprofile/transaction';
           }
         });
 			}

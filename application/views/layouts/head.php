@@ -26,6 +26,7 @@
 
 		<!-- Custom stlylesheet -->
 		<link type="text/css" rel="stylesheet" href="<?= base_url()?>assets/theme/css/style.css"/>
+		<link type="text/css" rel="stylesheet" href="<?= base_url()?>assets/theme/css/addonstyle.css"/>
 		<!--  -->
 		<link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 

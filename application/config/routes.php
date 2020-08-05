@@ -67,6 +67,11 @@ $route['homes-medium'] = 'Homes/medium';
 $route['shoplist/(:any)'] = 'Homes/storeMedium/$1';
 $route['electros/(:any)'] = 'Homes/detailsMedium/$1';
 $route['mycart'] = 'Homes/cartMedium';
-$route['ordercheckout/(:any)'] = 'Homes/checkoutMedium';
+$route['ordercheckout'] = 'Homes/checkoutMedium';
+$route['login'] = 'Account';
+$route['register'] = 'Account/register';
+$route['myprofile/dashboard'] = 'Dashboard';
+$route['myprofile/profiles'] = 'Dashboard/profiles';
+$route['myprofile/transaction'] = 'Dashboard/transaction';
 
 $route['checkout/(:any)'] = "cart/checkout/$1";

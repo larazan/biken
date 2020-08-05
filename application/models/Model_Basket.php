@@ -18,29 +18,29 @@
     }
 
     function cartItemsCount($shopperId) {
-      $count = $this->db->where(array('shopper_id'=>$shopperId))->from('tbl_basket')->count_all_results();
+      $count = $this->db->where(array('shopper_id'=>$shopperId, 'basket_status'=>1))->from('tbl_basket')->count_all_results();
       return $count;
     }
 
     function getCartDropList($shopperId) {
-      $all = $this->db->join('tbl_product', 'tbl_product.product_id = tbl_basket.item_id')->where(array('tbl_basket.shopper_id'=>$shopperId))->from('tbl_basket')->order_by('tbl_basket.id', 'DESC')->get()->result();
+      $all = $this->db->join('tbl_product', 'tbl_product.product_id = tbl_basket.item_id')->where(array('tbl_basket.shopper_id'=>$shopperId, 'tbl_basket.basket_status'=>1))->from('tbl_basket')->order_by('tbl_basket.id', 'DESC')->get()->result();
       $list = $this->createCartDropList($all);
       return $list;
     }
 
     function getCartList($shopperId) {
-      $all = $this->db->join('tbl_product', 'tbl_product.product_id = tbl_basket.item_id')->where(array('tbl_basket.shopper_id'=>$shopperId))->from('tbl_basket')->order_by('tbl_basket.id', 'DESC')->get()->result();
+      $all = $this->db->join('tbl_product', 'tbl_product.product_id = tbl_basket.item_id')->where(array('tbl_basket.shopper_id'=>$shopperId, 'tbl_basket.basket_status'=>1))->from('tbl_basket')->order_by('tbl_basket.id', 'DESC')->get()->result();
       $list = $this->createCartList($all);
       return $list;
     }
 
     function getSubTotalCartList($shopperId) {
-      $sumPrice = $this->db->select('sum(tbl_product.product_price*tbl_basket.item_qty) as sum')->join('tbl_product', 'tbl_product.product_id = tbl_basket.item_id')->where('tbl_basket.shopper_id', $shopperId)->get('tbl_basket')->row();
+      $sumPrice = $this->db->select('sum(tbl_product.product_price*tbl_basket.item_qty) as sum')->join('tbl_product', 'tbl_product.product_id = tbl_basket.item_id')->where('tbl_basket.shopper_id', $shopperId)->where('tbl_basket.basket_status', 1)->get('tbl_basket')->row();
       return ($sumPrice->sum > 0)?$this->terbilang($sumPrice->sum):0;
     }
 
     function getSubTotalMainCartList($shopperId) {
-      $sumPrice = $this->db->select('sum(tbl_product.product_price*tbl_basket.item_qty) as sum')->join('tbl_product', 'tbl_product.product_id = tbl_basket.item_id')->where('tbl_basket.shopper_id', $shopperId)->get('tbl_basket')->row();
+      $sumPrice = $this->db->select('sum(tbl_product.product_price*tbl_basket.item_qty) as sum')->join('tbl_product', 'tbl_product.product_id = tbl_basket.item_id')->where('tbl_basket.shopper_id', $shopperId)->where('tbl_basket.basket_status', 1)->get('tbl_basket')->row();
       return ($sumPrice->sum > 0)?number_format($sumPrice->sum):0;
     }
 
@@ -70,22 +70,49 @@
       $cartList = '';
       if(count($data) > 0) {
         foreach ($data as $dt) {
+          if (strlen($dt->product_description) >= 100) {
+            $shortDesc = substr($dt->product_description, 0, 100). " ... " . substr($dt->product_description, -5);
+          }
+          else {
+            $shortDesc = $dt->product_description;
+          }
+          $picked = ($dt->picked_status == 1)?'<button class="btn btn-success btn-sm picked-change" data-basketid="'.$dt->id.'" data-status="0"><i class="fa fa-check"></i></button>':'<button class="btn btn-default btn-sm picked-change" data-basketid="'.$dt->id.'" data-status="1"><i class="fa fa-minus"></i></button>';
           $cartList .= '<tr>';
-          $cartList .= '<td class="col-md-3">';
-          $cartList .= '<div class="media">';
-          $cartList .= '<a class="thumbnail pull-left" href="'.base_url().'electros/'.$dt->product_url.'.'.$dt->product_id.'"> <img class="media-object" src="'.base_url().'admin/assets/product/'.$dt->product_image.'" style="width: 25%; height: auto;"></a>';
-          $cartList .= '<div class="media-body">';
-          $cartList .= '<h4 class="media-heading"><a href="'.base_url().'electros/'.$dt->product_url.'.'.$dt->product_id.'">'.$dt->product_title.'</a></h4>';
-          $cartList .= '</div>';
-          $cartList .= '</div>';
+					$cartList .= '<td data-th="Product">';
+					$cartList .= '<div class="row">';
+          $cartList .= '<div class="col-sm-2 hidden-xs"><img src="'.base_url().'admin/assets/product/'.$dt->product_image.'" alt="..." class="img-responsive"/></div>';
+          $cartList .= '<div class="col-sm-10">';
+					$cartList .= '<h4 class="nomargin">'.$dt->product_title.'</h4>';
+					$cartList .= '<p>'.$shortDesc.'</p>';
+					$cartList .= '</div>';
+					$cartList .= '</div>';
+					$cartList .= '</td>';
+					$cartList .= '<td data-th="Quantity">';
+					$cartList .= '<input type="number" class="form-control text-center cart-qty" data-basketid="'.$dt->id.'" value="'.$dt->item_qty.'">';
           $cartList .= '</td>';
-          $cartList .= '<td class="col-md-1" style="text-align: center">';
-          $cartList .= '<input type="number" class="form-control cart-qty" data-basketid="'.$dt->id.'" value="'.$dt->item_qty.'">';
-          $cartList .= '</td>';
-          $cartList .= '<td class="col-md-2 text-center"><strong>Rp'.number_format($dt->product_price).'</strong></td>';
-          $cartList .= '<td class="col-md-2 text-center"><strong>Rp'.number_format($dt->item_qty*$dt->product_price).'</strong></td>';
-          $cartList .= '<td class="col-md-1"><button type="button" class="btn btn-danger delete-cart-list-btn" data-itemid="'.$dt->id.'"><i class="fa fa-close"></i> Remove</button></td>';
-          $cartList .= '</tr>';
+          $cartList .= '<td data-th="Price">Rp'.number_format($dt->product_price).'</td>';
+					$cartList .= '<td data-th="Subtotal" class="text-center">Rp'.number_format($dt->item_qty*$dt->product_price).'</td>';
+					$cartList .= '<td class="actions" data-th="">';
+					$cartList .= $picked;
+					$cartList .= '<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>';
+					$cartList .= '</td>';
+					$cartList .= '</tr>';
+          // $cartList .= '<tr>';
+          // $cartList .= '<td class="col-md-3">';
+          // $cartList .= '<div class="media">';
+          // $cartList .= '<a class="thumbnail pull-left" href="'.base_url().'electros/'.$dt->product_url.'.'.$dt->product_id.'"> <img class="media-object" src="'.base_url().'admin/assets/product/'.$dt->product_image.'" style="width: 25%; height: auto;"></a>';
+          // $cartList .= '<div class="media-body">';
+          // $cartList .= '<h4 class="media-heading"><a href="'.base_url().'electros/'.$dt->product_url.'.'.$dt->product_id.'">'.$dt->product_title.'</a></h4>';
+          // $cartList .= '</div>';
+          // $cartList .= '</div>';
+          // $cartList .= '</td>';
+          // $cartList .= '<td class="col-md-1" style="text-align: center">';
+          // $cartList .= '<input type="number" class="form-control cart-qty" data-basketid="'.$dt->id.'" value="'.$dt->item_qty.'">';
+          // $cartList .= '</td>';
+          // $cartList .= '<td class="col-md-2 text-center"><strong>Rp'.number_format($dt->product_price).'</strong></td>';
+          // $cartList .= '<td class="col-md-2 text-center"><strong>Rp'.number_format($dt->item_qty*$dt->product_price).'</strong></td>';
+          // $cartList .= '<td class="col-md-1"><button type="button" class="btn btn-danger delete-cart-list-btn" data-itemid="'.$dt->id.'"><i class="fa fa-close"></i> Remove</button></td>';
+          // $cartList .= '</tr>';
         }
       }
       else {

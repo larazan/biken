@@ -16,14 +16,35 @@
     }
 
     function getCheckoutItems($shopperId) {
-      $getData = $this->db->join('tbl_product', 'tbl_product.product_id = tbl_basket.item_id')->get_where('tbl_basket', array('tbl_basket.shopper_id'=>$shopperId, 'tbl_basket.basket_status'=>1))->result();
+      $getData = $this->db->join('tbl_product', 'tbl_product.product_id = tbl_basket.item_id')->get_where('tbl_basket', array('tbl_basket.shopper_id'=>$shopperId, 'tbl_basket.basket_status'=>1, 'tbl_basket.picked_status'=>1))->result();
       return $getData;
     }
 
     function getSumCheckout($shopperId) {
-      $getData = $this->db->select('sum(tbl_product.product_price*tbl_basket.item_qty) as sum')->join('tbl_product', 'tbl_product.product_id = tbl_basket.item_id')->get_where('tbl_basket', array('tbl_basket.shopper_id'=>$shopperId, 'tbl_basket.basket_status'=>1))->row();
+      $getData = $this->db->select('sum(tbl_product.product_price*tbl_basket.item_qty) as sum')->join('tbl_product', 'tbl_product.product_id = tbl_basket.item_id')->get_where('tbl_basket', array('tbl_basket.shopper_id'=>$shopperId, 'tbl_basket.basket_status'=>1, 'tbl_basket.picked_status'=>1))->row();
       $sum = $getData->sum;
       return $sum;
+    }
+
+    function getSumWeight($shopperId) {
+      $getData = $this->db->select('sum(tbl_product.product_weight) as sum')->join('tbl_product', 'tbl_product.product_id = tbl_basket.item_id')->get_where('tbl_basket', array('tbl_basket.shopper_id'=>$shopperId, 'tbl_basket.basket_status'=>1, 'tbl_basket.picked_status'=>1))->row();
+      $sum = $getData->sum;
+      return $sum;
+    }
+
+    function insertOrder($data) {
+      $this->db->insert('tbl_order', $data);
+      $res = $this->db->affected_rows();
+      return $res;
+    }
+
+    function moveFromBasket($items) {
+      $itemsExp = explode(',', $items);
+      // if(count($itemsExp > 0)){
+        foreach ($itemsExp as $dt) {
+          $this->db->update('tbl_basket', array('basket_status'=>2), array('id'=>$dt));
+        }
+      // }
     }
 
     function penyebut($nilai) {
@@ -63,12 +84,22 @@
       return $hasil;
     }
 
-    function checkoutToken() {
-      $encrypted_string = $this->encryption->encrypt($this->session->session_id);
+    function checkoutToken($token) {
+      $encrypted_string = $this->encryption->encrypt($token);
       //remove dodge characters
       $checkout_token = str_replace('+', '-plus-', $encrypted_string);
       $checkout_token = str_replace('/', '-fwrd-', $checkout_token);
       $checkout_token = str_replace('=', '-eqls-', $checkout_token);
       return $checkout_token;
+    }
+
+    function decryptToken($token) {
+      //remove dodge characters
+      $session_id = str_replace('-plus-', '+', $token);
+      $session_id = str_replace('-fwrd-', '/', $session_id);
+      $session_id = str_replace('-eqls-', '=', $session_id);
+
+      $token = $this->encryption->decrypt($session_id);
+      return $token;
     }
   }

@@ -63,4 +63,16 @@ class Basketnew extends CI_Controller {
     $subMainList = $this->Model_Basket->getSubTotalMainCartList($shopperId);
     echo json_encode(array('success'=>TRUE, 'carts'=>$cartCount, 'cartList'=>$cartList, 'subCartList'=>$subCartList, 'cartMainList'=>$cartMainList, 'subMainList'=>$subMainList));
   }
+
+  public function updateBasketPick($itemId) {
+    $shopperId = $this->session->userId;
+    $status = $this->input->post('status');
+    $this->Model_Basket->updateBasketQty($itemId, array('picked_status'=>$status));
+    $cartCount = $this->Model_Basket->cartItemsCount($shopperId);
+    $cartList = $this->Model_Basket->getCartDropList($shopperId);
+    $subCartList = $this->Model_Basket->getSubTotalCartList($shopperId);
+    $cartMainList = $this->Model_Basket->getCartList($shopperId);
+    $subMainList = $this->Model_Basket->getSubTotalMainCartList($shopperId);
+    echo json_encode(array('success'=>TRUE, 'carts'=>$cartCount, 'cartList'=>$cartList, 'subCartList'=>$subCartList, 'cartMainList'=>$cartMainList, 'subMainList'=>$subMainList));
+  }
 }
