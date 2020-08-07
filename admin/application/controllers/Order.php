@@ -12,6 +12,154 @@ class Order extends BaseController
 		$this->isLoggedIn();
 	}
 
+	// 1594159200
+	// 1594245600
+
+	function getDatetimeNow($ket = 'today') {
+		$tz_object = new DateTimeZone('Asia/Jakarta');
+		$datetime = new DateTime();
+		$datetime->setTimezone($tz_object);
+		$now = strtotime($datetime->format('m-d-Y 00:00:00'));
+		$oneDay = 86400;
+		if($ket == 'today') {
+			$result = $now; 
+		} else {
+			$result = $now + $oneDay; 
+		}
+		return $result;
+	}
+
+	public function today() {
+		$today = $this->getDatetimeNow('today');
+		$midnight = $this->getDatetimeNow('midnight');
+		// $mysql_query = "SELECT * FROM tbl_order WHERE order_date = ";
+		$this->db->select('*');
+		$this->db->from('tbl_order');
+		$this->db->where('order_date >', $today);
+		$this->db->where('order_date <', $midnight);
+		$query = $this->db->get();
+
+		// foreach($query->result() as $res){
+		// 	$res = $res;
+		// }
+		// echo "<pre>";
+		// var_dump($res);
+
+		$data['query'] = $query;
+		$data['flash'] = $this->session->flashdata('item');
+		$this->template->views('order/today', $data);
+	}
+
+	public function unpaid() {
+		$status = 0;
+		$this->db->select('*');
+		$this->db->from('tbl_order');
+		$this->db->where('order_status', $status);
+		$query = $this->db->get();
+
+		$data['query'] = $query;
+		$data['flash'] = $this->session->flashdata('item');
+		$this->template->views('order/unpaid', $data);
+	}
+
+	public function arrive() {
+		$status = 3;
+		$this->db->select('*');
+		$this->db->from('tbl_order');
+		$this->db->where('order_status', $status);
+		$query = $this->db->get();
+
+		$data['query'] = $query;
+		$data['flash'] = $this->session->flashdata('item');
+		$this->template->views('order/pending', $data);
+	}
+
+	public function process() {
+		$status = 1;
+		$this->db->select('*');
+		$this->db->from('tbl_order');
+		$this->db->where('order_status', $status);
+		$query = $this->db->get();
+
+		$data['query'] = $query;
+		$data['flash'] = $this->session->flashdata('item');
+		$this->template->views('order/process', $data);
+	}
+
+	public function send() {
+		$status = 2;
+		$this->db->select('*');
+		$this->db->from('tbl_order');
+		$this->db->where('order_status', $status);
+		$query = $this->db->get();
+
+		$data['query'] = $query;
+		$data['flash'] = $this->session->flashdata('item');
+		$this->template->views('order/send', $data);
+	}
+
+	public function getCustomer($cus_id) {
+		$name = $this->db->get_where('tbl_customer', array('customer_id' => $cus_id))->row()->customer_name;
+		return $name;
+	}
+
+	public function getBankName($bank_id) {
+		$name = $this->db->get_where('tbl_bank', array('id' => $bank_id))->row()->title;
+		return $name;
+	}
+
+	function getStatus($status) {
+		// 0 => 'Unpaid / Belum dibayar'
+		// 1 => 'Process / Dikemas'
+		// 2 => 'Send / Konfirmasi Terima Barang'
+		// 3 => 'Arrive / Barang Sampai'
+		// 4 => 'Cancel / Dibatalkan'
+		// default => 'Error' 
+
+		switch ($status) {
+			case 0:
+				$status_label = "badge-danger";
+				$result = 'Belum dibayar';
+				break;
+			
+			case 1:
+				$status_label = "badge-warning";
+				$result = 'Barang Dikemas';
+				break;
+
+			case 2:
+				$status_label = "badge-info";
+				$result = 'Barang Dikirim';
+				break;
+
+			case 3:
+				$status_label = "badge-success";
+				$result = 'Barang Sampai';
+				break;
+
+			case 4:
+				$status_label = "badge-danger";
+				$result = 'Dibatalkan';
+				break;
+
+			default:
+				$status_label = "badge-danger";
+				$result = 'Error';
+				break;
+		}
+
+		return '<span class="badge ' . $status_label . ' badge--wide">' . $result . '</span>';
+	}
+
+	function getProduct($order_items) {
+		$items = explode(",", $order_items);
+		
+		$this->db->where_in('product_id', $items);
+		$query = $this->db->get('tbl_product');
+
+		return $query;
+	}
+
 	public function index()
 	{
 		$this->template->views('order/manage');
@@ -65,6 +213,8 @@ class Order extends BaseController
 
 		if ((is_numeric($update_id)) && ($submit != "Submit")) {
 			$data = $this->fetch_data_from_db($update_id);
+			$data['customer_name'] = $this->getCustomer($data['shopper_id']);
+			$data['bank_name'] = $this->getBankName($data['bank_id']);
 		} else {
 			$data = $this->fetch_data_from_post();
 		}
@@ -100,13 +250,112 @@ class Order extends BaseController
 		}
 	}
 
+	function detail() {
+		$this->load->library('session');
+
+		$update_id = $this->uri->segment(3);
+		$submit = $this->input->post('submit');
+
+		if ($submit == "Cancel") {
+			redirect('order/manage');
+		}
+
+		if ($submit == "Submit") {
+			// process the form
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('order_awb', 'No Resi', 'trim|required');
+			
+			if ($this->form_validation->run() == TRUE) {
+				$data = $this->fetch_data_from_post();
+
+				if (is_numeric($update_id)) {
+                    $data['updated_at'] = time();
+					$this->_update($update_id, $data);
+					$flash_msg = "The order were successfully updated.";
+					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
+					$this->session->set_flashdata('item', $value);
+					redirect('order/detail/' . $update_id);
+				} 
+			}
+		}
+
+		if ((is_numeric($update_id)) && ($submit != "Submit")) {
+			$data = $this->fetch_data_from_db($update_id);
+			$data['customer_name'] = $this->getCustomer($data['shopper_id']);
+			$data['bank_name'] = $this->getBankName($data['bank_id']);
+			$data['status_name'] = $this->getStatus($data['order_status']);
+			$data['products'] = $this->getProduct($data['order_items']);
+		} else {
+			$data = $this->fetch_data_from_post();
+		}
+
+		
+		$data['headline'] = "Detail Order";
+		
+		$data['update_id'] = $update_id;
+		$data['flash'] = $this->session->flashdata('item');
+
+		$this->template->views('order/detail', $data);
+	}
+
+	function submit_resi() {
+		$this->load->library('session');
+
+		$update_id = $this->input->post('order_id');
+		$submit = $this->input->post('submit');
+
+		if ($submit == "Cancel") {
+			redirect('order/manage');
+		}
+
+		if ($submit == "Submit") {
+			// process the form
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('order_awb', 'No Resi', 'trim|required');
+
+			if ($this->form_validation->run() == TRUE) {
+				// update no resi
+				// update status order
+				if (is_numeric($update_id)) {
+                    $data['updated_at'] = time();
+                    $data['order_awb'] = $this->input->post('order_awb');
+                    $data['order_status'] = 2; // send
+					$this->_update($update_id, $data);
+					$flash_msg = "The order were successfully updated.";
+					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
+					$this->session->set_flashdata('item', $value);
+					redirect('order/detail/' . $update_id);
+				} 
+			} else {
+				$flash_msg = "The order were failed updated.";
+				$value = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
+				$this->session->set_flashdata('item', $value);
+				redirect('order/detail/' . $update_id);
+			}
+		}
+	}
+
 	function fetch_data_from_post()
 	{
-		$data['session_id'] = $this->input->post('session_id', true);
-		$data['no_order'] = $this->input->post('no_order', true);
-        $data['cus_id'] = $this->input->post('cus_id', true);
-        $data['payment_id'] = $this->input->post('payment_id', true);
-        $data['order_total'] = $this->input->post('order_total', true);
+		$data['order_id'] = $this->input->post('order_id', true);
+        $data['shopper_id'] = $this->input->post('shopper_id', true);
+        $data['bank_id'] = $this->input->post('bank_id', true);
+        $data['order_name'] = $this->input->post('order_name', true);
+		$data['order_mail'] = $this->input->post('order_mail', true);
+		$data['order_phone'] = $this->input->post('order_phone', true);
+		$data['order_province'] = $this->input->post('order_province', true);
+		$data['order_city'] = $this->input->post('order_city', true);
+		$data['order_address'] = $this->input->post('order_address', true);
+		$data['order_notes'] = $this->input->post('order_notes', true);
+		$data['shipping_detail'] = $this->input->post('shipping_detail', true);
+		$data['order_items'] = $this->input->post('order_items', true);
+        $data['order_shipping'] = $this->input->post('order_shipping', true);
+        $data['order_awb'] = $this->input->post('order_awb', true);
+        $data['order_weight'] = $this->input->post('order_weight', true);
+		$data['shipping_cost'] = $this->input->post('shipping_cost', true);
+		$data['order_cost'] = $this->input->post('order_cost', true);
+		$data['order_total'] = $this->input->post('order_total', true);
+		$data['order_payment'] = $this->input->post('order_payment', true);
 		$data['order_status'] = $this->input->post('order_status', true);
 		$data['order_date'] = time();
 		$data['updated_at'] = time();
@@ -118,9 +367,24 @@ class Order extends BaseController
 		$query = $this->get_where($updated_id);
 		foreach ($query->result() as $row) {
 			$data['order_id'] = $row->order_id;
-            $data['cus_id'] = $row->cus_id;
-            $data['payment_id'] = $row->payment_id;
-            $data['order_total'] = $row->order_total;
+	        $data['shopper_id'] = $row->shopper_id;
+	        $data['bank_id'] = $row->bank_id;
+	        $data['order_name'] = $row->order_name;
+			$data['order_mail'] = $row->order_mail;
+			$data['order_phone'] = $row->order_phone;
+			$data['order_province'] = $row->order_province;
+			$data['order_city'] = $row->order_city;
+			$data['order_address'] = $row->order_address;
+			$data['order_notes'] = $row->order_notes;
+			$data['shipping_detail'] = $row->shipping_detail;
+			$data['order_items'] = $row->order_items;
+	        $data['order_shipping'] = $row->order_shipping;
+	        $data['order_awb'] = $row->order_awb;
+	        $data['order_weight'] = $row->order_weight;
+			$data['shipping_cost'] = $row->shipping_cost;
+			$data['order_cost'] = $row->order_cost;
+			$data['order_total'] = $row->order_total;
+			$data['order_payment'] = $row->order_payment;
 			$data['order_status'] = $row->order_status;
 			$data['order_date'] = $row->order_date;
 			$data['updated_at'] = $row->updated_at;

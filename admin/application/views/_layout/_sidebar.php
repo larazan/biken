@@ -186,7 +186,7 @@
 
         <li class="nav-header">MANAJEMEN PENJUALAN</li>
         <li class="nav-item">
-          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(1) == 'order') ? 'active' : '' ?>">
+          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(2) == 'manage') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-shopping-basket"></i>
             <p>
               Order
@@ -194,7 +194,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(1) == 'order') ? 'active' : '' ?>">
+          <a href="<?= base_url() ?>order/today" class="nav-link <?= ($this->uri->segment(2) == 'today') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-calendar"></i>
             <p>
               Hari ini
@@ -202,7 +202,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(1) == 'order') ? 'active' : '' ?>">
+          <a href="<?= base_url() ?>order/unpaid" class="nav-link <?= ($this->uri->segment(2) == 'unpaid') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-exclamation-triangle"></i>
             <p>
               Belum Bayar
@@ -210,7 +210,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(1) == 'order') ? 'active' : '' ?>">
+          <a href="<?= base_url() ?>order/pending" class="nav-link <?= ($this->uri->segment(2) == 'pending') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-clock"></i>
             <p>
               Pending
@@ -218,7 +218,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(1) == 'order') ? 'active' : '' ?>">
+          <a href="<?= base_url() ?>order/process" class="nav-link <?= ($this->uri->segment(2) == 'process') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-retweet"></i>
             <p>
               Diproses
@@ -226,7 +226,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(1) == 'order') ? 'active' : '' ?>">
+          <a href="<?= base_url() ?>order/send" class="nav-link <?= ($this->uri->segment(2) == 'send') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-ship"></i>
             <p>
               Dikirim
