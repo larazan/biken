@@ -15,6 +15,13 @@ class Order extends BaseController
 	// 1594159200
 	// 1594245600
 
+	public function getCarrier() {
+		$this->db->where('status', 1);
+    	$this->db->order_by('kurir_id');
+		$query=$this->db->get('tbl_kurir');
+		return $query;
+	}
+
 	function getDatetimeNow($ket = 'today') {
 		$tz_object = new DateTimeZone('Asia/Jakarta');
 		$datetime = new DateTime();
@@ -291,11 +298,47 @@ class Order extends BaseController
 
 		
 		$data['headline'] = "Detail Order";
-		
+		$data['carrier'] = $this->getCarrier();
 		$data['update_id'] = $update_id;
 		$data['flash'] = $this->session->flashdata('item');
 
 		$this->template->views('order/detail', $data);
+	}
+
+	function shipping_alternative() {
+		$this->load->library('session');
+
+		$update_id = $this->input->post('order_id');
+		$submit = $this->input->post('submit');
+
+		if ($submit == "Cancel") {
+			redirect('order/manage');
+		}
+
+		if ($submit == "Submit") {
+			// process the form
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('order_shipping', 'Shipping', 'trim|required');
+
+			if ($this->form_validation->run() == TRUE) {
+				// update order shipping
+				if (is_numeric($update_id)) {
+                    $data['updated_at'] = time();
+                    $data['order_shipping'] = $this->input->post('order_shipping');
+                    // $data['order_status'] = 2; // send
+					$this->_update($update_id, $data);
+					$flash_msg = "The order shipping were successfully updated.";
+					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
+					$this->session->set_flashdata('item', $value);
+					redirect('order/detail/' . $update_id);
+				} 
+			} else {
+				$flash_msg = "The order shipping were failed updated.";
+				$value = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
+				$this->session->set_flashdata('item', $value);
+				redirect('order/detail/' . $update_id);
+			}
+		}
 	}
 
 	function submit_resi() {

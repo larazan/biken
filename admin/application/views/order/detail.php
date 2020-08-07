@@ -34,7 +34,8 @@
 
     .product-grid2 .product-image2 img {
         width: 100%;
-        height: auto
+        height: 250px;
+        /*height: auto*/
     }
 
     .product-image2 .pic-1 {
@@ -220,6 +221,36 @@ if (isset($flash)) {
             <!--/.col (left) -->
 
             <div class="col-md-6">
+
+            	<div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">Shipping Alternatif</h3>
+                    </div>
+                    <?php echo form_open('Order/shipping_alternative', 'class=m-form'); ?>
+                    <div class="card-body">
+                    	<input type="hidden" name="order_id" value="<?=$order_id?>">
+                        <div class="form-group row">
+                            <label for="no_resi">
+                                Shipping
+                            </label>
+                            <select class="form-control" name="order_shipping">
+                            	<?php
+                                foreach ($carrier->result() as $row) {
+                                ?>
+                                <option value="<?=$row->name?>"><?=$row->name?></option>
+                            	<?php } ?>
+                            </select>
+                           
+                            <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('order_awb'); ?></div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" name="submit" class="btn btn-info btn-block" value="Submit">Submit</button>
+                    </div>
+                    <!-- /.card-footer -->
+                    </form>
+                </div>
+
                 <div class="card card-default">
                     <div class="card-header">
                         <h3 class="card-title">No Resi</h3>
@@ -272,12 +303,12 @@ if (isset($flash)) {
                                 <div class="product-grid2">
                                     <div class="product-image2">
                                         <a href="#">
-                                            <img class="pic-1" src="<?=$image?>">
+                                            <img class="pic-1 img-responsive" src="<?=$image?>">
                                         </a>
-                                        <a class="add-to-cart" href="<?=$link?>">Lihat Barang</a>
+                                        <a class="add-to-cart" href="<?=$link?>" target="_blank">Lihat Barang</a>
                                     </div>
                                     <div class="product-content">
-                                        <h3 class="title"><a href="#"><?=$row->product_title?></a></h3>
+                                        <h3 class="title"><a href="<?=$link?>" target="_blank"><?=$row->product_title?></a></h3>
                                         <span class="price">Total harga: <?=$row->product_price?></span>
                                     </div>
                                 </div>
