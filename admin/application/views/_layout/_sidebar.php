@@ -186,7 +186,7 @@
 
         <li class="nav-header">MANAJEMEN PENJUALAN</li>
         <li class="nav-item">
-          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(2) == 'manage') ? 'active' : '' ?>">
+          <a href="<?= base_url() ?>order/manage" class="nav-link <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == 'manage') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-shopping-basket"></i>
             <p>
               Order
@@ -194,7 +194,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= base_url() ?>order/today" class="nav-link <?= ($this->uri->segment(2) == 'today') ? 'active' : '' ?>">
+          <a href="<?= base_url() ?>order/today" class="nav-link <?= ($this->uri->segment(1) == 'order' && $this->uri->segment(2) == 'today') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-calendar"></i>
             <p>
               Hari ini

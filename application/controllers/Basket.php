@@ -14,7 +14,27 @@ class Basket extends CI_Controller
         echo $sess;
     }
 
-    
+    function arrivalConfirmation() {
+        $data['shop_name'] = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
+        $data['address'] = $this->db->get_where('tbl_settings', array('type' => 'address'))->row()->description;
+        $data['phone'] = $this->db->get_where('tbl_settings', array('type' => 'phone'))->row()->description;
+        $data['email'] = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
+        $data['logo'] = $this->db->get_where('tbl_settings', array('type' => 'logo'))->row()->description;
+
+        $order_id = 2;
+
+        $orders = $this->db->get_where('tbl_order', array('order_id' => $order_id))->row();
+        
+        // get item
+        $items = explode(",", $orders->order_items);
+        $this->db->where_in('product_id', $items);
+        $products = $this->db->get('tbl_product');
+
+        $data['orders'] = $orders;
+        $data['products'] = $products;
+        $data['order_id'] = $order_id;
+        $this->load->view('mail/mailArrival', $data);
+    }
 
     function index() {
         $this->load->view('detail');
