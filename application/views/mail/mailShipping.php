@@ -463,7 +463,7 @@
                                                                                                                         <div class='contentEditable' style='text-align: center;'>
                                                                                                                             <br>
                                                                                                                             <hr>
-                                                                                                                            <h3>Your Shipping Code: <span style="font-weight: bold;">#54435-39283</span></h3>
+                                                                                                                            <h3>Your Shipping Code: <span style="font-weight: bold;">#<?=$shipping_code?></span></h3>
                                                                                                                             <hr>
                                                                                                                         </div>
                                                                                                                         <div class='contentEditable' style='text-align: center;'>

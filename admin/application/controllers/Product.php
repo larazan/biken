@@ -5,7 +5,6 @@ require APPPATH . '/libraries/BaseController.php';
 
 class Product extends BaseController
 {
-
 	private $loca = './assets/product/';
 
 	function __construct()
@@ -40,17 +39,20 @@ class Product extends BaseController
 		$this->_update($update_id, $update_data);
 	}
 
-	function hapus_gambar($image)
+	function hapus_gambar($imgs)
 	{
-		// lokasi folder image
-		$path_real = $this->loca;
-		$path_compress = $path_real . '870x342/';
-		//lokasi gambar secara spesifik
-		$image1 = $path_real . $image;
-		$image2 = $path_compress . $image;
-		//hapus image
-		unlink($image1);
-		unlink($image2);
+		// unserialize
+		$images = unserialize($imgs);
+		foreach ($images as $image) {
+			// lokasi folder image
+			$path_real = $this->loca;
+			//lokasi gambar secara spesifik
+			$image = $path_real . $image;
+			//hapus image
+			if (file_exists($image)) {
+				unlink($image);
+			}
+		}
 	}
 
 	function getSizes()
@@ -134,7 +136,7 @@ class Product extends BaseController
 		return $dataArr;
 	}
 
-	function create()
+	function create2()
 	{
 		error_reporting(0);
 		$this->load->library('session');
@@ -329,6 +331,173 @@ class Product extends BaseController
 		$this->template->views('product/create', $data);
 	}
 
+	function create()
+	{
+		error_reporting(0);
+		$this->load->library('session');
+
+		$update_id = $this->uri->segment(3);
+		$submit = $this->input->post('submit');
+
+		if ($submit == "Cancel") {
+			redirect('product/manage');
+		}
+
+		if ($submit == "Submit") {
+
+			// var_dump($_FILES['featured_image']['name'] == '');
+			// die();
+
+			// process the form
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('product_title', 'Nama Product', 'trim|required');
+			$this->form_validation->set_rules('sku', 'SKU', 'trim|required');
+			$this->form_validation->set_rules('product_price', 'Price', 'trim|required');
+
+			if ($this->form_validation->run() == TRUE) {
+			
+				if (!empty($base = $this->input->post('base'))) {
+							
+						$arr = [];
+						foreach ($base as $index => $base64) {
+							if (!empty($base64)) {
+								// die("Upload error on index : {$index}");
+								$res = $this->base64ToJpeg($base64);
+								array_push($arr, $res);
+							}
+						}
+
+					// validasi base64
+					if (base64_encode(base64_decode($base64, true)) === $base64) {
+
+						$data = array(
+							'product_title' => $this->input->post('product_title', true),
+							'sku' => $this->input->post('sku', true),
+							'product_url' => strtolower(url_title($this->input->post('product_title', true))),
+							'product_description' => $this->input->post('product_description', true),
+							'product_specification' => $this->serializeSpec($this->input->post('type'), $this->input->post('val')),
+							'product_size' => $this->serializeData($this->input->post('size', true)),
+							'product_color' => $this->serializeData($this->input->post('color', true)),
+							'product_price' => $this->input->post('product_price', true),
+							'product_weight' => $this->input->post('product_weight', true),
+							'product_quantity' => $this->input->post('product_quantity', true),
+							'product_category' => $this->input->post('product_category', true),
+							'product_brand' => $this->input->post('product_brand', true),
+							'product_view' => $this->input->post('product_view', true),
+							'filename' => serialize($arr),
+							'product_status' =>  $this->input->post('product_status', true),
+							'created_at' => time(),
+							'updated_at' => time()
+						);
+
+						if (is_numeric($update_id)) {
+							$data_old = $this->fetch_data_from_db($update_id);
+
+							$featured_image = $data_old['filename'];
+
+							// hapus gambar
+							$this->hapus_gambar($featured_image);
+
+							$this->_update($update_id, $data);
+
+							$flash_msg = "The product were successfully updated.";
+							$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
+							$this->session->set_flashdata('item', $value);
+							redirect('product/create/' . $update_id);
+						} else {
+							$this->_insert($data);
+							$update_id = $this->get_max();
+
+							$flash_msg = "The product was successfully added.";
+							$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
+							$this->session->set_flashdata('item', $value);
+							// redirect('product/create/' . $update_id);
+							redirect('product/manage');
+						}
+
+					} else {
+						$flash_msg = "Upload failed!.";
+						$value = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
+						$this->session->set_flashdata('item', $value);
+						redirect('product/create/' . $update_id);
+					}
+					
+				} else {
+
+					$data = array(
+						'product_title' => $this->input->post('product_title', true),
+						'sku' => $this->input->post('sku', true),
+						'product_url' => strtolower(url_title($this->input->post('product_title', true))),
+						'product_description' => $this->input->post('product_description', true),
+						'product_specification' => $this->serializeSpec($this->input->post('type'), $this->input->post('val')),
+						'product_size' => $this->serializeData($this->input->post('size', true)),
+						'product_color' => $this->serializeData($this->input->post('color', true)),
+						'product_price' => $this->input->post('product_price', true),
+						'product_weight' => $this->input->post('product_weight', true),
+						'product_quantity' => $this->input->post('product_quantity', true),
+						'product_category' => $this->input->post('product_category', true),
+						'product_brand' => $this->input->post('product_brand', true),
+						'product_view' => $this->input->post('product_view', true),
+						'product_status' =>  $this->input->post('product_status', true),
+						'created_at' => time(),
+						'updated_at' => time()
+					);
+
+					if (is_numeric($update_id)) {
+						$this->_update($update_id, $data);
+
+						$flash_msg = "The product were successfully updated.";
+						$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
+						$this->session->set_flashdata('item', $value);
+						redirect('product/create/' . $update_id);
+					} else {
+						$this->_insert($data);
+						$update_id = $this->get_max();
+
+						$flash_msg = "The product was successfully added.";
+						$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
+						$this->session->set_flashdata('item', $value);
+						// redirect('product/create/' . $update_id);
+						redirect('product/manage');
+					}
+				}
+			}
+		}
+
+		if ((is_numeric($update_id)) && ($submit != "Submit")) {
+			$data = $this->fetch_data_from_db($update_id);
+			$size = $data['product_size'];
+			$data['sizeList'] = unserialize($size);
+			$color = $data['product_color'];
+			$data['filename'] = json_encode($this->jpegToBase64($update_id));
+			$data['colorList'] = unserialize($color);
+		} else {
+			$data = $this->fetch_data_from_post();
+			$data['sizeList'] = [];
+			$data['colorList'] = [];
+			$data['filename'] = [];
+		}
+
+		if (!is_numeric($update_id)) {
+			$data['headline'] = "Tambah Product";
+		} else {
+			$data['headline'] = "Update Product";
+		}
+
+		$mysql_query = "SELECT tbl_subsubcategory.*, tbl_subcategory.*, tbl_category.*, tbl_subcategory.created_at AS sub_date, tbl_subsubcategory.created_at AS subsub_date  FROM tbl_subsubcategory LEFT JOIN tbl_subcategory ON tbl_subsubcategory.subcat_id = tbl_subcategory.sub_id LEFT JOIN tbl_category ON tbl_subcategory.cat_id = tbl_category.id ORDER BY subsub_id DESC";
+		$categories = $this->_custom_query($mysql_query);
+		$data['categories'] = $categories; //$this->_custom_query("SELECT * FROM tbl_category ORDER BY id DESC");
+		$data['brands'] = $this->_custom_query("SELECT * FROM tbl_brand ORDER BY brand_id DESC");
+
+		
+		$data['sizes'] = $this->getSizes();
+		$data['colors'] = $this->getColors();
+
+		$data['update_id'] = $update_id;
+		$data['flash'] = $this->session->flashdata('item');
+		$this->template->views('product/create', $data);
+	}
+
 	function base64ToJpeg($base64_string)
 	{
 		$data = explode(';', $base64_string);
@@ -337,7 +506,7 @@ class Product extends BaseController
 		if (!empty($part)) {
 			$file = md5(uniqid(rand(), true)) . ".{$part[1]}";
 
-			$ifp = fopen(APPPATH . "../assets/uploads/{$file}", 'wb');
+			$ifp = fopen(APPPATH . "../assets/product/{$file}", 'wb');
 			fwrite($ifp, base64_decode($dataa[1]));
 			fclose($ifp);
 		}
@@ -356,7 +525,7 @@ class Product extends BaseController
 		$res = [];
 		foreach ($uns as $path) {
 			$type = pathinfo($path, PATHINFO_EXTENSION);
-			$data = file_get_contents(APPPATH . "../assets/uploads/" . $path);
+			$data = file_get_contents(APPPATH . "../assets/product/" . $path);
 			$base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
 			// array_push($res, $base64);
 			array_push($res, array($base64));
@@ -407,25 +576,23 @@ class Product extends BaseController
 	function _process_delete($update_id)
 	{
 		$data = $this->fetch_data_from_db($update_id);
-		$big_pic = $data['product_image'];
-		$small_pic = $big_pic;
-
+		$imgs = $data['filename'];
 		$path_real = $this->loca;
-		$path_compress = $path_real . '870x342/';
-
-		$big_pic_path = $path_real . $big_pic;
-		$small_pic_path = $path_compress . $small_pic;
-
-		if (file_exists($big_pic_path)) {
-			unlink($big_pic_path);
-		}
-
-		if (file_exists($small_pic_path)) {
-			unlink($small_pic_path);
+		// unserialize
+		$images = unserialize($imgs);
+		foreach ($images as $image) {
+			// lokasi folder image
+			$path_real = $this->loca;
+			//lokasi gambar secara spesifik
+			$image = $path_real . $image;
+			//hapus image
+			if (file_exists($image)) {
+				unlink($image);
+			}
 		}
 
 		unset($data);
-		$data['product_image'] = "";
+		$data['filename'] = "";
 		$this->_update($update_id, $data);
 	}
 

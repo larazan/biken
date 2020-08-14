@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Thank for payment</title>
+    <title>Reset Password</title>
     <style type="text/css">
         body {
             padding-top: 0 !important;
@@ -361,7 +361,7 @@
                                                                             <tbody>
 
                                                                                 <tr class="highlight">
-                                                                                    <td style="background: #595238; color: #fff; border: 1px solid #2bb2bb;">
+                                                                                    <td style="background: #595238; color: #fff; border: 1px solid #d54062;">
                                                                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                                             <tbody>
                                                                                                 <tr>
@@ -396,7 +396,7 @@
                                                                             <tbody>
 
                                                                                 <tr>
-                                                                                    <td style="background: #ade498; color: #fff; *border: 1px solid #2bb2bb;">
+                                                                                    <td style="background: #e8505b; color: #fff; *border: 1px solid #2bb2bb;">
                                                                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                                                             <tbody>
                                                                                                 <tr>
@@ -411,7 +411,7 @@
                                                                                                                 <td>
                                                                                                                     <div class='contentEditableContainer contentTextEditable'>
                                                                                                                         <div class='contentEditable' style='text-align: left; font-size: 2em; font-weight: bold;'>
-                                                                                                                            <h5>Thank you for your payment! </h5>
+                                                                                                                            <h5>This is the link to reset your password! <br><span style="color: #000; font-size: 1.1em;">Now you can reset your password.</span></h5>
 
                                                                                                                         </div>
                                                                                                                     </div>
@@ -451,18 +451,19 @@
                                                                                                                 <td>
                                                                                                                     <div class='contentEditableContainer contentTextEditable'>
                                                                                                                         <div class='contentEditable' style='text-align: left;'>
-                                                                                                                            <p>Dear, <span style="font-weight: bolder;"><?= $name ?></span></p>
+                                                                                                                            <p>Dear, <span style="font-weight: bolder;"><?php echo $data["name"]; ?></span></p>
                                                                                                                         </div>
                                                                                                                         <div class='contentEditable' style='text-align: left;'>
-                                                                                                                            <p>Thank you for your order from <?= $shop_name ?>, You can check the status of your order by <a href="<?=base_url()?>account" style="color: #5bc0de; font-weight: bold;">logging into your account.</a></p>
+                                                                                                                            <p><?php echo $data["message"]; ?></p>
                                                                                                                             <br>
-                                                                                                                            <p>if you have questions about your order, you can email us at <a href="<?=$email?>" style="color: #5bc0de; font-weight: bold;"><?=$email?></a></p>
+                                                                                                                            <p>if you have questions, you can email us at <a href="<?=$email?>" style="color: #5bc0de; font-weight: bold;"><?=$email?></a></p>
                                                                                                                             <br>
                                                                                                                             <p>Thank you again for your business.</p>
                                                                                                                         </div>
+                                                                                                                        
                                                                                                                         <div class='contentEditable' style='text-align: center;'>
                                                                                                                             <br>
-                                                                                                                            <a href="<?=base_url()?>account" class="btn btn-info">Login</a>
+                                                                                                                            <a href="<?php echo $data['reset_link']; ?>" class="btn btn-info" target="_blank">Reset Password Link</a>
                                                                                                                         </div>
 
 
@@ -535,7 +536,7 @@
                                     <td height='20'></td>
                                 </tr>
                                 <tr>
-                                    <td style="background: #febf63; color: #ffffff; border: 1px solid #EEEEEE;">
+                                    <td style="background: #f9d56e; color: #ffffff; border: 1px solid #EEEEEE;">
                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                             <tbody>
                                                 <tr>

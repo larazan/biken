@@ -9,9 +9,108 @@ class Basket extends CI_Controller
 		parent::__construct();
     }
 
+    function tes2() {
+        $order_id = 1;
+
+        $data['shop_name'] = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
+        $data['address'] = $this->db->get_where('tbl_settings', array('type' => 'address'))->row()->description;
+        $data['phone'] = $this->db->get_where('tbl_settings', array('type' => 'phone'))->row()->description;
+        $data['email'] = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
+        $data['logo'] = $this->db->get_where('tbl_settings', array('type' => 'logo'))->row()->description;
+
+        $orders = $this->db->get_where('tbl_order', array('order_id' => $order_id))->row();
+        
+        // get item
+        $items = explode(",", $orders->order_items);
+        $this->db->where_in('product_id', $items);
+        $products = $this->db->get('tbl_product');
+
+        $data['orders'] = $orders;
+        $data['products'] = $products;
+        $data['order_id'] = $order_id;
+
+        $from = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
+        $email_customer = $from;
+        $subject = 'barang sudah diterima ';
+        $body = $this->load->view('mail/mailArrival', $data, true);
+
+        $config = Array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'forheron@gmail.com',
+            'smtp_pass' => 'labeneamata',
+            'mailtype'  => 'html',
+            'charset'   => 'utf-8',
+            // 'smtp_crypto' => 'tls'
+        );
+        $this->load->library('email', $config);
+
+        $this->email->set_newline("\r\n");
+
+        $this->email->from('forheron@gmail.com', 'Sistem ');
+        $this->email->to('zamroni666@gmail.com');
+        $this->email->subject($subject);
+        $this->email->message($body);
+        // $this->email->bcc($from);
+        // $this->email->cc($from);
+
+        if ($this->email->send() == false) {
+            show_error($this->email->print_debugger());
+        } else {
+            return TRUE;
+        }
+    }
+
     function tes() {
-        $sess = $this->session->session_id;
-        echo $sess;
+        // $sess = $this->session->session_id;
+        // echo $sess;
+
+        $user_id = 1;
+        $shipping_code = '643545-54646-1290';
+        
+        $data['shop_name'] = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
+        $data['address'] = $this->db->get_where('tbl_settings', array('type' => 'address'))->row()->description;
+        $data['phone'] = $this->db->get_where('tbl_settings', array('type' => 'phone'))->row()->description;
+        $data['email'] = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
+        $data['logo'] = $this->db->get_where('tbl_settings', array('type' => 'logo'))->row()->description;
+
+        $this->db->where('customer_id', $user_id);
+        $data['query'] = $this->db->get('tbl_customer');
+        $data['user_id'] = $user_id;
+        $data['shipping_code'] = $shipping_code;
+
+        $from = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
+        $email_customer = App::getCustomer($user_id)->customer_email;
+        $subject = 'thank for registration ';
+        $body = $this->load->view('mail/mailShipping', $data, true);
+
+        $config = Array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'forheron@gmail.com',
+            'smtp_pass' => 'labeneamata',
+            'mailtype'  => 'html',
+            'charset'   => 'utf-8',
+            // 'smtp_crypto' => 'tls'
+        );
+        $this->load->library('email', $config);
+
+        $this->email->set_newline("\r\n");
+
+        $this->email->from('forheron@gmail.com', 'Sistem ');
+        $this->email->to('zamroni666@gmail.com');
+        $this->email->subject($subject);
+        $this->email->message($body);
+        // $this->email->bcc($from);
+        // $this->email->cc($from);
+
+        if ($this->email->send() == false) {
+            show_error($this->email->print_debugger());
+        } else {
+            return TRUE;
+        }
     }
 
     function arrivalConfirmation() {

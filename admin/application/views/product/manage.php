@@ -67,7 +67,13 @@ $addlink = base_url() . "product/create";
 
                                     $tgl = getNiceDate($row->created_at, 'indo');
 
-                                    $gambar = $path.$row->product_image;
+                                    // $gambar = $path.$row->product_image;
+
+                                    // image
+                                    $arr_img = $row->filename;
+                                    $images = unserialize($arr_img);
+                                    $image = $path.$images[0];
+
                                 ?>
 
                                     <tr>
@@ -79,7 +85,7 @@ $addlink = base_url() . "product/create";
                                             <?= $row->sku ?>
                                         </td>
                                         <td>
-                                            <?php echo ($row->product_image == '') ? '' : '<img src="'.$gambar.'" class="img-responsive" width="80px">' ?>
+                                            <?php echo ($image == '') ? '' : '<img src="'.$image.'" class="img-responsive" width="80px">' ?>
                                         </td>
                                         <td>
                                             <?= $row->product_price ?>

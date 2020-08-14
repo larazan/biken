@@ -112,7 +112,7 @@ $backlink = base_url() . "product/manage";
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_brand'); ?></div>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Image</label>
                             <div class="col-sm-6">
                                 <div class="custom-file">
@@ -122,7 +122,7 @@ $backlink = base_url() . "product/manage";
                                 </div>
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_image'); ?></div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Image</label>
@@ -237,7 +237,7 @@ $backlink = base_url() . "product/manage";
 
                                                     ?>
                                                     <label class="m-checkbox2">
-                                                        <input type="checkbox" class="color" id="color" value="<?= $row->color_id ?>" name="color[]" <?= $checked ?>> <?= $row->name ?>
+                                                        <input type="checkbox" class="color" value="<?= $row->color_id ?>" name="color[]" <?= $checked ?>> <?= $row->name ?>
                                                     </label>
                                                 <?php } ?>
                                             </div>
@@ -412,7 +412,7 @@ $backlink = base_url() . "product/manage";
     $(document).ready(function() {
         uploadHBR.init({
             "target": "#uploads",
-            "textNew": "",
+            "textNew": "click or drop",
             "textTitle": "Click here or drag to upload an image",
             "textTitleRemove": "Click here remove the image"
         });
@@ -424,19 +424,20 @@ $backlink = base_url() . "product/manage";
 
 <script>
     $(document).ready(function() {
-        var arr = <?=$filename?>;
+        var arr = <?= $filename ?>;
         var res = document.getElementById('result-img');
-        console.log(arr);
-        console.log(arr.length);
+        // console.log(arr);
+        // console.log(arr.length);
 
-
-        for(var i=0; i < arr.length; i++){
-            console.log(arr[i]);
-            $('#base64_'+ i).val(arr[i]);
-            $('#result-img').append("<img src='"+arr[i]+"' alt='' />");
-            $("#prev_" + i).find("img").attr("src", arr[i]);
-            $("#prev_" + i).removeClass("hidden");
-            $("#new_" + i).addClass("hidden");
+        if (arr.length === 0) {
+            for (var i = 0; i < arr.length; i++) {
+                console.log(arr[i]);
+                $('#base64_' + i).val(arr[i]);
+                $('#result-img').append("<img src='" + arr[i] + "' alt='' />");
+                $("#prev_" + i).find("img").attr("src", arr[i]);
+                $("#prev_" + i).removeClass("hidden");
+                $("#new_" + i).addClass("hidden");
+            }
         }
     });
 </script>
