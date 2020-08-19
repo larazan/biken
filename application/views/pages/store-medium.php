@@ -121,7 +121,7 @@
                     </div>
                     <div class="product-body">
                       <p class="product-category"><?= $dt->subsub_name?></p>
-                      <h3 class="product-name"><a href="#"><?= strtoupper($dt->product_title); ?></a></h3>
+                      <h3 class="product-name to-details" data-tes="<?= $dt->product_url.'.'.$dt->product_id;?>"><a href="#"><?= strtoupper($dt->product_title); ?></a></h3>
                       <h4 class="product-price">Rp<?= number_format($dt->product_price);?></h4>
                       <div class="product-rating">
                         <i class="fa fa-star"></i>
@@ -132,7 +132,7 @@
                       </div>
                       <div class="product-btns">
                         <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                        <button data-tes="<?= $dt->product_url.'.'.$dt->product_id;?>" class="quick-view to-details"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                        <button data-tes="<?= $dt->product_url.'.'.$dt->product_id;?>" class="quick-view to-details2"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                       </div>
 										</div>
 										<div class="add-to-cart">

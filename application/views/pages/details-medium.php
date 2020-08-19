@@ -37,9 +37,24 @@
         <div class="row">
           <div class="col-md-6">
             <div class="details-slick">
+              <!-- multi image -->
+              <?php
+              $path = base_url().'admin/assets/product/';
+              // image
+              $arr_img = $itemData->filename;
+              $images = unserialize($arr_img);
+              for ($i=0; $i < count($images) ; $i++) { 
+              ?>
               <div class="">
-                <img src="<?= base_url()?>admin/assets/product/<?= $itemData->product_image;?>" alt="" class="img-responsive">
+                <img src="<?= $path.$images[$i] ?>" alt="" class="img-responsive">
               </div>
+              <?php } ?>
+              <!-- end multi image -->
+              <!-- single image -->
+              <!-- <div class="">
+                <img src="<?= base_url()?>admin/assets/product/<?= $itemData->product_image;?>" alt="" class="img-responsive">
+              </div> -->
+              <!-- end single image -->
             </div>
           </div>
           <div class="col-md-6 product-detail-title">

@@ -1373,6 +1373,10 @@ textarea.input {
   cursor: default;
 }
 
+.store-pagination li.active a {
+  color: #fff !important;
+}
+
 .store-pagination li a {
   display: block;
 }
