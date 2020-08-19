@@ -15,6 +15,7 @@ class Order extends BaseController
 	// 1594159200
 	// 1594245600
 
+	
 	public function getCarrier() {
 		$this->db->where('status', 1);
     	$this->db->order_by('kurir_id');

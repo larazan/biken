@@ -430,7 +430,7 @@
                                                                                                                         </div>
                                                                                                                         <div class='contentEditable' style='text-align: left; margin-top: 20px;'>
 
-                                                                                                                            <table width="100%" cellpadding="0" cellspacing="0">
+                                                                                                                        <table width="100%" cellpadding="0" cellspacing="0">
                                                                                                                                 <thead style="line-height: 50px;">
                                                                                                                                     <tr class="border_bottom">
                                                                                                                                         <td colspan="2"><strong>Item</strong></td>
@@ -439,7 +439,7 @@
                                                                                                                                     </tr>
                                                                                                                                 </thead>
                                                                                                                                 <tbody>
-                                                                                                                                <?php
+                                                                                                                                    <?php
                                                                                                                                     $grand_total = 0;
                                                                                                                                     $shipping = 0;
                                                                                                                                     foreach ($products->result() as $row) {

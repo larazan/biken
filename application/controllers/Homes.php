@@ -226,7 +226,7 @@ class Homes extends CI_Controller
 	}
 
 	public function details() {
-		$data['itemData'] = $this->db->get_where('tbl_product', array('product_id'=>3))->row();
+		$data['itemData'] = $this->db->get_where('tbl_product', array('product_id'=>1))->row();
 		$this->load->view('pages/details', $data);
 	}
 

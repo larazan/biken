@@ -144,7 +144,7 @@ $backlink = base_url() . "product/manage";
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Discount</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" placeholder=" Discount" id="product_discount" name="product_discount" value="<?= $product_discount ?>" required>
+                                <input type="text" class="form-control" placeholder=" Discount" id="product_discount" name="product_discount" value="<?= $product_discount ?>">
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_discount'); ?></div>
                             </div>
                         </div>
@@ -162,6 +162,8 @@ $backlink = base_url() . "product/manage";
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_quantity'); ?></div>
                             </div>
                         </div>
+                        <?php
+                        if ($sizeList != '') { ?>
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Size (optional)</label>
                             <div class="col-sm-6">
@@ -205,6 +207,10 @@ $backlink = base_url() . "product/manage";
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_quantity'); ?></div>
                             </div>
                         </div>
+                        <?php } ?>
+
+                        <?php
+                        if ($colorList != '') { ?>
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Color (optional)</label>
                             <div class="col-sm-6">
@@ -249,6 +255,8 @@ $backlink = base_url() . "product/manage";
                                 <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('product_quantity'); ?></div>
                             </div>
                         </div>
+                        <?php } ?>
+
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Product Description</label>
                             <div class="col-sm-6">
@@ -429,7 +437,7 @@ $backlink = base_url() . "product/manage";
         // console.log(arr);
         // console.log(arr.length);
 
-        if (arr.length === 0) {
+        if (arr.length !== 0) {
             for (var i = 0; i < arr.length; i++) {
                 console.log(arr[i]);
                 $('#base64_' + i).val(arr[i]);

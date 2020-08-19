@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Approval</title>
+    <title>Checkout</title>
     <style type="text/css">
         body {
             padding-top: 0 !important;
@@ -423,19 +423,19 @@
                                                                                                                                     </tr>
                                                                                                                                     <tr style="line-height: 30px;">
                                                                                                                                         <td class="text-left"><span style="font-weight: bolder;">Payment Method:</span> Bank</td>
-                                                                                                                                        <td class="text-right"><?=App::getShipping($shipping_id)->firstname?></td>
+                                                                                                                                        <td class="text-right"><?=$name?></td>
                                                                                                                                         
                                                                                                                                     </tr>
                                                                                                                                     <tr>
                                                                                                                                         <td class="text-left"><?= tgl_indo('Y-m-d')?></td>
-                                                                                                                                        <td class="text-right"><?=App::getShipping($shipping_id)->address?></td>
+                                                                                                                                        <td class="text-right"><?=$orders->order_address?></td>
                                                                                                                                     </tr>
                                                                                                                                 </tbody>
                                                                                                                             </table>
                                                                                                                         </div>
                                                                                                                         <div class='contentEditable' style='text-align: left; margin-top: 20px;'>
 
-                                                                                                                            <table width="100%" cellpadding="0" cellspacing="0">
+                                                                                                                        <table width="100%" cellpadding="0" cellspacing="0">
                                                                                                                                 <thead style="line-height: 50px;">
                                                                                                                                     <tr class="border_bottom">
                                                                                                                                         <td colspan="2"><strong>Item</strong></td>
@@ -447,30 +447,22 @@
                                                                                                                                     <?php
                                                                                                                                     $grand_total = 0;
                                                                                                                                     $shipping = 0;
-                                                                                                                                    foreach ($query->result() as $row) {
-                                                                                                                                        $basket_id = $row->id;
-                                                                                                                                        $prod_id = $row->item_id;
-                                                                                                                                        $prod_colour = $row->item_colour;
-                                                                                                                                        $prod_size = $row->item_size;
-                                                                                                                                        $prod_title = $row->item_title;
-                                                                                                                                        $prod_price = $row->price;
-                                                                                                                                        $prod_qty = $row->item_qty;
+                                                                                                                                    foreach ($products->result() as $row) {
+                                                                                                                                        
+                                                                                                                                        $prod_id = $row->product_id;
+                                                                                                                                        $prod_title = $row->product_title;
+                                                                                                                                        $prod_price = $row->product_price;
+                                                                                                                                        $prod_qty = 1; //$row->item_qty;
                                                                                                                                         $sub_total = $prod_price * $prod_qty;
-                                                                                                                                        $shopper_id = $row->shopper_id;
-
-                                                                                                                                        // product
-                                                                                                                                        $details = $this->db->get_where('tbl_product', array('product_id' => $prod_id))->row();
-                                                                                                                                        $brand_id = $details->product_brand;
-                                                                                                                                        $stok = $details->product_quantity;
-                                                                                                                                        $slug = $details->product_url;
-                                                                                                                                        $img = $details->product_image;
+                                                                                                                                        $brand_id = $row->product_brand;
+                                                                                                                                        $stok = $row->product_quantity;
+                                                                                                                                        $slug = $row->product_url;
+                                                                                                                                        $img = $row->product_image;
 
                                                                                                                                         // brand
                                                                                                                                         $brands = $this->db->get_where('tbl_brand', array('brand_id' => $brand_id))->row();
                                                                                                                                         $brand_url = $brands->brand_url;
                                                                                                                                         $brand_name = $brands->brand_name;
-
-                                                                                                                                        $stock = ($stok > 0) ? 'In Stock' : 'Out of Stock';
 
                                                                                                                                         $sub_total = $prod_price;
                                                                                                                                         $grand_total = $grand_total + $sub_total;
@@ -480,7 +472,7 @@
                                                                                                                                         <tr class="highlight">
                                                                                                                                             <td><img src="<?= base_url()?>admin/assets/product/<?= $img;?>" width="100"/></td>
                                                                                                                                             <td class="text-left padd"><?= $prod_title ?></td>
-                                                                                                                                            <td class="text-center"><?= $row->item_qty ?></td>
+                                                                                                                                            <td class="text-center"><?= $prod_qty ?></td>
                                                                                                                                             <td class="text-right"><?= rupiah($sub_total) ?></td>
                                                                                                                                         </tr>
 
@@ -507,13 +499,13 @@
                                                                                                                                         <td class="no-line"></td>
                                                                                                                                         <td class="no-line"></td>
                                                                                                                                         <td class="no-line text-center"><strong>Shipping</strong></td>
-                                                                                                                                        <td class="no-line text-right"><?=rupiah(App::shippingPrice($shipping_id));?></td>
+                                                                                                                                        <td class="no-line text-right"><?=rupiah($orders->shipping_cost);?></td>
                                                                                                                                     </tr>
                                                                                                                                     <tr class="highlight2">
                                                                                                                                         <td class="no-line"></td>
                                                                                                                                         <td class="no-line"></td>
                                                                                                                                         <td class="no-line text-center"><strong>Total</strong></td>
-                                                                                                                                        <td class="no-line text-right"><?= rupiah($grand_total + App::shippingPrice($shipping_id)) ?></td>
+                                                                                                                                        <td class="no-line text-right"><?= rupiah($grand_total + $orders->shipping_cost) ?></td>
                                                                                                                                     </tr>
                                                                                                                                 </tbody>
                                                                                                                             </table>

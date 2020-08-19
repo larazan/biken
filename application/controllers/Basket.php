@@ -10,56 +10,58 @@ class Basket extends CI_Controller
     }
 
     function tes2() {
-        $order_id = 1;
-
-        $data['shop_name'] = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
-        $data['address'] = $this->db->get_where('tbl_settings', array('type' => 'address'))->row()->description;
-        $data['phone'] = $this->db->get_where('tbl_settings', array('type' => 'phone'))->row()->description;
-        $data['email'] = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
-        $data['logo'] = $this->db->get_where('tbl_settings', array('type' => 'logo'))->row()->description;
-
-        $orders = $this->db->get_where('tbl_order', array('order_id' => $order_id))->row();
+        $this->Mail->sendMailCheckout(2, 'Customer');
         
-        // get item
-        $items = explode(",", $orders->order_items);
-        $this->db->where_in('product_id', $items);
-        $products = $this->db->get('tbl_product');
+        // $order_id = 1;
 
-        $data['orders'] = $orders;
-        $data['products'] = $products;
-        $data['order_id'] = $order_id;
+        // $data['shop_name'] = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
+        // $data['address'] = $this->db->get_where('tbl_settings', array('type' => 'address'))->row()->description;
+        // $data['phone'] = $this->db->get_where('tbl_settings', array('type' => 'phone'))->row()->description;
+        // $data['email'] = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
+        // $data['logo'] = $this->db->get_where('tbl_settings', array('type' => 'logo'))->row()->description;
 
-        $from = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
-        $email_customer = $from;
-        $subject = 'barang sudah diterima ';
-        $body = $this->load->view('mail/mailArrival', $data, true);
+        // $orders = $this->db->get_where('tbl_order', array('order_id' => $order_id))->row();
+        
+        // // get item
+        // $items = explode(",", $orders->order_items);
+        // $this->db->where_in('product_id', $items);
+        // $products = $this->db->get('tbl_product');
 
-        $config = Array(
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.gmail.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'forheron@gmail.com',
-            'smtp_pass' => 'labeneamata',
-            'mailtype'  => 'html',
-            'charset'   => 'utf-8',
-            // 'smtp_crypto' => 'tls'
-        );
-        $this->load->library('email', $config);
+        // $data['orders'] = $orders;
+        // $data['products'] = $products;
+        // $data['order_id'] = $order_id;
 
-        $this->email->set_newline("\r\n");
+        // $from = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
+        // $email_customer = $from;
+        // $subject = 'barang sudah diterima ';
+        // $body = $this->load->view('mail/mailArrival', $data, true);
 
-        $this->email->from('forheron@gmail.com', 'Sistem ');
-        $this->email->to('zamroni666@gmail.com');
-        $this->email->subject($subject);
-        $this->email->message($body);
-        // $this->email->bcc($from);
-        // $this->email->cc($from);
+        // $config = Array(
+        //     'protocol' => 'smtp',
+        //     'smtp_host' => 'ssl://smtp.gmail.com',
+        //     'smtp_port' => 465,
+        //     'smtp_user' => 'forheron@gmail.com',
+        //     'smtp_pass' => 'labeneamata',
+        //     'mailtype'  => 'html',
+        //     'charset'   => 'utf-8',
+        //     // 'smtp_crypto' => 'tls'
+        // );
+        // $this->load->library('email', $config);
 
-        if ($this->email->send() == false) {
-            show_error($this->email->print_debugger());
-        } else {
-            return TRUE;
-        }
+        // $this->email->set_newline("\r\n");
+
+        // $this->email->from('forheron@gmail.com', 'Sistem ');
+        // $this->email->to('zamroni666@gmail.com');
+        // $this->email->subject($subject);
+        // $this->email->message($body);
+        // // $this->email->bcc($from);
+        // // $this->email->cc($from);
+
+        // if ($this->email->send() == false) {
+        //     show_error($this->email->print_debugger());
+        // } else {
+        //     return TRUE;
+        // }
     }
 
     function tes() {

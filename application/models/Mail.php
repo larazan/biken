@@ -26,8 +26,8 @@ class Mail extends CI_Model
     }
 
     // send mail registrasi
-    static function sendMailRegistration($user_id = '') {
-        $user_id = 1;
+    public function sendMailRegistration($user_id = '') {
+        // $user_id = 1;
         
         $data['shop_name'] = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
         $data['address'] = $this->db->get_where('tbl_settings', array('type' => 'address'))->row()->description;
@@ -59,7 +59,7 @@ class Mail extends CI_Model
 
         $this->email->set_newline("\r\n");
 
-        $this->email->from($from, 'Sistem ');
+        $this->email->from($from, 'Sistem Toko online');
         $this->email->to($email_customer);
         $this->email->subject($subject);
         $this->email->message($body);
@@ -74,7 +74,7 @@ class Mail extends CI_Model
     }
 
     // send mail reset password
-    static function sendMailReset($detail) {
+    public function sendMailReset($detail) {
         
         $data['shop_name'] = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
         $data['address'] = $this->db->get_where('tbl_settings', array('type' => 'address'))->row()->description;
@@ -103,7 +103,7 @@ class Mail extends CI_Model
 
         $this->email->set_newline("\r\n");
 
-        $this->email->from($from, 'Sistem ');
+        $this->email->from($from, 'Sistem Toko online');
         $this->email->to($email_customer);
         $this->email->subject($subject);
         $this->email->message($body);
@@ -122,8 +122,8 @@ class Mail extends CI_Model
     }
 
     // send mail checkout
-    static function sendMailCheckout($order_id = '', $type = '') {
-        $order_id = 1;
+    public function sendMailCheckout($order_id = '', $type = '') {
+        // $order_id = 1;
 
         $orders = $this->db->get_where('tbl_order', array('order_id' => $order_id))->row();
         $shopper_id = $orders->shopper_id;
@@ -148,13 +148,14 @@ class Mail extends CI_Model
         $data['orders'] = $orders;
         $data['products'] = $products;
         $data['order_id'] = $order_id;
-        $data['name'] = $name;
+        $data['name'] = $orders->order_name;
+        $data['no_order'] = $orders->no_order;
 
-        self::sendMail($subject, $to, $template, $data);
+        $this->sendMail($subject, $to, $template, $data);
     }
 
 
-    static function sendMail($subject, $to, $template, $data) {
+    public function sendMail($subject, $to, $template, $data) {
         $data['shop_name'] = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
         $data['address'] = $this->db->get_where('tbl_settings', array('type' => 'address'))->row()->description;
         $data['phone'] = $this->db->get_where('tbl_settings', array('type' => 'phone'))->row()->description;
@@ -178,7 +179,7 @@ class Mail extends CI_Model
 
         $this->email->set_newline("\r\n");
 
-        $this->email->from($from, 'Sistem ');
+        $this->email->from($from, 'Sistem Toko online');
         $this->email->to($to);
         $this->email->subject($subject);
         $this->email->message($body);
@@ -193,7 +194,7 @@ class Mail extends CI_Model
     }
 
     // send mail approve
-    static function sendMailApprove($user_id = '', $type) {
+    public function sendMailApprove($user_id = '', $type) {
         if ($type == 'Admin') {
             $name = 'Admin';
             $to = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
@@ -212,7 +213,7 @@ class Mail extends CI_Model
 
         $from = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
         $data['name'] = $name;
-        $body = $this->load->view('mail/mailThanksRegistration', $data, true);
+        $body = $this->load->view('mail/mailThanksProve', $data, true);
 
         $config = Array(
             'protocol' => 'smtp',
@@ -228,7 +229,7 @@ class Mail extends CI_Model
 
         $this->email->set_newline("\r\n");
 
-        $this->email->from($from, 'Sistem ');
+        $this->email->from($from, 'Sistem Toko online');
         $this->email->to($to);
         $this->email->subject($subject);
         $this->email->message($body);
@@ -244,8 +245,8 @@ class Mail extends CI_Model
 
     // send mail shipping
 
-    static function sendMailShipping($user_id = '', $shipping_code = '') {
-        $user_id = 1;
+    public function sendMailShipping($user_id = '', $shipping_code = '') {
+        // $user_id = 1;
         
         $data['shop_name'] = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
         $data['address'] = $this->db->get_where('tbl_settings', array('type' => 'address'))->row()->description;
@@ -260,7 +261,7 @@ class Mail extends CI_Model
 
         $from = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
         $email_customer = App::getCustomer($user_id)->customer_email;
-        $subject = 'thank for registration ';
+        $subject = 'No resi Barang Pesanan';
         $body = $this->load->view('mail/mailShipping', $data, true);
 
         $config = Array(
@@ -277,7 +278,7 @@ class Mail extends CI_Model
 
         $this->email->set_newline("\r\n");
 
-        $this->email->from($from, 'Sistem ');
+        $this->email->from($from, 'Sistem Toko online');
         $this->email->to($email_customer);
         $this->email->subject($subject);
         $this->email->message($body);
@@ -292,8 +293,8 @@ class Mail extends CI_Model
     }
 
     // send mail arrival
-    static function sendMailArrival($order_id = '') {
-        $order_id = 1;
+    public function sendMailArrival($order_id = '') {
+        // $order_id = 1;
 
         $data['shop_name'] = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
         $data['address'] = $this->db->get_where('tbl_settings', array('type' => 'address'))->row()->description;
@@ -331,7 +332,7 @@ class Mail extends CI_Model
 
         $this->email->set_newline("\r\n");
 
-        $this->email->from($from, 'Sistem ');
+        $this->email->from($from, 'Sistem Toko online');
         $this->email->to($email_customer);
         $this->email->subject($subject);
         $this->email->message($body);
