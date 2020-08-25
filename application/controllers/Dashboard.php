@@ -36,6 +36,7 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function uploadBukti() {
+		$shopperId = $this->session->userId;
 		$filename = $_FILES['bukti']['name'];
 		$nama_baru = str_replace(' ', '_', $filename);		
 		$nmfile = date("YmdHis").'_'.$nama_baru;
@@ -50,14 +51,14 @@ class Dashboard extends CI_Controller {
 		$ids = $this->input->post('modalids');
 		if (!$this->upload->do_upload('bukti')){
 			$error = array('error' => $this->upload->display_errors());
-			// var_dump($error);
 			redirect('myprofile/transaction');
 		}
 		else{
 			$fileinfo = $this->upload->data();
 			$data = array('order_payment' => $fileinfo['file_name'], 'updated_at'=>time());
 			$up = $this->db->update('tbl_order', $data, array('order_id'=>$ids));
-			// var_dump($up);0
+			$this->Mail->sendMailApprove($shopperId, 'Admin');
+			$this->Mail->sendMailApprove($shopperId, 'User');
 			redirect('myprofile/transaction');
 		}
 	}
