@@ -111,6 +111,34 @@ class Homes extends CI_Controller
 		$this->load->view('pages/homes-medium', $data);
 	}
 
+	public function tesImg() {
+		$filename = $this->db->get_where('tbl_product', array('product_id' => 1))->row()->filename;
+		$images = unserialize($filename);
+		echo $images[0];
+	}
+
+	public function medium2() {
+		$shopperId = $this->session->userId;
+		$data["cart"] = $this->Model_Basket->cartItemsCount($shopperId);
+		$data["cartList"] = $this->Model_Basket->getCartDropList($shopperId);
+		$data["subCartList"] = $this->Model_Basket->getSubTotalCartList($shopperId);
+		$all = $this->db->join('tbl_subsubcategory', 'tbl_subsubcategory.subsub_id = tbl_product.product_category')->get_where('tbl_product', array('product_status'=>1))->result_array();
+		$terbaru = [];
+		foreach ($all as $dt) {
+			$images = unserialize($dt["filename"]);
+			array_push($terbaru, array(
+				'pic' => $images[0],
+				'ctg' => $dt["subsub_name"],
+				'title' => $dt["product_title"],
+				'price' => $dt["product_price"],
+				'url' => $dt["product_url"].'.'.$dt["product_id"],
+				'ids' => $dt["product_id"]
+			));
+		}
+		$data["items"] = $terbaru;
+		$this->load->view('pages/homes-medium', $data);
+	}
+
 	public function store() {
 		$this->load->view('pages/store');
 	}

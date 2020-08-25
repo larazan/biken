@@ -1,6 +1,6 @@
 (function($) {
   "use strict"
-  var base = window.location.origin+"/commerce"
+  var base = window.location.origin+"/clone/commerce"
   $('.main-search').click(function(){
     window.location.href = base+'/shoplist/1?&search='+$('.main-search-input').val();
   });

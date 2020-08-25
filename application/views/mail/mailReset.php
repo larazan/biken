@@ -451,19 +451,19 @@
                                                                                                                 <td>
                                                                                                                     <div class='contentEditableContainer contentTextEditable'>
                                                                                                                         <div class='contentEditable' style='text-align: left;'>
-                                                                                                                            <p>Dear, <span style="font-weight: bolder;"><?php echo $data["name"]; ?></span></p>
+                                                                                                                            <p>Hai, <span style="font-weight: bolder;"><?php echo $data["name"]; ?></span></p>
                                                                                                                         </div>
                                                                                                                         <div class='contentEditable' style='text-align: left;'>
                                                                                                                             <p><?php echo $data["message"]; ?></p>
                                                                                                                             <br>
-                                                                                                                            <p>if you have questions, you can email us at <a href="<?=$email?>" style="color: #5bc0de; font-weight: bold;"><?=$email?></a></p>
+                                                                                                                            <p>jika ada pertanyaan, silahkan hubingi kami melalui email <a href="<?=$email?>" style="color: #5bc0de; font-weight: bold;"><?=$email?></a></p>
                                                                                                                             <br>
-                                                                                                                            <p>Thank you again for your business.</p>
+                                                                                                                            <p>Terima kasih kembali atas partisipasinya.</p>
                                                                                                                         </div>
                                                                                                                         
                                                                                                                         <div class='contentEditable' style='text-align: center;'>
                                                                                                                             <br>
-                                                                                                                            <a href="<?php echo $data['reset_link']; ?>" class="btn btn-info" target="_blank">Reset Password Link</a>
+                                                                                                                            <a href="<?php echo $data['reset_link']; ?>" class="btn btn-info" target="_blank">Reset Password</a>
                                                                                                                         </div>
 
 

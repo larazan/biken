@@ -111,30 +111,38 @@ class Account extends CI_Controller
             $email = $this->input->post('username'); //'yono@email.com'; 
             $password = $this->input->post('pword'); //'isbal'; 
             
-
+            $exist = $this->login_model->checkEmailExist($email);
             $result = $this->login_model->loginProcess($email, $password);
             
-            if (count($result) > 0) {
-                foreach ($result as $res) {
-                    $sessionArray = array(
-                        'userId' => $res->customer_id,
-                        'name' => $res->customer_name,
-                        'isLoggedIn' => TRUE
-                    );
-
-                    $this->session->set_userdata($sessionArray);
-
-                    // update session
-                    $this->db->where('customer_id', $res->customer_id);
-                    $this->db->update('tbl_customer', array('customer_sess' => $this->session->session_id));
-                    redirect('homes-medium');
-                }
+            if ($exist) {
+                if (count($result) > 0) {
+                    foreach ($result as $res) {
+                        $sessionArray = array(
+                            'userId' => $res->customer_id,
+                            'name' => $res->customer_name,
+                            'isLoggedIn' => TRUE
+                        );
+    
+                        $this->session->set_userdata($sessionArray);
+    
+                        // update session
+                        $this->db->where('customer_id', $res->customer_id);
+                        $this->db->update('tbl_customer', array('customer_sess' => $this->session->session_id));
+                        redirect('homes-medium');
+                    }
+                } else {
+                    $flash_msg = 'Email or Password is incorrect, try again';
+                    $value = '<div class="col-lg-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
+                    $this->session->set_flashdata('item', $value);
+                    redirect('/account');
+                }  
             } else {
-                $flash_msg = 'Email or Password is incorrect, try again';
+                $flash_msg = 'Unknown email, please register first';
                 $value = '<div class="col-lg-12"><div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
                 $this->session->set_flashdata('item', $value);
                 redirect('/account');
             }
+            
         }
     }
 
@@ -294,7 +302,7 @@ class Account extends CI_Controller
             // process the form
             $this->load->library('form_validation');
             $this->form_validation->set_rules('username', 'Username', 'trim|required');
-            $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+            $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[tbl_customer.customer_email]');
             $this->form_validation->set_rules('password', 'Password', 'required|min_length[5]|max_length[20]');
             $this->form_validation->set_rules('cpassword', 'Confirm Password', 'trim|required|matches[password]|min_length[5]|max_length[20]');
             $this->form_validation->set_rules('mobile', 'Phone', 'trim|required|numeric|min_length[5]|max_length[13]');
@@ -302,32 +310,36 @@ class Account extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 $data = $this->customer_data_post();
                 $url = base_url().'account';
+                $exist = $this->login_model->checkEmailExist($this->input->post('email', true));
 
-                if ($this->input->post('agree') == 'Agree') {
-                    $this->db->insert('tbl_customer', $data);
-                    $ids = $this->db->insert_id();
-                    $this->Mail->sendMailRegistration($ids);
-                    // create subscribe account
-                    $data_sub['email'] = $data['customer_email'];
-                    $data_sub['status'] = 1;
-                    $data_sub['created_at'] = time();
-
-                    $this->db->insert('tbl_subscribe', $data_sub);
-
-                    $flash_msg = "The user account were successfully added. Please <a href='".$url."'>Login</a> to continue";
-                    $value = '<div class="col-lg-12"><div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
-                    $this->session->set_flashdata('item', $value);
-                    redirect('register');
-                } else {
-                    $this->db->insert('tbl_customer', $data);
-                    $ids = $this->db->insert_id();
-                    $this->Mail->sendMailRegistration($ids);
-
-                    $flash_msg = "The user account were successfully added. Please <a href='".$url."'>Login</a> to continue";
-                    $value = '<div class="col-lg-12"><div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
-                    $this->session->set_flashdata('item', $value);
-                    redirect('register');
+                if (!$exist) {
+                    if ($this->input->post('agree') == 'Agree') {
+                        $this->db->insert('tbl_customer', $data);
+                        $ids = $this->db->insert_id();
+                        $this->Mail->sendMailRegistration($ids);
+                        // create subscribe account
+                        $data_sub['email'] = $data['customer_email'];
+                        $data_sub['status'] = 1;
+                        $data_sub['created_at'] = time();
+    
+                        $this->db->insert('tbl_subscribe', $data_sub);
+    
+                        $flash_msg = "The user account were successfully added. Please <a href='".$url."'>Login</a> to continue";
+                        $value = '<div class="col-lg-12"><div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
+                        $this->session->set_flashdata('item', $value);
+                        redirect('register');
+                    } else {
+                        $this->db->insert('tbl_customer', $data);
+                        $ids = $this->db->insert_id();
+                        $this->Mail->sendMailRegistration($ids);
+    
+                        $flash_msg = "The user account were successfully added. Please <a href='".$url."'>Login</a> to continue";
+                        $value = '<div class="col-lg-12"><div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
+                        $this->session->set_flashdata('item', $value);
+                        redirect('register');
+                    }
                 }
+                
             }
             else {
                 $flash_msg = validation_errors();
