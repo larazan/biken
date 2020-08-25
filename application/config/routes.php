@@ -70,6 +70,7 @@ $route['mycart'] = 'Homes/cartMedium';
 $route['ordercheckout'] = 'Homes/checkoutMedium';
 $route['login'] = 'Account';
 $route['register'] = 'Account/register';
+$route['reset'] = 'Account/forgotPassword';
 $route['myprofile/dashboard'] = 'Dashboard';
 $route['myprofile/profiles'] = 'Dashboard/profiles';
 $route['myprofile/transaction'] = 'Dashboard/transaction';

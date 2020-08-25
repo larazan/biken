@@ -58,7 +58,7 @@
                 <button type="submit" class="btn btn-block btn-success" name="submit" value="Submit">Submit</button>
               </form>
               <hr>
-              <p><a href=".html#" id="lost-btn">Lost your password?</a></p>
+              <p><a href="<?= base_url()?>reset" id="lost-btn">Lost your password?</a></p>
               <div class="hidden" id="lost-form">
                 <p>Enter your email address and we will send you a link to reset your password.</p>
                 <form role="form">

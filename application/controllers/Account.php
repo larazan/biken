@@ -143,7 +143,8 @@ class Account extends CI_Controller
      */
     public function forgotPassword()
     {
-        $this->load->view('auth/forgotPassword');
+        // $this->load->view('auth/forgotPassword');
+        $this->load->view('pages/reset');
     }
 
     /**
@@ -184,7 +185,8 @@ class Account extends CI_Controller
                         $data1["message"] = "Reset Your Password";
                     }
 
-                    $sendStatus = resetPasswordEmail($data1);
+                    // $sendStatus = resetPasswordEmail($data1);
+                     $sendStatus = $this->Mail->sendMailReset($data1);
 
                     if ($sendStatus) {
                         $status = "send";
@@ -201,7 +203,7 @@ class Account extends CI_Controller
                 $status = 'invalid';
                 setFlashData($status, "This email is not registered with us.");
             }
-            redirect('/forgotPassword');
+            redirect('/reset');
         }
     }
 
