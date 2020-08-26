@@ -58,10 +58,10 @@ class Login_model extends CI_Model
      */
     function checkEmailExist($email)
     {
-        $this->db->select('userId');
-        $this->db->where('email', $email);
+        $this->db->select('customer_id');
+        $this->db->where('customer_email', $email);
         // $this->db->where('isDeleted', 0);
-        $query = $this->db->get('tbl_users');
+        $query = $this->db->get('tbl_customer');
 
         if ($query->num_rows() > 0){
             return true;
@@ -94,10 +94,10 @@ class Login_model extends CI_Model
      */
     function getCustomerInfoByEmail($email)
     {
-        $this->db->select('userId, email, name');
-        $this->db->from('tbl_users');
+        $this->db->select('customer_id, customer_email, customer_name');
+        $this->db->from('tbl_customer');
         // $this->db->where('isDeleted', 0);
-        $this->db->where('email', $email);
+        $this->db->where('customer_email', $email);
         $query = $this->db->get();
 
         return $query->result();

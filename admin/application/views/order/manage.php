@@ -112,7 +112,7 @@ $addlink = base_url() . "order/create";
                                             <?= $bank_name ?>
                                         </td>
                                         <td>
-                                            <?= $row->order_total ?>
+                                            <?= rupiah($row->order_total) ?>
                                         </td>
                                         <td>
                                             <span style="width: 110px;"><span class="badge <?= $status_label ?> badge--wide"><?= $status_desc ?></span></span>

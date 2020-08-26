@@ -201,12 +201,12 @@ if (isset($flash)) {
                         <div class="form-group trans row">
                             <label for="ongkir" class="col-sm-3 col-form-label">Ongkir</label>
                             <label class="col-sm-1 col-form-label">:</label>
-                            <label class="col-sm-8 col-form-label">Rp. <?=$shipping_cost?></label>
+                            <label class="col-sm-8 col-form-label">Rp. <?=rupiah($shipping_cost)?></label>
                         </div>
                         <div class="form-group trans row">
                             <label for="total_harga" class="col-sm-3 col-form-label">Total harga</label>
                             <label class="col-sm-1 col-form-label">:</label>
-                            <label class="col-sm-8 col-form-label">Rp. <?=$order_total?></label>
+                            <label class="col-sm-8 col-form-label">Rp. <?=rupiah($order_total)?></label>
                         </div>
 
 
@@ -228,7 +228,8 @@ if (isset($flash)) {
                     </div>
                     <?php echo form_open('Order/shipping_alternative', 'class=m-form'); ?>
                     <div class="card-body">
-                    	<input type="hidden" name="order_id" value="<?=$order_id?>">
+                        <input type="hidden" name="order_id" value="<?=$order_id?>">
+                        
                         <div class="form-group row">
                             <label for="no_resi">
                                 Shipping
@@ -258,7 +259,8 @@ if (isset($flash)) {
 
                     <?php echo form_open('Order/submit_resi', 'class=m-form'); ?>
                     <div class="card-body">
-                    	<input type="hidden" name="order_id" value="<?=$order_id?>">
+                        <input type="hidden" name="order_id" value="<?=$order_id?>">
+                        <input type="hidden" name="shopper_id" value="<?=$shopper_id?>">
                         <div class="form-group row">
                             <label for="no_resi">
                                 No Resi
@@ -309,7 +311,7 @@ if (isset($flash)) {
                                     </div>
                                     <div class="product-content">
                                         <h3 class="title"><a href="<?=$link?>" target="_blank"><?=$row->product_title?></a></h3>
-                                        <span class="price">Total harga: <?=$row->product_price?></span>
+                                        <span class="price">Total harga: <?=rupiah($row->product_price)?></span>
                                     </div>
                                 </div>
                             </div>

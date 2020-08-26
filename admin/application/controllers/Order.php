@@ -293,6 +293,7 @@ class Order extends BaseController
 			$data['bank_name'] = $this->getBankName($data['bank_id']);
 			$data['status_name'] = $this->getStatus($data['order_status']);
 			$data['products'] = $this->getProduct($data['order_items']);
+			$data['shopper_id'] = $data['shopper_id'];
 		} else {
 			$data = $this->fetch_data_from_post();
 		}
@@ -365,6 +366,10 @@ class Order extends BaseController
                     $data['order_awb'] = $this->input->post('order_awb');
                     $data['order_status'] = 2; // send
 					$this->_update($update_id, $data);
+
+					// send mail tracking code
+					$this->Mail->sendMailShipping($this->input->post('shopper_id'), $this->input->post('order_awb'));
+
 					$flash_msg = "The order were successfully updated.";
 					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
 					$this->session->set_flashdata('item', $value);
