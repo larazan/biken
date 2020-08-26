@@ -3,11 +3,11 @@
   <?php include 'application/views/layouts/head.php' ?>
   <body>
     <!-- HEADER -->
-    <?php include 'application/views/layouts/header.php' ?>
+    <?php include 'application/views/layouts/header-medium.php' ?>
     <!-- /HEADER -->
 
     <!-- NAVIGATION -->
-    <?php include 'application/views/layouts/navbar.php' ?>
+    <?php include 'application/views/layouts/navbar-medium.php' ?>
     <!-- /NAVIGATION -->
 
     <!-- BREADCRUMB -->

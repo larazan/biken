@@ -278,6 +278,10 @@ class Account extends CI_Controller
 
     public function register()
     {
+        $shopperId = $this->session->userId;
+		$data["cart"] = $this->Model_Basket->cartItemsCount($shopperId);
+		$data["cartList"] = $this->Model_Basket->getCartDropList($shopperId);
+		$data["subCartList"] = $this->Model_Basket->getSubTotalCartList($shopperId);
         $data['flash'] = $this->session->flashdata('item');
         $this->load->view('pages/register-new', $data);
     }
@@ -301,6 +305,8 @@ class Account extends CI_Controller
 
                 if ($this->input->post('agree') == 'Agree') {
                     $this->db->insert('tbl_customer', $data);
+                    $ids = $this->db->insert_id();
+                    $this->Mail->sendMailRegistration($ids);
                     // create subscribe account
                     $data_sub['email'] = $data['customer_email'];
                     $data_sub['status'] = 1;
@@ -314,6 +320,8 @@ class Account extends CI_Controller
                     redirect('register');
                 } else {
                     $this->db->insert('tbl_customer', $data);
+                    $ids = $this->db->insert_id();
+                    $this->Mail->sendMailRegistration($ids);
 
                     $flash_msg = "The user account were successfully added. Please <a href='".$url."'>Login</a> to continue";
                     $value = '<div class="col-lg-12"><div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><strong>'.$flash_msg.'</strong></div></div>';
@@ -336,6 +344,7 @@ class Account extends CI_Controller
         $data['customer_email'] = $this->input->post('email', true);
         $data['customer_phone'] = $this->input->post('mobile', true);
         $data['created_at'] = time();
+        $data['customer_status'] = 1;
         return $data;
     }
 }

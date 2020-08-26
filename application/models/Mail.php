@@ -149,7 +149,7 @@ class Mail extends CI_Model
         $data['products'] = $products;
         $data['order_id'] = $order_id;
         $data['name'] = $orders->order_name;
-        $data['no_order'] = $orders->no_order;
+        $data['no_order'] = $orders->order_code;
 
         $this->sendMail($subject, $to, $template, $data);
     }

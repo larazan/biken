@@ -33,12 +33,16 @@ class Checkoutnew extends CI_Controller {
     $shippingcost = $this->input->post('shipping-cost');
     $sumcost = $this->input->post('sum-cost');
     $sumAll = (int)$sumcost + (int)$shippingcost;
+    $orderCode = date('mY').time().$shopperId;
     $insDt = array(
-      'shopper_id'=>$shopperId, 'bank_id'=>$bank, 'order_name'=>$name, 'order_mail'=>$mail, 'order_phone'=>$tlp, 'order_province'=>$province, 'order_city'=>$city, 'order_address'=>$address, 'shipping_detail'=>$courier, 'order_notes'=>$ordernotes, 'order_weight'=>$weight, 'order_items'=>$items, 'shipping_cost'=>$shippingcost, 'order_cost'=>$sumcost, 'order_total'=>$sumAll, 'order_date'=>time(), 'order_status'=>0, 'updated_at'=>time()
+      'shopper_id'=>$shopperId, 'bank_id'=>$bank, 'order_name'=>$name, 'order_mail'=>$mail, 'order_phone'=>$tlp, 'order_province'=>$province, 'order_city'=>$city, 'order_address'=>$address, 'shipping_detail'=>$courier, 'order_notes'=>$ordernotes, 'order_weight'=>$weight, 'order_items'=>$items, 'shipping_cost'=>$shippingcost, 'order_cost'=>$sumcost, 'order_total'=>$sumAll, 'order_date'=>time(), 'order_status'=>0, 'updated_at'=>time(), 'order_code'=>$orderCode
     );
     $ins = $this->Model_Checkout->insertOrder($insDt);
     if($ins > 0) {
+      $orderid = $this->db->insert_id();
       $this->Model_Checkout->moveFrombasket($items);
+      $this->Mail->sendMailCheckout($orderid, 'Customer');
+      $this->Mail->sendMailCheckout($orderid, 'Admin');
       echo json_encode(array('status'=>TRUE));
     }
     else {
