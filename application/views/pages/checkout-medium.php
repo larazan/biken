@@ -313,15 +313,15 @@
 				}
 			});
 
-	  var id            = 1;
-      var price         = 4000;
-      var quantity      = 3;
-      var name          = 'orange';
-      var gross_amount  = 5000;
+	  var id            = 'a1';
+      var price         = '5000';
+      var quantity      = '2';
+      var name          = 'water melon';
+      var gross_amount  = '10000';
 
 			$.ajax({
 				type: 'POST',
-				url: '<?= site_url() ?>snap/token',
+				url: '<?= site_url() ?>/snap/token',
 				data: {
 					id: id,
 					price: price,
