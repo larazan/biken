@@ -341,7 +341,8 @@ class Homes extends CI_Controller
 		$data["checkoutItems"] = $this->Model_Checkout->getCheckoutItems($shopperId);
 		$data["weightItems"] = $this->Model_Checkout->getSumWeight($shopperId);
 		$data["items"] = $imp;
-		$data["checkoutSum"] = 'Rp'.number_format($this->Model_Checkout->getSumCheckout($shopperId));
+		// $data["checkoutSum"] = 'Rp'.number_format($this->Model_Checkout->getSumCheckout($shopperId));
+		$data["checkoutSum"] = $this->Model_Checkout->getSumCheckout($shopperId);
 		$data["cart"] = $this->Model_Basket->cartItemsCount($shopperId);
 		$data["cartList"] = $this->Model_Basket->getCartDropList($shopperId);
 		$data["subCartList"] = $this->Model_Basket->getSubTotalCartList($shopperId);

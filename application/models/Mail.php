@@ -122,16 +122,25 @@ class Mail extends CI_Model
     }
 
     // send mail checkout
-    public function sendMailCheckout($order_id = '', $type = '') {
+    public function sendMailCheckout($order_id, $type) {
         // $order_id = 1;
 
         $orders = $this->db->get_where('tbl_order', array('order_id' => $order_id))->row();
         $shopper_id = $orders->shopper_id;
 
-         // get item
-         $items = explode(",", $orders->order_items);
-         $this->db->where_in('product_id', $items);
-         $products = $this->db->get('tbl_product');
+         // get basket
+         $basket = explode(",", $orders->order_items);
+         $this->db->where_in('id', $basket);
+         $baskets = $this->db->get('tbl_basket');
+
+        // get product id
+         $arr_item = array();
+         foreach ($baskets->result() as $row) {
+            array_push($arr_item, $row->item_id);
+         }
+
+        $this->db->where_in('product_id', $arr_item);
+        $products = $this->db->get('tbl_product'); 
         
         if ($type == 'Admin') {
             $subject = 'Ada Pesanan barang';

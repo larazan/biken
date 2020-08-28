@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'application/views/layouts/head.php' ?>
+<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="<CLIENT-KEY>"></script>
 
 <body>
+
+	<!-- MIDTRANS -->
+	<form id="payment-form" method="post" action="<?= site_url() ?>/snap/finish">
+		<input type="hidden" name="result_type" id="result-type" value=""></div>
+		<input type="hidden" name="result_data" id="result-data" value=""></div>
+	</form>
+
 	<!-- HEADER -->
 	<?php include 'application/views/layouts/header-medium.php' ?>
 	<!-- /HEADER -->
@@ -67,7 +75,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<select name="province" id="" class="form-control province-change">
+										<select name="province" id="provinsi" class="form-control province-change">
 											<option value="0">Pilih Provinsi</option>
 											<?php foreach ($provinces['rajaongkir']['results'] as $dt) { ?>
 												<option value="<?= $dt["province_id"]; ?>"><?= $dt["province"]; ?></option>
@@ -77,7 +85,7 @@
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<select name="city" id="" class="form-control kota-change">
+										<select name="city" id="kota" class="form-control kota-change">
 											<option value="">Pilih Kota</option>
 										</select>
 									</div>
@@ -108,6 +116,8 @@
 									</div>
 								</div>
 							</div>
+							<input type="hidden" name="provinsi" id="province_name">
+							<input type="hidden" name="kota" id="city_name">
 							<input type="hidden" name="weight" value="<?= $weightItems; ?>">
 							<input type="hidden" name="items" value="<?= $items; ?>">
 							<input type="hidden" name="shipping">
@@ -151,7 +161,7 @@
 						</div>
 						<div class="order-col">
 							<div><strong>TOTAL</strong></div>
-							<div><strong class="order-total"><?= $checkoutSum; ?></strong></div>
+							<div><strong class="order-total">Rp<?= rupiah($checkoutSum) ?></strong></div>
 						</div>
 					</div>
 					<div class="input-checkbox">
@@ -183,12 +193,18 @@
 	<?php include 'application/views/layouts/jspack.php' ?>
 	<script src="<?= base_url() ?>assets/theme/js/addon.js"></script>
 	<script>
+		let elProv = document.getElementById('province_name');
+		let elCit = document.getElementById('city_name');
 		$(document).ready(function() {
 			$('.province-change').change(function() {
 				getCity($('.province-change').val());
+				let textProv = this.options[this.selectedIndex].text;
+				elProv.value = textProv;
 			});
 			$('.kota-change').change(function() {
 				getCost();
+				let textCity = this.options[this.selectedIndex].text;
+				elCit.value = textCity;
 			});
 			$('#shipping-list').on('change', '.payment-change', function() {
 				calculate($(this).val())
@@ -200,7 +216,7 @@
 			})
 		});
 
-		
+
 
 		function getCity(ids) {
 			$('.kota-change').empty();
@@ -293,9 +309,65 @@
 				data: $('#checkoutForm').serialize(),
 				dataType: "JSON",
 				success: function(data) {
-					window.location.href = '<?= base_url() ?>myprofile/transaction';
+					// window.location.href = '<?= base_url() ?>myprofile/transaction';
 				}
 			});
+
+	  var id            = 1;
+      var price         = 4000;
+      var quantity      = 3;
+      var name          = 'orange';
+      var gross_amount  = 5000;
+
+			$.ajax({
+				type: 'POST',
+				url: '<?= site_url() ?>snap/token',
+				data: {
+					id: id,
+					price: price,
+					quantity: quantity,
+					name: name,
+					gross_amount: gross_amount
+				},
+				cache: false,
+
+				success: function(data) {
+					//location = data;
+
+					console.log('token = ' + data);
+
+					var resultType = document.getElementById('result-type');
+					var resultData = document.getElementById('result-data');
+
+					function changeResult(type, data) {
+						$("#result-type").val(type);
+						$("#result-data").val(JSON.stringify(data));
+						//resultType.innerHTML = type;
+						//resultData.innerHTML = JSON.stringify(data);
+					}
+
+					snap.pay(data, {
+
+						onSuccess: function(result) {
+							changeResult('success', result);
+							console.log(result.status_message);
+							console.log(result);
+							$("#payment-form").submit();
+						},
+						onPending: function(result) {
+							changeResult('pending', result);
+							console.log(result.status_message);
+							$("#payment-form").submit();
+						},
+						onError: function(result) {
+							changeResult('error', result);
+							console.log(result.status_message);
+							$("#payment-form").submit();
+						}
+					});
+				}
+			});
+
 		}
 	</script>
 </body>

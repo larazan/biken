@@ -43,38 +43,38 @@ class Snap extends CI_Controller
 	{
 
 		// Required
-		// $transaction_details = array(
-		//   'order_id' => rand(),
-		//   'gross_amount' => 94000, // no decimal allowed for creditcard
-		// );
-
 		$transaction_details = array(
-			'order_id' => rand(),
-			'gross_amount' => $this->input->post('gross_amount'), // no decimal allowed for creditcard
+		  'order_id' => rand(),
+		  'gross_amount' => 94000, // no decimal allowed for creditcard
 		);
+
+		// $transaction_details = array(
+		// 	'order_id' => rand(),
+		// 	'gross_amount' => $this->input->post('gross_amount'), // no decimal allowed for creditcard
+		// );
 
 		// Optional
-		$item1_details = array(
-			'id' => $this->input->post('id'),
-			'price' => $this->input->post('price'),
-			'quantity' => $this->input->post('quantity'),
-			'name' => $this->input->post('name')
-		);
-
 		// $item1_details = array(
-		//   'id' => 'a1',
-		//   'price' => 18000,
-		//   'quantity' => 3,
-		//   'name' => "Apple2"
+		// 	'id' => $this->input->post('id'),
+		// 	'price' => $this->input->post('price'),
+		// 	'quantity' => $this->input->post('quantity'),
+		// 	'name' => $this->input->post('name')
 		// );
 
+		$item1_details = array(
+		  'id' => 'a1',
+		  'price' => 18000,
+		  'quantity' => 3,
+		  'name' => "Apple2"
+		);
+
 		// Optional
-		// $item2_details = array(
-		// 	'id' => 'a2',
-		// 	'price' => 20000,
-		// 	'quantity' => 2,
-		// 	'name' => "Orange"
-		// );
+		$item2_details = array(
+			'id' => 'a2',
+			'price' => 20000,
+			'quantity' => 2,
+			'name' => "Orange"
+		);
 
 		// Optional Ongkir
 		$item3_details = array(

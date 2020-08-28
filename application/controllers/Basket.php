@@ -9,6 +9,20 @@ class Basket extends CI_Controller
 		parent::__construct();
     }
 
+    function tes3() {
+        // get basket
+        $items = array(39, 41); //explode(",", "41");
+        $this->db->where_in('id', $items);
+        $basket = $this->db->get('tbl_basket');
+
+        $arr_item = array();
+        echo "<pre>";
+        foreach ($basket->result() as $row) {
+            var_dump($row->item_id);
+        }
+        
+    }
+
     function tes2() {
         $this->Mail->sendMailCheckout(2, 'Customer');
         
