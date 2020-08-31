@@ -3,6 +3,35 @@
 <?php include 'application/views/layouts/head.php' ?>
 <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="<CLIENT-KEY>"></script>
 
+<style>
+
+.modal-busy {
+	position: fixed;
+	z-index: 999;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color: Black;
+	filter: alpha(opacity=60);
+	opacity: 0.6;
+	-moz-opacity: 0.8;
+}
+.center-busy {
+	z-index: 1000;
+	margin: 300px auto;
+	padding: 0px;
+	width: 130px;
+	filter: alpha(opacity=100);
+	opacity: 1;
+	-moz-opacity: 1;
+}
+.center-busy img {
+	height: 128px;
+	width: 128px;
+}
+</style>
+
 <body>
 
 	<!-- MIDTRANS -->
@@ -18,6 +47,16 @@
 	<!-- NAVIGATION -->
 	<?php include 'application/views/layouts/navbar-medium.php' ?>
 	<!-- /NAVIGATION -->
+
+	<!-- loader -->
+
+	<div class="modal-busy" id="loader" style="display: none">
+		<div class="center-busy" id="test-git">
+			<img alt="" src="<?=base_url()?>asset/css/fancybox_loading@2x.gif" />
+		</div>
+	</div>
+
+	<!-- end loader -->
 
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb" class="section">
@@ -43,6 +82,10 @@
 	<div class="section">
 		<!-- container -->
 		<div class="container">
+
+		
+		
+
 			<!-- row -->
 			<div class="row">
 
@@ -176,6 +219,7 @@
 				<!-- /Order Details -->
 			</div>
 			<!-- /row -->
+		
 		</div>
 		<!-- /container -->
 	</div>
@@ -301,33 +345,25 @@
 			});
 		}
 
-		function proceed() {
-			console.log($('#checkoutForm').serialize());
-			$.ajax({
-				type: "POST",
-				url: "<?= base_url() ?>Checkoutnew/proceedCheckout",
-				data: $('#checkoutForm').serialize(),
-				dataType: "JSON",
-				success: function(data) {
-					// window.location.href = '<?= base_url() ?>myprofile/transaction';
-				}
-			});
-
-	  var id            = 'a1';
-      var price         = '5000';
-      var quantity      = '2';
-      var name          = 'water melon';
-      var gross_amount  = '10000';
-
+		function midPayment(dataSet) {
+			console.log(dataSet);
 			$.ajax({
 				type: 'POST',
-				url: '<?= site_url() ?>/snap/token',
+				url: '<?= site_url() ?>/checkoutnew/token',
 				data: {
-					id: id,
-					price: price,
-					quantity: quantity,
-					name: name,
-					gross_amount: gross_amount
+					id: dataSet.product_id,
+					price: dataSet.product_price,
+					quantity: dataSet.item_qty,
+					name: dataSet.product_title,
+					gross_amount: dataSet.gross_amount,
+					shipping: dataSet.shippingcost,
+
+					cusName: dataSet.customer_name,
+					cusTelp: dataSet.customer_tlp,
+					cusMail: dataSet.customer_mail,
+					cusAddress: dataSet.customer_address,
+					cusCity: dataSet.customer_kota,
+
 				},
 				cache: false,
 
@@ -365,6 +401,30 @@
 							$("#payment-form").submit();
 						}
 					});
+				}
+			});
+
+		}
+
+		function proceed() {
+			console.log($('#checkoutForm').serialize());
+			
+			$.ajax({
+				type: "POST",
+				url: "<?= base_url() ?>Checkoutnew/proceedCheckout",
+				data: $('#checkoutForm').serialize(),
+				dataType: "JSON",
+				beforeSend: function() {
+					$("#loader").show();
+				},
+				complete: function() {
+					$("#loader").hide();
+				},
+				success: function(data) {
+					// window.location.href = '<?= base_url() ?>myprofile/transaction';
+
+					// get token midtrans
+					midPayment(data);
 				}
 			});
 
