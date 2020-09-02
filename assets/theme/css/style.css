@@ -2322,3 +2322,7 @@ textarea.input {
     margin-top: 10px;
   }
 }
+
+.list-group-item.active a {
+  color: #fff;
+}

@@ -32,7 +32,6 @@ $addlink = base_url() . "Transaction/create";
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">DataTable with default features</h3>
-                        <a href="<?= $addlink ?>" class="btn bg-primary float-right">Tambah Transaction</a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -41,8 +40,10 @@ $addlink = base_url() . "Transaction/create";
                                 <tr>
                                     <th>No</th>
                                     <th>Order ID</th>
-                                    <th>No Resi</th>
-                                    <th>Status Pembayaran</th>
+                                    <th>Transaction ID</th>
+                                    <th>Payment Type</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
                                     <th>Date</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
@@ -51,48 +52,34 @@ $addlink = base_url() . "Transaction/create";
                                 <?php $no = 1;
                                 $path = base_url().'assets/payment/';
                                 foreach ($query->result() as $row) {
-                                    $editLink = base_url() . "transaction/create/" . $row->id;
+                                    $editLink = base_url() . "transaction/detail/" . $row->id;
                                     $deleteLink = base_url(). "modal/popup/delete/" . $row->id . "/transaction";
-                                    $status = $row->status;
-
-                                    if ($status == 1) {
-                                        $status_label = "badge-success";
-                                        $status_desc = "Active";
-                                    } else {
-                                        $status_label = "badge-danger";
-                                        $status_desc = "Inactive";
-                                    }
-
+                                    
                                     $opened = ($row->opened != 1)? 'seal' : '';
-                                    $tgl = getNiceDate($row->created_at, 'indo');
-
-                                    $gambar = $path.$row->featured_image;
                                 ?>
 
                                     <tr>
                                         <td><?= $no++ ?> </td>
                                         <td>
-                                            <span class="<?=$opened?>"><?= $row->name ?></span>  
+                                            <span class="<?=$opened?>"><?= $row->order_id ?></span>  
                                         </td>
                                         <td>
-                                            <?= $row->email ?>
+                                            <?= $row->transaction_id ?>
                                         </td>
                                         <td>
-                                            <?php echo ($row->featured_image == '') ? '' : '<img src="'.$gambar.'" class="img-responsive" width="80px">' ?>
+                                            <?= $row->payment_type ?>
                                         </td>
                                         <td>
-                                            <?= $row->rekening ?>
+                                            <?= $row->gross_amount ?>
                                         </td>
                                         <td>
-                                            <?= $row->bank ?>
+                                            <h5><span class="badge badge-secondary"><?= $row->status_message ?></span></h5>
                                         </td>
+                                       
                                         <td>
-                                            <?= $row->total ?>
+                                            <?= $row->transaction_time ?>
                                         </td>
-                                        <td>
-                                            <span style="width: 110px;"><span class="badge <?= $status_label ?> badge--wide"><?= $status_desc ?></span></span>
-                                        </td>
-                                        <td><?= $tgl ?></td>
+                                      
                                         <td class="text-center">
                                             <a class="btn btn-sm btn-info" href="<?= $editLink ?>"><i class="fa fa-edit"></i></a>
                                             <a class="btn btn-sm btn-danger deleteUser" href="#" data-userid="1" onclick="showAjaxModal('<?= $deleteLink ?>');"><i class="fa fa-trash"></i></a>

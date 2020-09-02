@@ -17,10 +17,10 @@ class Transaction extends BaseController
 		$this->template->views('transaction/manage');
     }
     
-    public function detail()
-	{
-		$this->template->views('transaction/detail');
-	}
+    // public function detail()
+	// {
+	// 	$this->template->views('transaction/detail');
+	// }
 	
 	public function invoice()
 	{
@@ -35,7 +35,12 @@ class Transaction extends BaseController
 		$this->template->views('transaction/manage', $data);
 	}
 
-	public function create()
+	function _set_to_opened($update_id) {
+        $data['opened'] = 1;
+        $this->_update($update_id, $data);
+    }
+
+	public function detail()
 	{
 		$this->load->library('session');
 
@@ -84,11 +89,11 @@ class Transaction extends BaseController
 			$data['headline'] = "Edit transaction";
 		}
 
-
+		$this->_set_to_opened($update_id);
 		$data['update_id'] = $update_id;
 		$data['flash'] = $this->session->flashdata('item');
 
-		$this->template->views('transaction/create', $data);
+		$this->template->views('transaction/detail', $data);
 	}
 
 	function delete()
@@ -120,9 +125,25 @@ class Transaction extends BaseController
 	{
 		$query = $this->get_where($updated_id);
 		foreach ($query->result() as $row) {
-			$data['size_id'] = $row->size_id;
-			$data['name'] = $row->name;
-			$data['size_status'] = $row->size_status;
+			$data['id'] = $row->id;
+			$data['status_code'] = $row->status_code;
+			$data['status_message'] = $row->status_message;
+			$data['transaction_id'] = $row->transaction_id;
+			$data['order_id'] = $row->order_id;
+			$data['gross_amount'] = $row->gross_amount;
+			$data['payment_type'] = $row->payment_type;
+			$data['transaction_time'] = $row->transaction_time;
+			$data['transaction_status'] = $row->transaction_status;
+			$data['bank'] = $row->bank;
+			$data['va_number'] = $row->va_number;
+			$data['fraud_status'] = $row->fraud_status;
+			$data['bca_va_number'] = $row->bca_va_number;
+			$data['permata_va_number'] = $row->permata_va_number;
+			$data['pdf_url'] = $row->pdf_url;
+			$data['finish_redirect_url'] = $row->finish_redirect_url;
+			$data['bill_key'] = $row->bill_key;
+			$data['biller_code'] = $row->biller_code;
+			$data['opened'] = $row->opened;
 		}
 
 		if (!isset($data)) {

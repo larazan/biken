@@ -143,7 +143,7 @@ class Checkoutnew extends CI_Controller
 			'last_name'     => "",
 			'address'       => $this->input->post('cusAddress'), //"Mangga 20",
 			'city'          => $this->input->post('cusCity'), // "Jakarta",
-			'postal_code'   => "16602",
+			'postal_code'   => "",
 			'phone'         => $this->input->post('cusTelp'), //"081122334455",
 			'country_code'  => 'IDN'
 		);
@@ -154,7 +154,7 @@ class Checkoutnew extends CI_Controller
 			'last_name'     => "",
 			'address'       => $this->input->post('cusAddress'), //"Mangga 20",
 			'city'          => $this->input->post('cusCity'), // "Jakarta",
-			'postal_code'   => "16602",
+			'postal_code'   => "",
 			'phone'         => $this->input->post('cusTelp'), //"081122334455",
 			'country_code'  => 'IDN'
 		);

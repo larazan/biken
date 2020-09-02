@@ -137,7 +137,7 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="form-group">
-										<input class="input" type="text" name="address" value="<?= $billing->customer_address; ?>">
+										<input class="input" type="text" name="address" placeholder="address" value="<?= $billing->customer_address; ?>">
 									</div>
 								</div>
 							</div>

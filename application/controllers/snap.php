@@ -32,6 +32,7 @@ class Snap extends CI_Controller
 		$this->load->library('midtrans');
 		$this->midtrans->config($params);
 		$this->load->helper('url');
+		$this->load->model('snapmodel');
 	}
 
 	public function index()
@@ -309,7 +310,8 @@ class Snap extends CI_Controller
 		}
 
 		$this->data['finish'] = json_decode($this->input->post('result_data'));
-		$this->load->view('konfirmasi', $data);
+		// $this->load->view('konfirmasi', $data);
+		redirect('myprofile/transaction');
 	}
 
 	function tes() {
