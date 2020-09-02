@@ -327,7 +327,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="<?= base_url() ?>contact/manage" class="nav-link <?= ($this->uri->segment(1) == 'contact') ? 'active' : '' ?>">
+          <a href="<?= base_url() ?>midtrans/manage" class="nav-link <?= ($this->uri->segment(1) == 'midtrans') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-cc-visa"></i>
             <p>
               Pembayaran

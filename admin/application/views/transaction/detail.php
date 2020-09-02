@@ -298,31 +298,48 @@ if (isset($flash)) {
             <div class="col-md-6">
                 <div class="card card-default">
                     <div class="card-header">
-                        <h3 class="card-title">Customer Details</h3>
+                        <h3 class="card-title">Transaction Action</h3>
                     </div>
                     <div class="card-body">
-                        <table class="table table-striped">
-                            <tbody>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Tri wiyono</td>
-                                </tr>
-                                <tr>
-                                    <td>Phone</td>
-                                    <td>0987654321</td>
-                                </tr>
-                                <tr>
-                                    <td>Email</td>
-                                    <td>Tri.wiyono@gmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td>Address</td>
-                                    <td>Jl. Raya Wisma Pagesangan No.203, Pagesangan, Kec. Jambangan, Kota SBY, Jawa Timur 60233</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <form action="<?php echo base_url()?>/transaction/process" method="POST">
+                            
+                            <div class="form-group row">
+                                <label for="midtrans_key">
+                                    Order id
+                                </label>
+                                <input type="text" class="form-control m-input" id="order_id" name="order_id" placeholder="Enter Order ID" value="">
+                                <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('order_id'); ?></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="radio">
+                                    Action 
+                                </label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="action" value="status">
+                                    <label class="form-check-label">Get Status</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="action" value="approve">
+                                    <label class="form-check-label">Approve</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="action" value="cancel">
+                                    <label class="form-check-label">Cancel</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="action" value="expire">
+                                    <label class="form-check-label">Expire</label>
+                                </div>
+                            </div>
+                           
+                        
                     </div>
                     <!-- /.card-body -->
+                    <div class="card-footer">
+                        <button type="submit" name="submit" class="btn btn-info btn-block" value="Submit">Submit Payment</button>
+                    </div>
+                    <!-- /.card-footer -->
+                    </form>
                 </div>
 
 

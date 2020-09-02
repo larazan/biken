@@ -9,11 +9,15 @@ class Checkoutnew extends CI_Controller
 		header('Access-Control-Allow-Methods: PUT, GET, POST');
 		header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 
-		$params = array('server_key' => 'SB-Mid-server-BypiGGkEjs5g92tSWXqNg5ni', 'production' => false);
+		$params = array('server_key' => $this->db->get_where('tbl_settings', array('type' => 'midtrans_key'))->row()->description, 'production' => false);
 		$this->load->library('midtrans');
 		$this->midtrans->config($params);
 		$this->load->helper('url');
 		$this->load->model(array('Model_Checkout'));
+	}
+
+	function test() {
+		$this->load->view('pages/thankyou');
 	}
 
 	public function getCheckoutCost()

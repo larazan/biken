@@ -35,6 +35,16 @@ class Dashboard extends CI_Controller {
 		$this->load->view('pages/profiles-transaction-medium', $data);
 	}
 
+	public function thankyou() {
+		$shopperId = $this->session->userId;
+		$data["orderList"] = $this->Model_Orders->createOrderList($shopperId);
+		$data["profiles"] = $this->Model_Checkout->getBillingInfo($shopperId);
+		$data["cart"] = $this->Model_Basket->cartItemsCount($shopperId);
+		$data["cartList"] = $this->Model_Basket->getCartDropList($shopperId);
+		$data["subCartList"] = $this->Model_Basket->getSubTotalCartList($shopperId);
+		$this->load->view('pages/thankyou', $data);
+	}
+
 	public function uploadBukti() {
 		$shopperId = $this->session->userId;
 		$filename = $_FILES['bukti']['name'];

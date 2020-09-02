@@ -74,5 +74,6 @@ $route['reset'] = 'Account/forgotPassword';
 $route['myprofile/dashboard'] = 'Dashboard';
 $route['myprofile/profiles'] = 'Dashboard/profiles';
 $route['myprofile/transaction'] = 'Dashboard/transaction';
+$route['thankyou'] = 'Dashboard/thankyou';
 
 $route['checkout/(:any)'] = "cart/checkout/$1";
