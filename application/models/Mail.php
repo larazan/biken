@@ -10,6 +10,8 @@ class Mail extends CI_Model
     {
         parent::__construct();
         self::$db = &get_instance()->db;
+        $this->smtp_user = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
+        $this->smtp_pass = $this->db->get_where('tbl_settings', array('type' => 'password'))->row()->description;
     }
 
     static function configMail() {
@@ -17,8 +19,8 @@ class Mail extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => 'forheron@gmail.com',
-            'smtp_pass' => 'labeneamata',
+            'smtp_user' => $smtp_user,
+            'smtp_pass' => $smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'
@@ -38,7 +40,8 @@ class Mail extends CI_Model
         $this->db->where('customer_id', $user_id);
         $data['query'] = $this->db->get('tbl_customer');
         $data['user_id'] = $user_id;
-        // $this->load->view('mail/mailThanksRegistration', $data);
+        //////////////URL//////////////////
+        $data['linkUrl'] = base_url().'login';
 
         $from = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
         $email_customer = App::getCustomer($user_id)->customer_email;
@@ -49,8 +52,8 @@ class Mail extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => 'forheron@gmail.com',
-            'smtp_pass' => 'labeneamata',
+            'smtp_user' => $smtp_user,
+            'smtp_pass' => $smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'
@@ -93,8 +96,8 @@ class Mail extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => 'forheron@gmail.com',
-            'smtp_pass' => 'labeneamata',
+            'smtp_user' => $smtp_user,
+            'smtp_pass' => $smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'
@@ -178,8 +181,8 @@ class Mail extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => 'forheron@gmail.com',
-            'smtp_pass' => 'labeneamata',
+            'smtp_user' => $smtp_user,
+            'smtp_pass' => $smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'
@@ -214,6 +217,9 @@ class Mail extends CI_Model
             $subject = 'Kustomer Sudah melakukan pembayaran';
         }
         
+        /////////////////////URL///////////////////////////
+        $data['linkUrl'] = base_url().'login';
+
         $data['shop_name'] = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
         $data['address'] = $this->db->get_where('tbl_settings', array('type' => 'address'))->row()->description;
         $data['phone'] = $this->db->get_where('tbl_settings', array('type' => 'phone'))->row()->description;
@@ -228,8 +234,8 @@ class Mail extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => 'forheron@gmail.com',
-            'smtp_pass' => 'labeneamata',
+            'smtp_user' => $smtp_user,
+            'smtp_pass' => $smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'
@@ -267,6 +273,8 @@ class Mail extends CI_Model
         $data['query'] = $this->db->get('tbl_customer');
         $data['user_id'] = $user_id;
         $data['shipping_code'] = $shipping_code;
+        ////////////URL/////////////
+        $data['linkUrl'] = base_url().'homes/tracking';
 
         $from = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
         $email_customer = App::getCustomer($user_id)->customer_email;
@@ -277,8 +285,8 @@ class Mail extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => 'forheron@gmail.com',
-            'smtp_pass' => 'labeneamata',
+            'smtp_user' => $smtp_user,
+            'smtp_pass' => $smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'
@@ -331,8 +339,8 @@ class Mail extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => 'forheron@gmail.com',
-            'smtp_pass' => 'labeneamata',
+            'smtp_user' => $smtp_user,
+            'smtp_pass' => $smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'

@@ -468,7 +468,7 @@
                                                                                                                         </div>
                                                                                                                         <div class='contentEditable' style='text-align: center;'>
                                                                                                                             <br>
-                                                                                                                            <a href="<?=base_url()?>homes/tracking" class="btn btn-info">Trace Barang</a>
+                                                                                                                            <a href="<?=$linkUrl?>" class="btn btn-info">Trace Barang</a>
                                                                                                                         </div>
 
 

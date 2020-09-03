@@ -1,10 +1,13 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller {
+require APPPATH . '/libraries/BaseController.php';
+
+class Dashboard extends BaseController {
 	public function __construct() {
 		parent::__construct();
-    $this->load->model(array('Model_Basket', 'Model_Checkout', 'Model_Orders'));
+		$this->load->model(array('Model_Basket', 'Model_Checkout', 'Model_Orders'));
+		$this->isLoggedIn();
 	}
 	public function index() {
 		$shopperId = $this->session->userId;		

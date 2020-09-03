@@ -462,7 +462,7 @@
                                                                                                                         </div>
                                                                                                                         <div class='contentEditable' style='text-align: center;'>
                                                                                                                             <br>
-                                                                                                                            <a href="<?=base_url()?>account" class="btn btn-info">Login</a>
+                                                                                                                            <a href="<?=$linkUrl?>" class="btn btn-info">Login</a>
                                                                                                                         </div>
 
 

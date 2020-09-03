@@ -209,14 +209,14 @@
             </p>
           </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a href="<?= base_url() ?>order/pending" class="nav-link <?= ($this->uri->segment(2) == 'pending') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-clock"></i>
             <p>
               Pending
             </p>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a href="<?= base_url() ?>order/process" class="nav-link <?= ($this->uri->segment(2) == 'process') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-retweet"></i>

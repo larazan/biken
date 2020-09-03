@@ -50,6 +50,10 @@ class Site_management extends BaseController
 		$data['description'] = $this->input->post('email');
 		$this->db->where('type' , 'email');
 		$this->db->update('tbl_settings' , $data);
+
+		$data['description'] = $this->input->post('password');
+		$this->db->where('type' , 'password');
+		$this->db->update('tbl_settings' , $data);
 	
 		$data['description'] = $this->input->post('author');
 		$this->db->where('type' , 'author');

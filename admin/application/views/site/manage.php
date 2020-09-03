@@ -72,6 +72,13 @@ if (isset($flash)) {
                             <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('email'); ?></div>
                         </div>
                         <div class="form-group row">
+                            <label for="password">
+                                Password Email
+                            </label>
+                            <input type="text" class="form-control m-input" id="password" name="password" placeholder="Enter Password Email" value="<?php echo $this->db->get_where('tbl_settings', array('type' => 'password'))->row()->description; ?>">
+                            <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('password'); ?></div>
+                        </div>
+                        <div class="form-group row">
                             <label for="author">
                                 Author
                             </label>
