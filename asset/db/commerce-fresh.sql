@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
   KEY `timestamp` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table commerce.ci_sessions: ~116 rows (approximately)
+-- Dumping data for table commerce.ci_sessions: ~121 rows (approximately)
 /*!40000 ALTER TABLE `ci_sessions` DISABLE KEYS */;
 INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 	('tj9ik19badaqiegbqig4be0j299ksdmk', '::1', 1591580872, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539313538303837313B),
@@ -147,7 +147,11 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 	('hbh0vv5k750s20vmiff3me1ktasecprf', '::1', 1599028347, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539393032383334373B7573657249647C733A313A2235223B6E616D657C733A343A226F6E6F79223B69734C6F67676564496E7C623A313B),
 	('efj8hi2bvafqjskt3pbm8hrmst32belr', '::1', 1599028720, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539393032383732303B7573657249647C733A313A2235223B6E616D657C733A343A226F6E6F79223B69734C6F67676564496E7C623A313B),
 	('fjlnjqol0bq236es0aisl8qaaisqaetr', '::1', 1599030298, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539393033303239383B7573657249647C733A313A2235223B6E616D657C733A343A226F6E6F79223B69734C6F67676564496E7C623A313B),
-	('b2sdj3pf9qn1j3t8ctf61ohabcqe8g2h', '::1', 1599030299, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539393033303239383B7573657249647C733A313A2235223B6E616D657C733A343A226F6E6F79223B69734C6F67676564496E7C623A313B);
+	('b2sdj3pf9qn1j3t8ctf61ohabcqe8g2h', '::1', 1599030299, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539393033303239383B7573657249647C733A313A2235223B6E616D657C733A343A226F6E6F79223B69734C6F67676564496E7C623A313B),
+	('v6c06de0a6ckuak0id9cd3df3siaq8bv', '::1', 1599099901, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539393039393930313B7573657249647C733A313A2235223B6E616D657C733A343A226F6E6F79223B69734C6F67676564496E7C623A313B),
+	('krqbckpsj68bnlqedti4p8k2pgphd8q0', '::1', 1599101309, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539393130313330393B7573657249647C733A313A2235223B6E616D657C733A343A226F6E6F79223B69734C6F67676564496E7C623A313B),
+	('u8lnccu2nakdm5s6mgnu4t1inpan1mmo', '::1', 1599102300, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539393130323330303B7573657249647C733A313A2235223B6E616D657C733A343A226F6E6F79223B69734C6F67676564496E7C623A313B),
+	('s1p6n68h2k068rhv121g07msu4jo1f8r', '::1', 1599102401, _binary 0x5F5F63695F6C6173745F726567656E65726174657C693A313539393130323330303B7573657249647C733A313A2235223B6E616D657C733A343A226F6E6F79223B69734C6F67676564496E7C623A313B);
 /*!40000 ALTER TABLE `ci_sessions` ENABLE KEYS */;
 
 -- Dumping structure for table commerce.products
@@ -259,9 +263,9 @@ CREATE TABLE IF NOT EXISTS `tbl_basket` (
   `basket_status` int(11) DEFAULT '1',
   `picked_status` int(11) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
 
--- Dumping data for table commerce.tbl_basket: ~5 rows (approximately)
+-- Dumping data for table commerce.tbl_basket: ~8 rows (approximately)
 /*!40000 ALTER TABLE `tbl_basket` DISABLE KEYS */;
 INSERT INTO `tbl_basket` (`id`, `session_id`, `item_title`, `price`, `tax`, `item_id`, `item_qty`, `item_colour`, `item_size`, `date_added`, `shopper_id`, `basket_tag`, `ip_address`, `basket_status`, `picked_status`) VALUES
 	(50, 'tdokqgc0g4b200bpd0018v91ng5a7bev', NULL, NULL, NULL, 6, 1, NULL, NULL, 1598855420, 8, NULL, 0, 2, 1),
@@ -270,7 +274,8 @@ INSERT INTO `tbl_basket` (`id`, `session_id`, `item_title`, `price`, `tax`, `ite
 	(53, '6vg33i26kovlqbr04nk42p5erts3p7ls', NULL, NULL, NULL, 13, 1, NULL, NULL, 1598936169, 8, NULL, 0, 2, 1),
 	(54, 'hdogbl3adh1m4c5cf1sjiq8u237h0cmu', NULL, NULL, NULL, 3, 1, NULL, NULL, 1599021317, 8, NULL, 0, 2, 1),
 	(55, 'hhmg8unkmu84e2m1ls4v0lu4nnrg2695', NULL, NULL, NULL, 1, 1, NULL, NULL, 1599031042, 8, NULL, 0, 2, 1),
-	(56, 'va6jaft3t6mvhdiillj3v5710t33hjgu', NULL, NULL, NULL, 5, 1, NULL, NULL, 1599031702, 8, NULL, 0, 2, 1);
+	(56, 'va6jaft3t6mvhdiillj3v5710t33hjgu', NULL, NULL, NULL, 5, 1, NULL, NULL, 1599031702, 8, NULL, 0, 2, 1),
+	(57, 'v6c06de0a6ckuak0id9cd3df3siaq8bv', NULL, NULL, NULL, 3, 1, NULL, NULL, 1599096217, 8, NULL, 0, 2, 1);
 /*!40000 ALTER TABLE `tbl_basket` ENABLE KEYS */;
 
 -- Dumping structure for table commerce.tbl_brand
@@ -363,7 +368,7 @@ INSERT INTO `tbl_customer` (`customer_id`, `customer_name`, `customer_sess`, `cu
 	(2, 'Yono', NULL, 'tes@mail.com', NULL, 'Ruko Mangga Dua Square Blok E No.24, Jl. Gn. Sahari No.1, RT.12/RW.6, Ancol, Pademangan, North Jakarta City, Jakarta 14430', 'surabaya', '089555555555', 1, 1593129600),
 	(5, 'demos', '0r0ojm2e678imr7n0eqo64unm6a9gbks', 'tes@mail.com', '$2y$10$o2c4xDRFOb2.Wm4NvZR4h.0ZvbAzRXmds/zsAROsfIVv.YnbNa4tm', 'JL Semolowaru Utara 3 No.28, Sukolilo', 'surabaya', '09876543', 1, 1595399454),
 	(6, 'tes', NULL, 'tes@mail.com', '$2y$10$Ky8BJCmWqNTSeKhG/jysXeFwmMZl84Qiw4gDOgInB1DUMz2CsO3KC', NULL, NULL, '098765432', NULL, 1595399466),
-	(8, 'larazan', 'b2sdj3pf9qn1j3t8ctf61ohabcqe8g2h', 'zamroni666@gmail.com', '$2y$10$QzUWP8iftCH.hcJDxW58k.VWFzPgYEEWVOUHFHA4GkNyswBPAKIGq', NULL, NULL, '0987654444', 1, 1598494081),
+	(8, 'larazan', 'b1oplip9t8es6etd9i229rsmidt9suo1', 'zamroni666@gmail.com', '$2y$10$QzUWP8iftCH.hcJDxW58k.VWFzPgYEEWVOUHFHA4GkNyswBPAKIGq', NULL, NULL, '0987654444', 1, 1598494081),
 	(9, 'clasher', '5c9hbhedo4i05eheqtn5bss7glme53ga', 'clashclansatuu@gmail.com', '$2y$10$qBsHl0cyUVZx/JqGbIXJOuhTI5AIoZPNVrNc46KdeYNiBL/f/lTZm', NULL, NULL, '09876543', 1, 1598336626);
 /*!40000 ALTER TABLE `tbl_customer` ENABLE KEYS */;
 
@@ -446,9 +451,9 @@ CREATE TABLE IF NOT EXISTS `tbl_order` (
   `order_date` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 
--- Dumping data for table commerce.tbl_order: ~3 rows (approximately)
+-- Dumping data for table commerce.tbl_order: ~6 rows (approximately)
 /*!40000 ALTER TABLE `tbl_order` DISABLE KEYS */;
 INSERT INTO `tbl_order` (`order_id`, `no_order`, `shopper_id`, `bank_id`, `order_code`, `order_name`, `order_mail`, `order_phone`, `order_province`, `order_city`, `order_address`, `order_notes`, `shipping_detail`, `order_items`, `order_shipping`, `order_awb`, `order_weight`, `shipping_cost`, `order_cost`, `order_total`, `order_payment`, `order_status`, `order_date`, `updated_at`) VALUES
 	(45, '0', 8, 1, '08202015988608378', 'larazan', 'zamroni666@gmail.com', '0987654444', '10', '181', 'Jl. Jogokaryan No.36, Mantrijeron, Kec. Mantrijeron, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55143', 'lorem ipsum dolor si amet', 'jne-YES', '51', NULL, NULL, 2500, 87000, 7200000, 7287000, NULL, 0, 1598860837, 1598860837),
@@ -456,7 +461,8 @@ INSERT INTO `tbl_order` (`order_id`, `no_order`, `shopper_id`, `bank_id`, `order
 	(47, '0', 8, 1, '09202015989402598', 'larazan', 'zamroni666@gmail.com', '0987654444', '9', '54', 'Jl. Jogokaryan No.36, Mantrijeron, Kec. Mantrijeron, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55143', 'lorem ipsum', 'jne-REG', '53', NULL, NULL, 1000, 18000, 6000000, 6018000, NULL, 0, 1598940259, 1598940259),
 	(48, '0', 8, 1, '09202015990303658', 'larazan', 'zamroni666@gmail.com', '0987654444', '10', '105', 'alamat', 'lorem', 'sicepat-REG', '54', NULL, NULL, 2500, 51000, 6900000, 6951000, NULL, 0, 1599030365, 1599030365),
 	(49, '0', 8, 1, '09202015990310538', 'larazan', 'zamroni666@gmail.com', '0987654444', '0', '', '', '', '', '55', NULL, NULL, 2500, 0, 6200000, 6200000, NULL, 0, 1599031053, 1599031053),
-	(50, '0', 8, 1, '09202015990317128', 'larazan', 'zamroni666@gmail.com', '0987654444', '0', '', '', '', '', '56', NULL, NULL, 1000, 0, 690000, 690000, NULL, 0, 1599031712, 1599031712);
+	(50, '0', 8, 1, '09202015990317128', 'larazan', 'zamroni666@gmail.com', '0987654444', '0', '', '', '', '', '56', NULL, NULL, 1000, 0, 690000, 690000, NULL, 0, 1599031712, 1599031712),
+	(51, '0', 8, 1, '09202015990967648', 'larazan', 'zamroni666@gmail.com', '0987654444', '5', '419', 'Jl. Jogokaryan No.36, Mantrijeron, Kec. Mantrijeron, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55143', '', 'jne-YES', '57', NULL, NULL, 2500, 75000, 6900000, 6975000, NULL, 0, 1599096764, 1599096764);
 /*!40000 ALTER TABLE `tbl_order` ENABLE KEYS */;
 
 -- Dumping structure for table commerce.tbl_payment_confirm
@@ -570,15 +576,16 @@ CREATE TABLE IF NOT EXISTS `tbl_requesttransaksi` (
   `biller_code` varchar(50) DEFAULT NULL,
   `opened` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table commerce.tbl_requesttransaksi: ~2 rows (approximately)
+-- Dumping data for table commerce.tbl_requesttransaksi: ~3 rows (approximately)
 /*!40000 ALTER TABLE `tbl_requesttransaksi` DISABLE KEYS */;
 INSERT INTO `tbl_requesttransaksi` (`id`, `status_code`, `status_message`, `transaction_id`, `order_id`, `gross_amount`, `payment_type`, `transaction_time`, `transaction_status`, `bank`, `va_number`, `fraud_status`, `bca_va_number`, `permata_va_number`, `pdf_url`, `finish_redirect_url`, `bill_key`, `biller_code`, `opened`) VALUES
 	(1, '201', 'Transaksi sedang diproses', '8dc68863-caf3-436c-8fb1-5bd388ce5f7e', '813107361', 6957000.00, 'bank_transfer', '2020-09-01 09:56:12', 'pending', '-', '-', 'accept', '23773342564', '-', 'https://app.sandbox.midtrans.com/snap/v1/transactions/b25190a4-1c3b-4240-a01e-12d9f057f0b5/pdf', 'http://example.com?order_id=813107361&status_code=201&transaction_status=pending', '-', '-', 1),
 	(2, '201', 'Transaksi sedang diproses', 'd3cead34-4dfb-4e83-a325-cf23ef12fad1', '827809079', 6018000.00, 'bank_transfer', '2020-09-01 13:05:23', 'pending', '-', '-', 'accept', '-', '-', 'https://app.sandbox.midtrans.com/snap/v1/transactions/4cec9916-a2d9-4ea6-80c1-38d7f463c724/pdf', 'http://example.com?order_id=827809079&status_code=201&transaction_status=pending', '-', '-', NULL),
 	(3, '201', 'Transaksi sedang diproses', '131c585b-9ce8-4363-ba0b-478e93c1de70', '1714837249', 6951000.00, 'cstore', '2020-09-02 14:06:58', 'pending', '-', '-', NULL, '-', '-', 'https://app.sandbox.midtrans.com/snap/v1/transactions/53104eb4-3f4c-415b-bda4-9b45cec807d7/pdf', 'http://example.com?order_id=1714837249&status_code=201&transaction_status=pending', '-', '-', NULL),
-	(4, '407', 'Success, transaction is found', '7202459e-24cd-4450-acf2-f0f120338b07', '663289088', 690000.00, 'gopay', '2020-09-02 14:29:32', 'expire', '-', '-', 'accept', '-', '-', NULL, 'http://example.com?order_id=663289088&status_code=407&transaction_status=expire', '-', '-', NULL);
+	(4, '407', 'Success, transaction is found', '7202459e-24cd-4450-acf2-f0f120338b07', '663289088', 690000.00, 'gopay', '2020-09-02 14:29:32', 'expire', '-', '-', 'accept', '-', '-', NULL, 'http://example.com?order_id=663289088&status_code=407&transaction_status=expire', '-', '-', NULL),
+	(5, '201', 'Transaksi sedang diproses', 'df3b7c50-1641-4957-8b2f-0e79fc8868de', '44246767', 6975000.00, 'cstore', '2020-09-03 08:34:04', 'pending', '-', '-', 'accept', '-', '-', 'https://app.sandbox.midtrans.com/snap/v1/transactions/38847ac7-e26c-49cd-83e2-247092dbc2b0/pdf', 'http://example.com?order_id=44246767&status_code=201&transaction_status=pending', '-', '-', NULL);
 /*!40000 ALTER TABLE `tbl_requesttransaksi` ENABLE KEYS */;
 
 -- Dumping structure for table commerce.tbl_reset_password
@@ -618,7 +625,7 @@ INSERT INTO `tbl_settings` (`settings_id`, `type`, `description`) VALUES
 	(1, 'shop_name', 'Wiklan | Situs Belanja Online Media Iklan Indoor dan Outdoor'),
 	(2, 'address', 'Jl. Adityawarman No. 2 Surabaya 60242 Jawa Timur - Indonesia'),
 	(3, 'phone', '(031) 512 01088'),
-	(4, 'email', 'zamroni666@gmail.com'),
+	(4, 'email', 'forheron@gmail.com'),
 	(5, 'author', 'PT. Wijaya Iklan Indonesia (Wiklan)'),
 	(6, 'logo', 'logo_wiklan.png'),
 	(7, 'homepage_background', 'homepage_background.jpg'),
@@ -633,7 +640,7 @@ INSERT INTO `tbl_settings` (`settings_id`, `type`, `description`) VALUES
 	(16, 'rajaongkir_key', '18c1ae365c10fea954e08449b1c2e185'),
 	(17, 'midtrans_key', 'SB-Mid-server-BypiGGkEjs5g92tSWXqNg5ni'),
 	(18, 'kurir', 'a:3:{i:0;s:4:"tiki";i:1;s:3:"pos";i:2;s:3:"jne";}'),
-	(19, 'password', NULL),
+	(19, 'password', 'labeneamata'),
 	(20, 'kodepos', NULL),
 	(21, 'max_width', NULL),
 	(22, 'max_height', NULL);
@@ -770,3 +777,4 @@ INSERT INTO `tbl_users` (`userId`, `email`, `password`, `name`, `mobile`, `creat
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+biken

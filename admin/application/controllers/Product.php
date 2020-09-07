@@ -367,9 +367,12 @@ class Product extends BaseController
 							}
 						}
 
-					// validasi base64
-					if (base64_encode(base64_decode($base64, true)) === $base64) {
+						
 
+					// validasi base64
+					// if (base64_encode(base64_decode($base64, true)) === $base64) {
+					if ($this->validBase64($this->input->post('base', true))) {	
+						
 						$data = array(
 							'product_title' => $this->input->post('product_title', true),
 							'sku' => $this->input->post('sku', true),
@@ -496,6 +499,40 @@ class Product extends BaseController
 		$data['update_id'] = $update_id;
 		$data['flash'] = $this->session->flashdata('item');
 		$this->template->views('product/create', $data);
+	}
+
+	function validBase64($base64_string) {
+		// dimurnikan dari 
+		// data:image/png dan base64
+
+		$s = explode(';', $base64_string);
+
+		return (bool) preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $s[1]);
+		return (bool) preg_match("/data:image\/([a-zA-Z]*);base64.*/", $s[0]);
+
+		// Check if there are valid base64 characters
+		// if (!preg_match("/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).base64,.*/", $s)) return false;
+
+		// // Decode the string in strict mode and check the results
+		// $decoded = base64_decode($s, true);
+		// if(false === $decoded) return false;
+	
+		// // Encode the string again
+		// if(base64_encode($decoded) != $s) return false;
+	
+		// return true;
+
+	}
+
+	function tes() {
+		// $data = "data:image/png;base64";
+		$data = 'S5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NzMxMjU1RUZGNTQzMTFFNzlCRDNEMUI3QjM0NzNGMUYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzMxMjU1RUVGNTQzMTFFNzlCRDNEMUI3QjM0NzNGMUYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6M0Y1OTA0MDZFRTJFMTFFNzkyRDNFMDBCMTg5Q0U3OEIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6M0Y1OTA0MDdFRTJFMTFFNzkyRDNFMDBCMTg5Q0U3OEIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7rcbG6AARfPUlEQVR42uy9ebBlyVkf+GXmOefe+6rqVb3q6urqfZN6UTcSWjBCSAKELIylIRAEYgYGWXjYYhiIgWAgwBCMZ0yM8YRjzIyN7T88JobBEgQgtBimAQmQJXXTrb33Xd1dXfv2tnvv2TLn2/Lc88oTYf4wMUHX92uV3nt3OSdPnjyZv/x9m0spgcFgMBgMBoPhPx+8dYHBYDAYDAaDESyDwWAwGAwGI1gGg8FgMBgMRrAMBoPBYDAYDEawDAaDwWAwGIxgGQwGg8FgMBjBMhgMBoPBYDAYwTIYDAaDwWAwgmUwGAwGg8FgBMtgMBgMBoPBYATLYDAYDAaDwQiWwWAwGAwGgxEsg8FgMBgMBiNYBoPBYDAYDAYjWAaDwWAwGAxGsAwGg8FgMBiMYBkMBoPBYDAYjGAZDAaDwWAwGMEyGAwGg8FgMIJlMBgMBoPBYDCCZTAYDAaDwWAEy2AwGAwGg8EIlsFgMBgMBoPBCJbBYDAYDAaDESyDwWAwGAwGI1gGg8FgMBgMRrAMBoPBYDAYDEawDAaDwWAwGIxgGQwGg8FgMBjBMhgMBoPBYDAYwTIYDAaDwWAwgmUwGAwGg8FgBMtgMBgMBoPBYATLYDAYDAaDwQiWwWAwGAwGgxEsg8FgMBgMBoMRLIPBYDAYDAYjWAaDwWAwGAxGsAwGg8FgMBiMYBkMBoPBYDAYjGAZDAaDwWAwGMEyGAwGg8FgMIJlMBgMBoPBYDCCZTAYDAaDwWAEy2AwGAwGg8EIlsFgMBgMBoPBCJbBYDAYDAaDESyDwWAwGAwGI1gGg8FgMBgMBiNYBoPBYDAYDEawDAaDwWAwGIxgGQwGg8FgMBjBMhgMBoPBYDAYwTIYDAaDwWAwgmUwGAwGg8FgBMtgMBgMBoPBYATLYDAYDAaDwQiWwWAwGAwGgxEsg8FgMBgMBoMRLIPBYDAYDAYjWAaDwWAwGAxGsAwGg8FgMBiMYBkMBoPBYDAYjGAZDAaDwWAwGMEyGAwGg8FgMIJlMBgMBoPBYDCCZTAYDAaDwWAEy2AwGAwGg8EIlsFgMBgMBoPBCJbBYDAYDAaDESyDwWAwGAwGI1gGg8FgMBgMBiNYBoPBYDAYDEawDAaDwWAwGIxgGQwGg8FgMBjBMhgMBoPBYDAYwTIYDAaDwWAwgmUwGAwGg8FgBMtgMBgMBoPBYATLYDAYDAaDwQiWwWAwGAwGgxEsg8FgMBgMBoMRLIPBYDAYDAYjWAaDwWAwGAxGsAwGg8FgMBgM';
+
+		if (preg_match("/data:image\/([a-zA-Z]*);base64.*/", $data)) {
+			echo 'cocok';
+		} else {
+			echo 'tidak cocok';
+		}
 	}
 
 	function base64ToJpeg($base64_string)
