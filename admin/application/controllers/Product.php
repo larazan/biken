@@ -502,8 +502,7 @@ class Product extends BaseController
 	}
 
 	function validBase64($base64_string) {
-		// dimurnikan dari 
-		// data:image/png dan base64
+		// dimurnikan dari data:image/png dan base64
 
 		$s = explode(';', $base64_string);
 
