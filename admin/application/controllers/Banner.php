@@ -114,7 +114,8 @@ class Banner extends BaseController
                                 $flash_msg = "The banner were successfully updated.";
                                 $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
                                 $this->session->set_flashdata('item', $value);
-                                redirect('banner/create/'.$update_id);
+                                // redirect('banner/create/'.$update_id);
+                                redirect('banner/manage');
 
                             } else {
                                 $this->_insert($data);
@@ -123,7 +124,8 @@ class Banner extends BaseController
                                 $flash_msg = "The banner was successfully added.";
                                 $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
                                 $this->session->set_flashdata('item', $value);
-                                redirect('banner/create/'.$update_id);
+                                // redirect('banner/create/'.$update_id);
+                                redirect('banner/manage');
                             }
                             
 
@@ -137,7 +139,7 @@ class Banner extends BaseController
                 } else {
                     $data = array(
                         'banner_name' => $this->input->post('banner_name', true),
-                        'banner_img' => $nmfile,
+                        // 'banner_img' => $nmfile,
                         'banner_status' =>  $this->input->post('banner_status', true),
                         'created_at' => time(),
                         'updated_at' => time()
@@ -149,7 +151,8 @@ class Banner extends BaseController
                         $flash_msg = "The banner were successfully updated.";
                         $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
                         $this->session->set_flashdata('item', $value);
-                        redirect('banner/create/'.$update_id);
+                        // redirect('banner/create/'.$update_id);
+                        redirect('banner/manage');
                     } else {
                         $this->_insert($data);
                         $update_id = $this->get_max();
@@ -157,7 +160,8 @@ class Banner extends BaseController
                         $flash_msg = "The banner was successfully added.";
                         $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
                         $this->session->set_flashdata('item', $value);
-                        redirect('banner/create/'.$update_id);
+                        // redirect('banner/create/'.$update_id);
+                        redirect('banner/manage');
                     }
 
                 }

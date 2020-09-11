@@ -7,22 +7,20 @@
                     <!--Start footer left-->
                     <div class="footer-left">
                         <div class="contact-info widget">
-                            <h3 class="widget-title">Contact info</h3>
-                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium</p>
                             <ul>
                                 <li>
                                     <span>Address :</span>
                                     <address>
-                                        123 Sky Tower address name, Los Algeles, ,<br> USA, Country, 01234
+                                       <?=$shop_address?>
                                     </address>
                                 </li>
                                 <li>
                                     <span>Phone :</span>
-                                    (012) 345 6789
+                                    <?=$shop_phone?>
                                 </li>
                                 <li>
                                     <span>Email :</span>
-                                    info@templaza.com
+                                    <?=$shop_email?>
                                 </li>
                             </ul>
                         </div>
@@ -139,17 +137,7 @@
                         <div class="col-md-6 col-sm-6">
                             <p>Copyright &copy; 2015 <a href="http://templaza.com/" target="_blank">BikeSport</a> by TemPlaza. All rights reserved.</p>
                         </div>
-                        <div class="col-md-6 col-sm-6">
-                            <div class="pull-right">
-                                <span class="payments-method">
-                                    <a href="#"><img src="<?=base_url()?>assets/<?=base_url()?>assets/images/Visa.png" alt="visa"></a>
-                                    <a href="#"><img src="<?=base_url()?>assets/<?=base_url()?>assets/images/Intersection.png" alt="Intersection"></a>
-                                    <a href="#"><img src="<?=base_url()?>assets/<?=base_url()?>assets/images/ebay.png" alt="ebay"></a>
-                                    <a href="#"><img src="<?=base_url()?>assets/<?=base_url()?>assets/images/Amazon.png" alt="Amazon"></a>
-                                    <a href="#"><img src="<?=base_url()?>assets/<?=base_url()?>assets/images/Discover.png" alt="Discover"></a>
-                                </span>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

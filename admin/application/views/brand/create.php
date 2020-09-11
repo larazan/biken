@@ -37,10 +37,10 @@ $backlink = base_url() . "brand/manage";
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <?php
-                    $form_location = base_url() . "brand/create/" . $update_id;
+                    <?php 
+                    $attribute = array('class' => '');
+                    echo form_open_multipart('brand/create/'.$update_id, $attribute);
                     ?>
-                    <form class="form-horizontal" method="post" action="<?= $form_location ?>">
                         
                         <div class="card-body">
                             <div class="form-group row">
@@ -48,6 +48,17 @@ $backlink = base_url() . "brand/manage";
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control" placeholder="Brand Name" id="brand_name" name="brand_name" value="<?= $brand_name ?>" required>
                                     <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('brand_name'); ?></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Image</label>
+                                <div class="col-sm-6">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="customFile" name="brand_img">
+            
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                    <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('brand_img'); ?></div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -77,6 +88,24 @@ $backlink = base_url() . "brand/manage";
                     </form>
                 </div>
                 <!-- /.card -->
+<!-- image -->
+<?php
+$path_img = base_url().'assets/brand/'.$brand_img;
+if ($brand_img != "") { ?>
+
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Image</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="">
+				            <img src="<?= $path_img ?>" width="" style="width: 100%;">
+			            </div>
+                    </div>
+                </div>
+                
+<?php } ?>
 
             </div>
             <!--/.col (left) -->

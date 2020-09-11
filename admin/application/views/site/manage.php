@@ -113,13 +113,7 @@ if (isset($flash)) {
                             <input type="text" class="form-control m-input" id="tagline" name="tagline" placeholder="Enter tagline" value="<?php echo $this->db->get_where('tbl_settings', array('type' => 'tagline'))->row()->description; ?>">
                             <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('tagline'); ?></div>
                         </div>
-                        <div class="form-group row">
-                            <label for="author">
-                                Author
-                            </label>
-                            <input type="text" class="form-control m-input" id="author" name="author" placeholder="Enter Author Name" value="<?php echo $this->db->get_where('tbl_settings', array('type' => 'author'))->row()->description; ?>">
-                            <div class="form-control-feedback" style="color: #f4516c;"><?php echo form_error('author'); ?></div>
-                        </div>
+                        
                         <div class="form-group row">
                             <label for="rekening">
                                 No Rekening

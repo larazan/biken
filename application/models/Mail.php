@@ -5,7 +5,8 @@ class Mail extends CI_Model
 {
 
     private static $db;
-
+    var $smtp_pass;
+    var $smtp_user;
     function __construct()
     {
         parent::__construct();
@@ -14,13 +15,15 @@ class Mail extends CI_Model
         $this->smtp_pass = $this->db->get_where('tbl_settings', array('type' => 'password'))->row()->description;
     }
 
+    
+
     static function configMail() {
         $config = Array(
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => $smtp_user,
-            'smtp_pass' => $smtp_pass,
+            'smtp_user' => $this->smtp_user,
+            'smtp_pass' => $this->smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'
@@ -52,8 +55,8 @@ class Mail extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => $smtp_user,
-            'smtp_pass' => $smtp_pass,
+            'smtp_user' => $this->smtp_user,
+            'smtp_pass' => $this->smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'
@@ -96,8 +99,8 @@ class Mail extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => $smtp_user,
-            'smtp_pass' => $smtp_pass,
+            'smtp_user' => $this->smtp_user,
+            'smtp_pass' => $this->smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'
@@ -181,8 +184,8 @@ class Mail extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => $smtp_user,
-            'smtp_pass' => $smtp_pass,
+            'smtp_user' => $this->smtp_user,
+            'smtp_pass' => $this->smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'
@@ -234,8 +237,8 @@ class Mail extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => $smtp_user,
-            'smtp_pass' => $smtp_pass,
+            'smtp_user' => $this->smtp_user,
+            'smtp_pass' => $this->smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'
@@ -285,8 +288,8 @@ class Mail extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => $smtp_user,
-            'smtp_pass' => $smtp_pass,
+            'smtp_user' => $this->smtp_user,
+            'smtp_pass' => $this->smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'
@@ -339,8 +342,8 @@ class Mail extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => $smtp_user,
-            'smtp_pass' => $smtp_pass,
+            'smtp_user' => $this->smtp_user,
+            'smtp_pass' => $this->smtp_pass,
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             // 'smtp_crypto' => 'tls'

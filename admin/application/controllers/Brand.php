@@ -6,6 +6,8 @@ require APPPATH . '/libraries/BaseController.php';
 class Brand extends BaseController
 {
 
+	private $loca = './assets/brand/';
+
 	function __construct()
 	{
 		parent::__construct();
@@ -25,6 +27,18 @@ class Brand extends BaseController
 		$this->template->views('Brand/manage', $data);
 	}
 
+	function hapus_gambar($image) {
+        // lokasi folder image
+        $path_real = $this->loca;
+        $path_compress = $path_real.'870x342/';
+        //lokasi gambar secara spesifik
+        $image1 = $path_real.$image;
+        $image2 = $path_compress.$image;
+        //hapus image
+        unlink($image1);
+        unlink($image2);
+    }
+
 	public function create()
 	{
 		$this->load->library('session');
@@ -42,24 +56,109 @@ class Brand extends BaseController
 			$this->form_validation->set_rules('brand_name', 'Brand name', 'trim|required');
 			
 			if ($this->form_validation->run() == TRUE) {
-				$data = $this->fetch_data_from_post();
 
-				if (is_numeric($update_id)) {
-					$data['updated_at'] = time();
-					$this->_update($update_id, $data);
-					$flash_msg = "The brand were successfully updated.";
-					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
-					$this->session->set_flashdata('item', $value);
-					redirect('Brand/create/' . $update_id);
-				} else {
-					$this->_insert($data);
-					$update_id = $this->get_max();
+				// ganti titik dengan _
+                $filename = $_FILES['brand_img']['name'];
+                $new_filename = str_replace(".", "_", substr($filename, 0, strrpos($filename, ".")) ).".".end(explode('.',$filename));
+                $nama_baru = str_replace(' ', '_', $new_filename);
+                
+                $nmfile = date("ymdHis").'_'.$nama_baru;
+                $loc = $this->loca;
 
-					$flash_msg = "The brand was successfully added.";
-					$value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>' . $flash_msg . '</div>';
-					$this->session->set_flashdata('item', $value);
-					redirect('Brand/create/' . $update_id);
-				}
+                $config['upload_path']   = $loc;
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $config['max_size'] = '2048';
+                $config['overwrite'] = FALSE;
+                $config['remove_spaces'] = TRUE;
+                $config['file_name'] = $nmfile;
+
+                $this->load->library('upload');
+                $this->upload->initialize($config);
+
+				// jika ada file yg di upload
+                if ($_FILES['brand_img']['name'] != '') {
+                    if($_FILES['brand_img']['name'])
+                    {
+                        if ($this->upload->do_upload('brand_img'))
+                        {
+                            $data = array(
+                                'brand_name' => $this->input->post('brand_name', true),
+								'brand_img' => $nmfile,
+								'brand_url' => $this->input->post('brand_url', true),
+								'brand_description' => $this->input->post('brand_description', true),
+                                'status' =>  $this->input->post('status', true),
+                                'created_at' => time(),
+                                'updated_at' => time()
+                            );                            
+
+                            if (is_numeric($update_id)) {
+                                $data_old = $this->fetch_data_from_db($update_id);
+
+                                $brand_img = $data_old['brand_img'];
+
+                                // hapus gambar
+                                $this->hapus_gambar($brand_img);
+								$data['updated_at'] = time();
+                                $this->_update($update_id, $data);
+
+                                $flash_msg = "The brand were successfully updated.";
+                                $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
+                                $this->session->set_flashdata('item', $value);
+								// redirect('brand/create/'.$update_id);
+								redirect('brand/manage');
+
+                            } else {
+                                $this->_insert($data);
+                                $update_id = $this->get_max();
+
+                                $flash_msg = "The brand was successfully added.";
+                                $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
+                                $this->session->set_flashdata('item', $value);
+								// redirect('brand/create/'.$update_id);
+								redirect('brand/manage');
+                            }
+                            
+
+                        } else {
+                            $flash_msg = "Upload failed!.";
+                            $value = '<div class="alert alert-danger alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
+                            $this->session->set_flashdata('item', $value);
+                            redirect('brand/create/'.$update_id);
+                        }
+                    }
+                } else {
+                    $data = array(
+                        'brand_name' => $this->input->post('brand_name', true),
+						// 'brand_img' => $nmfile,
+						'brand_url' => $this->input->post('brand_url', true),
+						'brand_description' => $this->input->post('brand_description', true),
+						'status' =>  $this->input->post('status', true),
+						'created_at' => time(),
+						'updated_at' => time()
+                    );   
+
+                    if (is_numeric($update_id)) {
+						$data['updated_at'] = time();
+                        $this->_update($update_id, $data);
+                        $flash_msg = "The brand were successfully updated.";
+                        $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
+                        $this->session->set_flashdata('item', $value);
+						// redirect('brand/create/'.$update_id);
+						redirect('brand/manage');
+                    } else {
+                        $this->_insert($data);
+                        $update_id = $this->get_max();
+
+                        $flash_msg = "The brand was successfully added.";
+                        $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
+                        $this->session->set_flashdata('item', $value);
+						// redirect('brand/create/'.$update_id);
+						redirect('brand/manage');
+                    }
+
+                }
+
+			
 			}
 		}
 
@@ -67,6 +166,7 @@ class Brand extends BaseController
 			$data = $this->fetch_data_from_db($update_id);
 		} else {
 			$data = $this->fetch_data_from_post();
+			$data['brand_img'] = '';
 		}
 
 		if (!is_numeric($update_id)) {
@@ -89,6 +189,9 @@ class Brand extends BaseController
 
 		$submit = $this->input->post('submit', TRUE);
 		if ($submit == "Delete") {
+			// delete featured image
+			$this->_process_delete($update_id);
+			
 			// delete the item record from db
 			$this->_delete($update_id);
 
@@ -99,6 +202,30 @@ class Brand extends BaseController
 			redirect('Brand/manage');
 		}
 	}
+
+	function _process_delete($update_id){
+        $data = $this->fetch_data_from_db($update_id);
+        $big_pic = $data['brand_img'];
+        $small_pic = $big_pic;
+
+        $path_real = $this->loca;
+        $path_compress = $path_real.'870x342/';
+
+        $big_pic_path = $path_real.$big_pic;
+        $small_pic_path = $path_compress.$small_pic;
+
+        if (file_exists($big_pic_path)) {
+            unlink($big_pic_path);
+        } 
+
+        if (file_exists($small_pic_path)) {
+            unlink($small_pic_path);
+        } 
+
+        unset($data);
+        $data['brand_img'] = "";
+        $this->_update($update_id, $data);
+    }
 
 	function fetch_data_from_post()
 	{
@@ -115,6 +242,7 @@ class Brand extends BaseController
 		foreach ($query->result() as $row) {
 			$data['brand_id'] = $row->brand_id;
 			$data['brand_name'] = $row->brand_name;
+			$data['brand_img'] = $row->brand_img;
 			$data['status'] = $row->status;
 			$data['created_at'] = $row->created_at;
 			$data['updated_at'] = $row->updated_at;

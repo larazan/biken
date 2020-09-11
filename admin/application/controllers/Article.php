@@ -118,7 +118,8 @@ class Article extends BaseController
                                 $flash_msg = "The article were successfully updated.";
                                 $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
                                 $this->session->set_flashdata('item', $value);
-                                redirect('Article/create/'.$update_id);
+                                // redirect('Article/create/'.$update_id);
+                                redirect('Article/manage');
 
                             } else {
                                 $this->_insert($data);
@@ -127,7 +128,8 @@ class Article extends BaseController
                                 $flash_msg = "The article was successfully added.";
                                 $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
                                 $this->session->set_flashdata('item', $value);
-                                redirect('Article/create/'.$update_id);
+                                // redirect('Article/create/'.$update_id);
+                                redirect('Article/manage');
                             }
                             
 
@@ -156,7 +158,8 @@ class Article extends BaseController
                         $flash_msg = "The article were successfully updated.";
                         $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
                         $this->session->set_flashdata('item', $value);
-                        redirect('Article/create/'.$update_id);
+                        // redirect('Article/create/'.$update_id);
+                        redirect('Article/manage');
                     } else {
                         $this->_insert($data);
                         $update_id = $this->get_max();
@@ -164,7 +167,8 @@ class Article extends BaseController
                         $flash_msg = "The article was successfully added.";
                         $value = '<div class="alert alert-success alert-dismissible fade show" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>'.$flash_msg.'</div>';
                         $this->session->set_flashdata('item', $value);
-                        redirect('Article/create/'.$update_id);
+                        // redirect('Article/create/'.$update_id);
+                        redirect('Article/manage');
                     }
 
                 }

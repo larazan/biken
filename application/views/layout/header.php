@@ -3,34 +3,7 @@
 
                 <!--Start class header top-->
                 <div class="header-top">
-                    <ul class="pull-left">
-                        <li>
-                            <a href="#">
-                                USD
-                                <span class="fa fa-angle-down tz-down"></span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a href="#">EURO</a>
-                                </li>
-                                <li>
-                                    <a href="#">USD</a>
-                                </li>
-                                <li>
-                                    <a href="#">EGP</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">
-                                English
-                                <span class="fa fa-angle-down tz-down"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">Call us:   (012) 3456 7890</a>
-                        </li>
-                    </ul>
+                    
                     <ul class="pull-right">
                         <li>
                             <a href="shop-register.html">My Account</a>

@@ -41,6 +41,7 @@ $addlink = base_url() . "brand/create";
                                 <tr>
                                     <th>No</th>
                                     <th>Name</th>
+                                    <th>Image</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th class="text-center">Actions</th>
@@ -48,6 +49,7 @@ $addlink = base_url() . "brand/create";
                             </thead>
                             <tbody>
                                 <?php $no = 1;
+                                $path = base_url().'assets/brand/';
                                 foreach ($query->result() as $row) {
                                     $editLink = base_url() . "Brand/create/" . $row->brand_id;
                                     $deleteLink = base_url(). "modal/popup/delete/" . $row->brand_id . "/brand";
@@ -62,12 +64,16 @@ $addlink = base_url() . "brand/create";
                                     }
 
                                     $tgl = getNiceDate($row->created_at, 'indo');
+                                    $gambar = $path.$row->brand_img;
                                 ?>
 
                                     <tr>
                                         <td><?= $no++ ?> </td>
                                         <td>
                                             <?= $row->brand_name ?>
+                                        </td>
+                                        <td>
+                                            <?php echo ($row->brand_img == '') ? '' : '<img src="'.$gambar.'" class="img-responsive" width="80px">' ?>
                                         </td>
                                         <td>
                                             <span style="width: 110px;"><span class="badge <?= $status_label ?> badge--wide"><?= $status_desc ?></span></span>

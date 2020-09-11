@@ -1,3 +1,11 @@
+<?php
+$shop_name = $this->db->get_where('tbl_settings', array('type' => 'shop_name'))->row()->description;
+$shop_address = $this->db->get_where('tbl_settings', array('type' => 'address'))->row()->description;
+$shop_phone = $this->db->get_where('tbl_settings', array('type' => 'phone'))->row()->description;
+$shop_email = $this->db->get_where('tbl_settings', array('type' => 'email'))->row()->description;
+
+?>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
